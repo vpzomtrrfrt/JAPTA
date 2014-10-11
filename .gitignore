@@ -1,0 +1,10 @@
+eclipse
+bin
+build*
+*gradle*
+.project
+.classpath
+MinecraftForge*
+*.txt
+*.swp
+.settings
