@@ -22,6 +22,7 @@ public class BlockRNGQuarry extends BlockContainer {
 		super(Material.rock);
 		setBlockName("rngQuarry");
 		setBlockTextureName(JAPTA.modid+":rngQuarry");
+		setCreativeTab(JAPTA.tab);
 	}
 	
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase b, ItemStack stack) {

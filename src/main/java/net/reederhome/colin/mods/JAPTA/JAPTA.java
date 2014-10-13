@@ -1,8 +1,10 @@
 package net.reederhome.colin.mods.JAPTA;
 
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -14,6 +16,15 @@ public class JAPTA {
 
 	public static final String modid = "JAPTA";
 	public static final String name = "JAPTA";
+	
+	public static CreativeTabs tab = new CreativeTabs(CreativeTabs.getNextID(), "JAPTA") {
+
+		@Override
+		public Item getTabIconItem() {
+			return Item.getItemFromBlock(rngQuarry);
+		}
+		
+	};
 	
 	public static Block rngQuarry = new BlockRNGQuarry();
 	
