@@ -1,1 +1,4 @@
 tile.rngQuarry.name=RNG Quarry
+text.japta.rngQuarry.noTool=Quarry: Click with a tool to equip it.
+text.japta.rngQuarry.hasTool=Quarry: %1$s equipped, %2$d RF
+text.japta.rngQuarry.gotTool=Quarry: %1$s equipped

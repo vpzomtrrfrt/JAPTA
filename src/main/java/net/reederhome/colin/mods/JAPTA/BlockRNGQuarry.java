@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
@@ -22,11 +23,10 @@ public class BlockRNGQuarry extends BlockContainer {
 		setBlockName("rngQuarry");
 		setBlockTextureName(JAPTA.modid+":rngQuarry");
 	}
-	String[] text = {"Quarry: Click with a tool to equip it."};
 	
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase b, ItemStack stack) {
-		if(b instanceof EntityPlayer) {
-			((EntityPlayer) b).addChatMessage(new ChatComponentText(text[0]));
+		if(b instanceof EntityPlayer&&!world.isRemote) {
+			((EntityPlayer) b).addChatMessage(new ChatComponentTranslation("text.japta.rngQuarry.noTool"));
 		}
 	}
 	
@@ -50,10 +50,10 @@ public class BlockRNGQuarry extends BlockContainer {
 		if(!world.isRemote) {
 			if(stack==null) {
 				if(te.itm==null) {
-					p.addChatMessage(new ChatComponentText(text[0]));
+					p.addChatMessage(new ChatComponentTranslation("text.japta.rngQuarry.noTool"));
 				}
 				else {
-					p.addChatMessage(new ChatComponentText("Quarry: "+I18n.format(te.itm.getUnlocalizedName()+".name")+" equipped, "+te.amount+" RF"));
+					p.addChatMessage(new ChatComponentTranslation("text.japta.rngQuarry.hasTool", te.itm.func_151000_E(), te.amount));
 				}
 			}
 			else {
@@ -62,7 +62,7 @@ public class BlockRNGQuarry extends BlockContainer {
 				}
 				te.itm=stack;
 				p.inventory.setInventorySlotContents(p.inventory.currentItem, null);
-				p.addChatMessage(new ChatComponentText("Quarry: "+I18n.format(te.itm.getUnlocalizedName()+".name")+" equipped"));
+				p.addChatMessage(new ChatComponentTranslation("text.japta.rngQuarry.gotTool", te.itm.func_151000_E()));
 			}
 		}
 		return true;
