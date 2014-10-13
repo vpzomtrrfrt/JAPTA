@@ -1,7 +1,8 @@
 eclipse
 bin
-build*
-*gradle*
+build
+gradle*
+.gradle
 .project
 .classpath
 MinecraftForge*
