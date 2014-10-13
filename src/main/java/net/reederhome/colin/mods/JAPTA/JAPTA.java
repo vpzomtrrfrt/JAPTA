@@ -1,6 +1,9 @@
 package net.reederhome.colin.mods.JAPTA;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -18,5 +21,6 @@ public class JAPTA {
 	public void preInit(FMLPreInitializationEvent ev) {
 		GameRegistry.registerBlock(rngQuarry, "rngQuarry");
 		GameRegistry.registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
+		GameRegistry.addRecipe(new ItemStack(rngQuarry), "srs", "iwi", " g ", 's', Blocks.stone, 'r', Items.redstone, 'i', Items.iron_ingot, 'w', Items.wooden_pickaxe, 'g', Items.gold_ingot);
 	}
 }

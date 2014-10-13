@@ -44,7 +44,7 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 	
 	public void updateEntity() {
 		int i = 0;
-		while(amount>=consume&&i<5) {
+		while(amount>=consume&&i<2) {
 			i++;
 			int x = xCoord+new Random().nextInt(range*2)-range;
 			int y = yCoord-1;
@@ -60,7 +60,7 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 				if(hl==-1) hl=0;
 			}
 			//System.out.println("harvest level: "+hl);
-			if(b.getHarvestLevel(meta)<=hl) {
+			if(b.getHarvestLevel(meta)<=hl&&b.getBlockHardness(worldObj, x, y, z)!=-1) {
 				ArrayList<ItemStack> drops = b.getDrops(worldObj, x, y, z, meta, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, itm));
 				Iterator<ItemStack> it = drops.iterator();
 				while(it.hasNext()) {
