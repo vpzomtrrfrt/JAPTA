@@ -20,37 +20,47 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 
 	int amount = 0;
 	static final int maxAmount = 2000;
-	static final int consume = 200;
+	static final int consume = 500;
 	int range = 8;
-	ItemStack itm = new ItemStack(Items.diamond_pickaxe);
+	ItemStack itm = null;
 	
 	public void writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
 		nbt.setInteger("Energy", amount);
-		NBTTagCompound it = new NBTTagCompound();
-		itm.writeToNBT(it);
-		nbt.setTag("Item", it);
+		if(itm!=null) {
+			NBTTagCompound it = new NBTTagCompound();
+			itm.writeToNBT(it);
+			nbt.setTag("Item", it);
+		}
 	}
 	
 	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
 		amount = nbt.getInteger("Energy");
-		itm = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("Item"));
+		if(nbt.hasKey("Item")) {
+			itm = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("Item"));
+		}
 	}
 	
 	public void updateEntity() {
 		int i = 0;
-		while(amount>consume&&i<5) {
+		while(amount>=consume&&i<5) {
 			i++;
 			int x = xCoord+new Random().nextInt(range*2)-range;
 			int y = yCoord-1;
 			int z = zCoord+new Random().nextInt(range*2)-range;
-			while(worldObj.isAirBlock(x, y, z)&&y>0) {
+			while((worldObj.isAirBlock(x, y, z)||worldObj.getBlock(x, y, z).getMaterial().isLiquid())&&y>0) {
 				y--;
 			}
 			Block b = worldObj.getBlock(x, y, z);
 			int meta = worldObj.getBlockMetadata(x, y, z);
-			int hl = itm.getItem().getHarvestLevel(itm, "pickaxe");
+			int hl = 0;
+			if(itm!=null) {
+				hl = itm.getItem().getHarvestLevel(itm, b.getHarvestTool(meta));
+				if(hl==-1) hl=0;
+			}
 			//System.out.println("harvest level: "+hl);
-			if(b.getHarvestLevel(meta)<hl) {
+			if(b.getHarvestLevel(meta)<=hl) {
 				ArrayList<ItemStack> drops = b.getDrops(worldObj, x, y, z, meta, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, itm));
 				Iterator<ItemStack> it = drops.iterator();
 				while(it.hasNext()) {
@@ -106,8 +116,8 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 					}
 				}
 				worldObj.setBlockToAir(x, y, z);
+				amount-=consume;
 			}
-			amount-=consume;
 		}
 	}
 	
