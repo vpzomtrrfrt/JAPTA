@@ -27,11 +27,15 @@ public class JAPTA {
 	};
 	
 	public static Block rngQuarry = new BlockRNGQuarry();
+	public static Block mechanicalGenerator = new BlockMechanicalGenerator();
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent ev) {
 		GameRegistry.registerBlock(rngQuarry, "rngQuarry");
+		GameRegistry.registerBlock(mechanicalGenerator, "mechanicalGenerator");
 		GameRegistry.registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
+		GameRegistry.registerTileEntity(TileEntityMechanicalGenerator.class, "MechanicalGenerator");
 		GameRegistry.addRecipe(new ItemStack(rngQuarry), "srs", "iwi", " g ", 's', Blocks.stone, 'r', Items.redstone, 'i', Items.iron_ingot, 'w', Items.wooden_pickaxe, 'g', Items.gold_ingot);
+		
 	}
 }
