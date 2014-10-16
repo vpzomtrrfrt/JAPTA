@@ -44,7 +44,7 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 	
 	public void updateEntity() {
 		int i = 0;
-		while(amount>=consume&&i<2) {
+		while(amount>=consume&&i<1) {
 			i++;
 			int x = xCoord+new Random().nextInt(range*2)-range;
 			int y = yCoord-1;
@@ -52,6 +52,7 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 			while((worldObj.isAirBlock(x, y, z)||worldObj.getBlock(x, y, z).getMaterial().isLiquid())&&y>0) {
 				y--;
 			}
+			if(y==0) continue;
 			Block b = worldObj.getBlock(x, y, z);
 			int meta = worldObj.getBlockMetadata(x, y, z);
 			int hl = 0;
@@ -117,6 +118,9 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 				}
 				worldObj.setBlockToAir(x, y, z);
 				amount-=consume;
+				if(Math.random()<0.9) {
+					itm.setItemDamage(itm.getItemDamage()+1);
+				}
 			}
 		}
 	}
