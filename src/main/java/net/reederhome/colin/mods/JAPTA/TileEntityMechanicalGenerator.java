@@ -9,7 +9,7 @@ public class TileEntityMechanicalGenerator extends TileEntity implements IEnergy
 
 	int amount = 0;
 	static final int maxAmount = 100;
-	static final int inc = 5;
+	static final int inc = 2;
 	
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
