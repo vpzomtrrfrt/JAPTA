@@ -118,8 +118,11 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 				}
 				worldObj.setBlockToAir(x, y, z);
 				amount-=consume;
-				if(Math.random()<0.9) {
+				if(Math.random()<0.9&&itm!=null&&itm.isItemStackDamageable()) {
 					itm.setItemDamage(itm.getItemDamage()+1);
+					if(itm.getItemDamage()>itm.getMaxDamage()) {
+						itm=null;
+					}
 				}
 			}
 		}
