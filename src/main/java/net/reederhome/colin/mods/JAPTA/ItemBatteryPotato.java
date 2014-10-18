@@ -30,9 +30,10 @@ public class ItemBatteryPotato extends Item implements IEnergyContainerItem {
 	}
 	
 	public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player) {
-		if(stack.getItemDamage()+200<=stack.getMaxDamage()) {
+		int taken = 500;
+		if(stack.getItemDamage()+taken<=stack.getMaxDamage()) {
 			player.getFoodStats().addStats(3, 1);
-			stack.setItemDamage(stack.getItemDamage()+200);
+			stack.setItemDamage(stack.getItemDamage()+taken);
 		}
 		return stack;
 	}

@@ -53,7 +53,7 @@ public class JAPTA {
 		GameRegistry.addRecipe(new ItemStack(mechanicalGenerator), "rrr", "sgs", "sgs", 'r', Items.redstone, 's', Blocks.stone, 'g', Items.gold_nugget);
 		GameRegistry.addRecipe(new ItemStack(lifeConverter), "frf", "rgr", "frf", 'f', Items.rotten_flesh, 'r', Items.redstone, 'g', Items.gold_ingot);
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(batteryPotato), Items.potato, Items.gold_nugget, Items.iron_ingot, Items.redstone);
+		GameRegistry.addShapelessRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), Items.potato, Items.gold_nugget, Items.iron_ingot, Items.redstone);
 		
 		MinecraftForge.EVENT_BUS.register(this);
 	}
