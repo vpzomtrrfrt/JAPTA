@@ -35,17 +35,24 @@ public class JAPTA {
 	public static Block mechanicalGenerator = new BlockMechanicalGenerator();
 	public static Block lifeConverter = new BlockLifeConverter();
 	
+	public static Item batteryPotato = new ItemBatteryPotato();
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent ev) {
 		GameRegistry.registerBlock(rngQuarry, "rngQuarry");
 		GameRegistry.registerBlock(mechanicalGenerator, "mechanicalGenerator");
 		GameRegistry.registerBlock(lifeConverter, "lifeConverter");
+		
+		GameRegistry.registerItem(batteryPotato, "batteryPotato");
+		
 		GameRegistry.registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
 		GameRegistry.registerTileEntity(TileEntityMechanicalGenerator.class, "MechanicalGenerator");
 		GameRegistry.registerTileEntity(TileEntityLifeConverter.class, "LifeConverter");
+		
 		GameRegistry.addRecipe(new ItemStack(rngQuarry), "srs", "iwi", " g ", 's', Blocks.stone, 'r', Items.redstone, 'i', Items.iron_ingot, 'w', Items.wooden_pickaxe, 'g', Items.gold_ingot);
 		GameRegistry.addRecipe(new ItemStack(mechanicalGenerator), "rrr", "sgs", "sgs", 'r', Items.redstone, 's', Blocks.stone, 'g', Items.gold_nugget);
 		GameRegistry.addRecipe(new ItemStack(lifeConverter), "frf", "rgr", "frf", 'f', Items.rotten_flesh, 'r', Items.redstone, 'g', Items.gold_ingot);
+		
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 	
