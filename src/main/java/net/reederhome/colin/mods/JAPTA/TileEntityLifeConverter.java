@@ -12,12 +12,24 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 
 public class TileEntityLifeConverter extends TileEntity implements IEnergyHandler {
-
-	static DamageSource damageSource = new DamageSource("japta.lifeConverter");
 	
 	int amount = 0;
 	static final int maxAmount = 100;
-	static final int inc = 2;
+	static final int inc = 4;
+	static final float th = 1;
+	
+	public void updateEntity() {
+		super.updateEntity();
+		List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(xCoord-0.5, yCoord, zCoord-0.5, xCoord+1.5, yCoord+2.5, zCoord+1.5));
+		Iterator<EntityLivingBase> it = l.iterator();
+		while(it.hasNext()&&amount>th*inc/2) {
+			EntityLivingBase e = it.next();
+			if(e.getHealth()<e.getMaxHealth()) {
+				e.heal(th);
+				amount-=th*inc/2;
+			}
+		}
+	}
 	
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
@@ -37,7 +49,17 @@ public class TileEntityLifeConverter extends TileEntity implements IEnergyHandle
 	@Override
 	public int receiveEnergy(ForgeDirection from, int maxReceive,
 			boolean simulate) {
-		return 0;
+		int tr;
+		if(amount+maxReceive<=maxAmount) {
+			tr=maxReceive;
+		}
+		else {
+			tr=maxAmount-amount;
+		}
+		if(!simulate) {
+			amount+=tr;
+		}
+		return tr;
 	}
 
 	@Override
