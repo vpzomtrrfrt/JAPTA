@@ -18,7 +18,7 @@ public class ItemBatteryPotato extends Item implements IEnergyContainerItem {
 		setMaxStackSize(1);
 		setCreativeTab(JAPTA.tab);
 		setUnlocalizedName("batteryPotato");
-		setTextureName("potato");
+		setTextureName(JAPTA.modid+":batteryPotato");
 	}
 	
 	public EnumAction getItemUseAction(ItemStack stack) {

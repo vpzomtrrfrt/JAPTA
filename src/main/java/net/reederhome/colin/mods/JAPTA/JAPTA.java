@@ -62,7 +62,7 @@ public class JAPTA {
 		int y = (int)Math.floor(ev.entity.posY-1);
 		int z = (int)Math.floor(ev.entity.posZ);
 		TileEntity te = ev.entity.worldObj.getTileEntity(x,y,z);
-		if(te instanceof TileEntityLifeConverter) {
+		if(te instanceof TileEntityLifeConverter&&ev.entity.worldObj.getBlockMetadata(x, y, z)==0) {
 			if(((TileEntityLifeConverter) te).amount+ev.ammount*TileEntityLifeConverter.inc<=TileEntityLifeConverter.maxAmount) {
 				((TileEntityLifeConverter) te).amount+=ev.ammount*TileEntityLifeConverter.inc;
 				((TileEntityLifeConverter) te).transmit();

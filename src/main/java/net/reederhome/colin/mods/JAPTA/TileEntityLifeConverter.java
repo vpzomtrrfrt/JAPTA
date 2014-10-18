@@ -20,13 +20,15 @@ public class TileEntityLifeConverter extends TileEntity implements IEnergyHandle
 	
 	public void updateEntity() {
 		super.updateEntity();
-		List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(xCoord-0.5, yCoord, zCoord-0.5, xCoord+1.5, yCoord+2.5, zCoord+1.5));
-		Iterator<EntityLivingBase> it = l.iterator();
-		while(it.hasNext()&&amount>th*inc/2) {
-			EntityLivingBase e = it.next();
-			if(e.getHealth()<e.getMaxHealth()) {
-				e.heal(th);
-				amount-=th*inc/2;
+		if(worldObj.getBlockMetadata(xCoord, yCoord, zCoord)>0) {
+			List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(xCoord-0.5, yCoord, zCoord-0.5, xCoord+1.5, yCoord+2.5, zCoord+1.5));
+			Iterator<EntityLivingBase> it = l.iterator();
+			while(it.hasNext()&&amount>th*inc/2) {
+				EntityLivingBase e = it.next();
+				if(e.getHealth()<e.getMaxHealth()) {
+					e.heal(th);
+					amount-=th*inc/2;
+				}
 			}
 		}
 	}

@@ -1,6 +1,10 @@
 tile.rngQuarry.name=RNG Quarry
 tile.mechanicalGenerator.name=Mechanical Generator
+tile.lifeConverter.name=Life Converter
+item.batteryPotato.name=Battery Potato
 itemGroup.JAPTA=JAPTA
 text.japta.rngQuarry.noTool=Quarry: Click with a tool to equip it.
 text.japta.rngQuarry.hasTool=Quarry: %1$s equipped, %2$d RF
 text.japta.rngQuarry.gotTool=Quarry: %1$s equipped
+text.japta.lifeConverter.modeAbsorb=Life Converter now in Absorb Mode
+text.japta.lifeConverter.modeHeal=Life Converter now in Healing Mode
