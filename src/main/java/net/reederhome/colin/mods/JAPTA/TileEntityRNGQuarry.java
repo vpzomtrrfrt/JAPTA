@@ -61,7 +61,8 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 				if(hl==-1) hl=0;
 			}
 			//System.out.println("harvest level: "+hl);
-			if(b.getHarvestLevel(meta)<=hl&&b.getBlockHardness(worldObj, x, y, z)!=-1) {
+			int bhl = b.getHarvestLevel(meta);
+			if(bhl<=hl&&b.getBlockHardness(worldObj, x, y, z)!=-1) {
 				ArrayList<ItemStack> drops = b.getDrops(worldObj, x, y, z, meta, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, itm));
 				Iterator<ItemStack> it = drops.iterator();
 				while(it.hasNext()) {
@@ -118,7 +119,7 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 				}
 				worldObj.setBlockToAir(x, y, z);
 				amount-=consume;
-				if(Math.random()<0.9&&itm!=null&&itm.isItemStackDamageable()) {
+				if(Math.random()<0.9&&itm!=null&&itm.isItemStackDamageable()&&bhl>0) {
 					itm.setItemDamage(itm.getItemDamage()+1);
 					if(itm.getItemDamage()>itm.getMaxDamage()) {
 						itm=null;
