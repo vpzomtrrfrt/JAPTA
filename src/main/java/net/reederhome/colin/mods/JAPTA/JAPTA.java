@@ -34,6 +34,7 @@ public class JAPTA {
 	public static Block rngQuarry = new BlockRNGQuarry();
 	public static Block mechanicalGenerator = new BlockMechanicalGenerator();
 	public static Block lifeConverter = new BlockLifeConverter();
+	public static Block energyTeleporter = new BlockEnergyTeleporter();
 	
 	public static Item batteryPotato = new ItemBatteryPotato();
 	
@@ -42,12 +43,14 @@ public class JAPTA {
 		GameRegistry.registerBlock(rngQuarry, "rngQuarry");
 		GameRegistry.registerBlock(mechanicalGenerator, "mechanicalGenerator");
 		GameRegistry.registerBlock(lifeConverter, "lifeConverter");
+		GameRegistry.registerBlock(energyTeleporter, "energyTeleporter");
 		
 		GameRegistry.registerItem(batteryPotato, "batteryPotato");
 		
 		GameRegistry.registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
 		GameRegistry.registerTileEntity(TileEntityMechanicalGenerator.class, "MechanicalGenerator");
 		GameRegistry.registerTileEntity(TileEntityLifeConverter.class, "LifeConverter");
+		GameRegistry.registerTileEntity(TileEntityEnergyTeleporter.class, "EnergyTeleporter");
 		
 		GameRegistry.addRecipe(new ItemStack(rngQuarry), "srs", "iwi", " g ", 's', Blocks.stone, 'r', Items.redstone, 'i', Items.iron_ingot, 'w', Items.wooden_pickaxe, 'g', Items.gold_ingot);
 		GameRegistry.addRecipe(new ItemStack(mechanicalGenerator), "rrr", "sgs", "sgs", 'r', Items.redstone, 's', Blocks.stone, 'g', Items.gold_nugget);
