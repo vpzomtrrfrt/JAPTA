@@ -13,6 +13,9 @@ public class BlockEnergyTeleporter extends BlockContainer {
 
 	protected BlockEnergyTeleporter() {
 		super(Material.iron);
+		setBlockName("energyTeleporter");
+		setBlockTextureName(JAPTA.modid+":energyTeleporter");
+		setCreativeTab(JAPTA.tab);
 	}
 
 	@Override
