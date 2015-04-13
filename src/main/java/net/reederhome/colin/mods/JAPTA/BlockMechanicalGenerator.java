@@ -17,6 +17,8 @@ public class BlockMechanicalGenerator extends BlockContainer {
 		setCreativeTab(JAPTA.tab);
 		setBlockName("mechanicalGenerator");
 		setBlockTextureName(JAPTA.modid+":mechanicalGenerator");
+		setHardness(4);
+		setHarvestLevel("pickaxe", 2);
 	}
 	
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block b) {

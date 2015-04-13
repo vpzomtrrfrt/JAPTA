@@ -20,6 +20,8 @@ public class BlockLifeConverter extends BlockContainer {
 		setCreativeTab(JAPTA.tab);
 		setBlockTextureName(JAPTA.modid+":lifeConverter");
 		setBlockName("lifeConverter");
+		setHardness(2);
+		setHarvestLevel("pickaxe", 2);
 	}
 	
 	@Override

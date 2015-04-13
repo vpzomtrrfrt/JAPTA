@@ -11,6 +11,10 @@ public class BlockChargingPlate extends BlockPressurePlate implements ITileEntit
 
 	public BlockChargingPlate() {
 		super(JAPTA.modid+":chargingPlate", Material.circuits, Sensitivity.players);
+		setCreativeTab(JAPTA.tab);
+		setBlockName("chargingPlate");
+		setHardness(1);
+		setHarvestLevel("pickaxe", 2);
 	}
 
 	@Override

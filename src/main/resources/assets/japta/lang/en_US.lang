@@ -2,6 +2,7 @@ tile.rngQuarry.name=RNG Quarry
 tile.mechanicalGenerator.name=Mechanical Generator
 tile.lifeConverter.name=Life Converter
 tile.energyTeleporter.name=Endergy Cell
+tile.chargingPlate.name=Charging Plate
 item.batteryPotato.name=Battery Potato
 itemGroup.JAPTA=JAPTA
 text.japta.rngQuarry.noTool=Quarry: Click with a tool to equip it.

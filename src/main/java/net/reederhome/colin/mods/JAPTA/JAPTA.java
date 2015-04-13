@@ -44,7 +44,7 @@ public class JAPTA {
 		GameRegistry.registerBlock(rngQuarry, "rngQuarry");
 		GameRegistry.registerBlock(mechanicalGenerator, "mechanicalGenerator");
 		GameRegistry.registerBlock(lifeConverter, "lifeConverter");
-		GameRegistry.registerBlock(energyTeleporter, "energyTeleporter");
+		GameRegistry.registerBlock(energyTeleporter, ItemBlockOne.class, "energyTeleporter");
 		GameRegistry.registerBlock(chargingPlate, "chargingPlate");
 		
 		GameRegistry.registerItem(batteryPotato, "batteryPotato");

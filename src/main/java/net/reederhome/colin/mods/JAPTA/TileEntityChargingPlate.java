@@ -12,62 +12,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyHandler;
 
-public class TileEntityChargingPlate extends TileEntity implements IEnergyHandler {
-
-	int amount = 0;
+public class TileEntityChargingPlate extends TileEntityJPT {
 	int maxAmount = 1000;
-	
-	public void writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		nbt.setInteger("Energy", amount);
-	}
-	
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		amount = nbt.getInteger("Energy");
-	}
-	
-	@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
-		return true;
-	}
-
-	@Override
-	public int receiveEnergy(ForgeDirection from, int maxReceive,
-			boolean simulate) {
-		int tr;
-		if(amount+maxReceive<=maxAmount) {
-			tr=maxReceive;
-		}
-		else {
-			tr=maxAmount-amount;
-		}
-		if(!simulate) {
-			amount+=tr;
-		}
-		return tr;
-	}
-
-	@Override
-	public int extractEnergy(ForgeDirection from, int maxExtract,
-			boolean simulate) {
-		int tr;
-		if(maxExtract<amount) {
-			tr=maxExtract;
-		}
-		else {
-			tr=amount;
-		}
-		if(!simulate) {
-			amount-=tr;
-		}
-		return tr;
-	}
-
-	@Override
-	public int getEnergyStored(ForgeDirection from) {
-		return amount;
-	}
 
 	@Override
 	public int getMaxEnergyStored(ForgeDirection from) {
