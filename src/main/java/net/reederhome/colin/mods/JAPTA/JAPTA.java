@@ -42,7 +42,7 @@ public class JAPTA {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent ev) {
 		GameRegistry.registerBlock(rngQuarry, "rngQuarry");
-		GameRegistry.registerBlock(mechanicalGenerator, "mechanicalGenerator");
+		GameRegistry.registerBlock(mechanicalGenerator, ItemBlockOne.class, "mechanicalGenerator");
 		GameRegistry.registerBlock(lifeConverter, "lifeConverter");
 		GameRegistry.registerBlock(energyTeleporter, ItemBlockOne.class, "energyTeleporter");
 		GameRegistry.registerBlock(chargingPlate, "chargingPlate");

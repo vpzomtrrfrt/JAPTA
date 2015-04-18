@@ -18,7 +18,9 @@ public class TileEntityMechanicalGenerator extends TileEntity implements IEnergy
 	
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		amount = nbt.getInteger("Energy");
+		if(nbt.hasKey("Energy")) {
+			amount = nbt.getInteger("Energy");
+		}
 	}
 	
 	@Override
@@ -74,6 +76,13 @@ public class TileEntityMechanicalGenerator extends TileEntity implements IEnergy
 					}
 				}
 			}
+		}
+	}
+	
+	public void updateEntity() {
+		super.updateEntity();
+		if(amount>0) {
+			transmit();
 		}
 	}
 
