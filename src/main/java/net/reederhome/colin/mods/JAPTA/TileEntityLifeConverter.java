@@ -12,8 +12,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
 
 public class TileEntityLifeConverter extends TileEntityJPT {
-	
-	int amount = 0;
 	static final int maxAmount = 100;
 	static final int inc = 4;
 	static final float th = 1;
