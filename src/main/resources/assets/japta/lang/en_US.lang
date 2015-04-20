@@ -12,5 +12,5 @@ text.japta.rngQuarry.hasTool=Quarry: %1$s equipped, %2$d RF
 text.japta.rngQuarry.gotTool=Quarry: %1$s equipped
 text.japta.lifeConverter.modeAbsorb=Life Converter now in Absorb Mode
 text.japta.lifeConverter.modeHeal=Life Converter now in Healing Mode
-text.japta.energyTeleporter.no=You don't have permission to manipulate this.
+text.japta.energyTeleporter.no=You don't have permission to manipulate this. (owned by %1$s)
 text.japta.energyTeleporter.status=Transport Frequency set to %1$s, %2$d RF

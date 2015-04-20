@@ -57,6 +57,7 @@ public class BlockEnergyTeleporter extends Block implements ITileEntityProvider 
             TileEntity te = w.getTileEntity(x, y, z);
             if(te!=null) {
             	te.writeToNBT(tag);
+            	System.out.println(tag);
             	w.removeTileEntity(x, y, z);
             }
             else {
@@ -72,7 +73,7 @@ public class BlockEnergyTeleporter extends Block implements ITileEntityProvider 
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int par1, float par2, float par3, float par4) {
 		if(w.isRemote) return true;
 		TileEntityEnergyTeleporter te = (TileEntityEnergyTeleporter) w.getTileEntity(x, y, z);
-		if(te.player==null||p.getCommandSenderName()==te.player) {
+		if(te.player==null||p.getCommandSenderName().equals(te.player)) {
 			ItemStack hi = p.getHeldItem();
 			if(hi!=null) {
 				String nf = hi.getUnlocalizedName();
@@ -81,7 +82,7 @@ public class BlockEnergyTeleporter extends Block implements ITileEntityProvider 
 			p.addChatMessage(new ChatComponentTranslation("text.japta.energyTeleporter.status", te.item, te.get(te.item)));
 		}
 		else {
-			p.addChatMessage(new ChatComponentTranslation("text.japta.energyTeleporter.no"));
+			p.addChatMessage(new ChatComponentTranslation("text.japta.energyTeleporter.no", te.player));
 			w.playSoundAtEntity(p, "mob.villager.no", 1, 1);
 		}
 		return true;

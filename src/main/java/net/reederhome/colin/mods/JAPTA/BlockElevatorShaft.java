@@ -71,10 +71,11 @@ public class BlockElevatorShaft extends Block {
 				}
 				if(found && !w.isRemote) {
 					TileEntityElevatorTop te = (TileEntityElevatorTop) w.getTileEntity(x, ty, z);
-					if(te.amount>=te.use) {
+					int use = te.getEnergyCost(ty-y);
+					if(te.amount>=use) {
 						e.setPositionAndUpdate(e.posX, ty+1, e.posZ);
 						w.playSoundAtEntity(e, "mob.chicken.plop", 1, 1);
-						te.amount-=te.use;
+						te.amount-=use;
 					}
 				}
 			}

@@ -44,7 +44,7 @@ public class JAPTA {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent ev) {
 		GameRegistry.registerBlock(rngQuarry, "rngQuarry");
-		GameRegistry.registerBlock(mechanicalGenerator, ItemBlockOne.class, "mechanicalGenerator");
+		GameRegistry.registerBlock(mechanicalGenerator, "mechanicalGenerator");
 		GameRegistry.registerBlock(lifeConverter, "lifeConverter");
 		GameRegistry.registerBlock(energyTeleporter, ItemBlockOne.class, "energyTeleporter");
 		GameRegistry.registerBlock(chargingPlate, "chargingPlate");
@@ -66,7 +66,7 @@ public class JAPTA {
 		GameRegistry.addRecipe(new ItemStack(energyTeleporter), "prp", "rer", "prp", 'p', Items.ender_pearl, 'r', Items.redstone, 'e', Items.ender_eye);
 		GameRegistry.addRecipe(new ItemStack(chargingPlate), "   ", "gpg", "oro", 'g', Items.glowstone_dust, 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', Blocks.redstone_block);
 		GameRegistry.addRecipe(new ItemStack(elevatorShaft), "igi", "igi", "igi", 'i', Items.iron_ingot, 'g', Blocks.glass);
-		GameRegistry.addRecipe(new ItemStack(elevatorTop), "grg", "rer", "rsr", 'r', Items.redstone, 'e', Items.ender_pearl, 's', elevatorShaft);
+		GameRegistry.addRecipe(new ItemStack(elevatorTop), "grg", "rer", "rsr", 'r', Items.redstone, 'e', Items.ender_pearl, 's', elevatorShaft, 'g', Items.gold_nugget);
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), Items.potato, Items.gold_nugget, Items.iron_ingot, Items.redstone);
 		
