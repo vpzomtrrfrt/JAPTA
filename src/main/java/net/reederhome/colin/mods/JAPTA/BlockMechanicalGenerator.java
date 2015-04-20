@@ -76,6 +76,10 @@ public class BlockMechanicalGenerator extends Block implements ITileEntityProvid
             TileEntity te = w.getTileEntity(x, y, z);
             if(te!=null) {
             	te.writeToNBT(tag);
+            	tag.removeTag("x");
+            	tag.removeTag("y");
+            	tag.removeTag("z");
+            	tag.removeTag("id");
             	w.removeTileEntity(x, y, z);
             }
             else {

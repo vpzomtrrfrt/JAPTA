@@ -36,6 +36,8 @@ public class JAPTA {
 	public static Block lifeConverter = new BlockLifeConverter();
 	public static Block energyTeleporter = new BlockEnergyTeleporter();
 	public static Block chargingPlate = new BlockChargingPlate();
+	public static Block elevatorShaft = new BlockElevatorShaft();
+	public static Block elevatorTop = new BlockElevatorTop();
 	
 	public static Item batteryPotato = new ItemBatteryPotato();
 	
@@ -46,6 +48,8 @@ public class JAPTA {
 		GameRegistry.registerBlock(lifeConverter, "lifeConverter");
 		GameRegistry.registerBlock(energyTeleporter, ItemBlockOne.class, "energyTeleporter");
 		GameRegistry.registerBlock(chargingPlate, "chargingPlate");
+		GameRegistry.registerBlock(elevatorShaft, "elevatorShaft");
+		GameRegistry.registerBlock(elevatorTop, "elevatorTop");
 		
 		GameRegistry.registerItem(batteryPotato, "batteryPotato");
 		
@@ -54,12 +58,15 @@ public class JAPTA {
 		GameRegistry.registerTileEntity(TileEntityLifeConverter.class, "LifeConverter");
 		GameRegistry.registerTileEntity(TileEntityEnergyTeleporter.class, "EnergyTeleporter");
 		GameRegistry.registerTileEntity(TileEntityChargingPlate.class, "ChargingPlate");
+		GameRegistry.registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
 		
 		GameRegistry.addRecipe(new ItemStack(rngQuarry), "s s", "iri", "wgw", 's', Blocks.stone, 'r', Items.redstone, 'i', Items.iron_ingot, 'w', Items.wooden_pickaxe, 'g', Items.gold_ingot);
 		GameRegistry.addRecipe(new ItemStack(mechanicalGenerator), "rrr", "sgs", "sgs", 'r', Items.redstone, 's', Blocks.stone, 'g', Items.gold_nugget);
 		GameRegistry.addRecipe(new ItemStack(lifeConverter), "frf", "rgr", "frf", 'f', Items.rotten_flesh, 'r', Items.redstone, 'g', Items.gold_ingot);
 		GameRegistry.addRecipe(new ItemStack(energyTeleporter), "prp", "rer", "prp", 'p', Items.ender_pearl, 'r', Items.redstone, 'e', Items.ender_eye);
 		GameRegistry.addRecipe(new ItemStack(chargingPlate), "   ", "gpg", "oro", 'g', Items.glowstone_dust, 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', Blocks.redstone_block);
+		GameRegistry.addRecipe(new ItemStack(elevatorShaft), "igi", "igi", "igi", 'i', Items.iron_ingot, 'g', Blocks.glass);
+		GameRegistry.addRecipe(new ItemStack(elevatorTop), "grg", "rer", "rsr", 'r', Items.redstone, 'e', Items.ender_pearl, 's', elevatorShaft);
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), Items.potato, Items.gold_nugget, Items.iron_ingot, Items.redstone);
 		
