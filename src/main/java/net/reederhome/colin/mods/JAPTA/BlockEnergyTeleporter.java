@@ -33,41 +33,7 @@ public class BlockEnergyTeleporter extends Block implements ITileEntityProvider 
 	public void onBlockPlacedBy(World w, int x, int y, int z, EntityLivingBase lb, ItemStack is) {
 		TileEntityEnergyTeleporter te = (TileEntityEnergyTeleporter) w.getTileEntity(x, y, z);
 		te.item=lb.getCommandSenderName();
-		if(is.hasTagCompound()) {
-			te.readFromNBT(is.stackTagCompound);
-		}
-		if(lb instanceof EntityPlayer) {
-			te.player=lb.getCommandSenderName();
-		}
-	}
-	
-	public int quantityDropped(Random r) {
-		return 0;
-	}
-	
-	public void breakBlock(World w, int x, int y, int z, Block b, int i1) {
-		if (!w.isRemote && w.getGameRules().getGameRuleBooleanValue("doTileDrops"))
-        {
-            float var6 = 0.7F;
-            double var7 = (double)(w.rand.nextFloat() * var6) + (double)(1.0F - var6) * 0.5D;
-            double var9 = (double)(w.rand.nextFloat() * var6) + (double)(1.0F - var6) * 0.5D;
-            double var11 = (double)(w.rand.nextFloat() * var6) + (double)(1.0F - var6) * 0.5D;
-            ItemStack stack = new ItemStack(this);
-            NBTTagCompound tag = new NBTTagCompound();
-            TileEntity te = w.getTileEntity(x, y, z);
-            if(te!=null) {
-            	te.writeToNBT(tag);
-            	System.out.println(tag);
-            	w.removeTileEntity(x, y, z);
-            }
-            else {
-            	System.out.println("aww?");
-            }
-            stack.setTagCompound(tag);
-            EntityItem var13 = new EntityItem(w, (double)x + var7, (double)y + var9, (double)z + var11, stack);
-            var13.delayBeforeCanPickup = 10;
-            w.spawnEntityInWorld(var13);
-        }
+		te.player=lb.getCommandSenderName();
 	}
 	
 	public boolean onBlockActivated(World w, int x, int y, int z, EntityPlayer p, int par1, float par2, float par3, float par4) {
