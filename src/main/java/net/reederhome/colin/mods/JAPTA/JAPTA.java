@@ -38,6 +38,7 @@ public class JAPTA {
 	public static Block chargingPlate = new BlockChargingPlate();
 	public static Block elevatorShaft = new BlockElevatorShaft();
 	public static Block elevatorTop = new BlockElevatorTop();
+	public static Block timeMachine = new BlockTimeMachine();
 	
 	public static Item batteryPotato = new ItemBatteryPotato();
 	
@@ -50,6 +51,7 @@ public class JAPTA {
 		GameRegistry.registerBlock(chargingPlate, "chargingPlate");
 		GameRegistry.registerBlock(elevatorShaft, "elevatorShaft");
 		GameRegistry.registerBlock(elevatorTop, "elevatorTop");
+		GameRegistry.registerBlock(timeMachine, "timeMachine");
 		
 		GameRegistry.registerItem(batteryPotato, "batteryPotato");
 		
@@ -59,6 +61,7 @@ public class JAPTA {
 		GameRegistry.registerTileEntity(TileEntityEnergyTeleporter.class, "EnergyTeleporter");
 		GameRegistry.registerTileEntity(TileEntityChargingPlate.class, "ChargingPlate");
 		GameRegistry.registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
+		GameRegistry.registerTileEntity(TileEntityTimeMachine.class, "TimeMachine");
 		
 		GameRegistry.addRecipe(new ItemStack(rngQuarry), "s s", "iri", "wgw", 's', Blocks.stone, 'r', Items.redstone, 'i', Items.iron_ingot, 'w', Items.wooden_pickaxe, 'g', Items.gold_ingot);
 		GameRegistry.addRecipe(new ItemStack(mechanicalGenerator), "rrr", "sgs", "sgs", 'r', Items.redstone, 's', Blocks.stone, 'g', Items.gold_nugget);
