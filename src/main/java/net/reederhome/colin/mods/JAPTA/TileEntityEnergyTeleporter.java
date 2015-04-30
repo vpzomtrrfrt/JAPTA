@@ -101,12 +101,13 @@ public class TileEntityEnergyTeleporter extends TileEntity implements IEnergyHan
 		if(amt>0) {
 			for(int s = 0; s < 6; s++) {
 				ForgeDirection side = ForgeDirection.getOrientation(s);
+				ForgeDirection oppo = side.getOpposite();
 				TileEntity te = worldObj.getTileEntity(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
 				if(te!=null) {
 					if(te instanceof IEnergyHandler) {
 						IEnergyHandler h = (IEnergyHandler) te;
-						if(h.canConnectEnergy(side)) {
-							int r = h.receiveEnergy(side, amt, false);
+						if(h.canConnectEnergy(oppo)) {
+							int r = h.receiveEnergy(oppo, amt, false);
 							amt-=r;
 						}
 					}
