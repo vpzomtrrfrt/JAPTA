@@ -1,7 +1,9 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import java.util.List;
+
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,6 +21,12 @@ public class ItemBatteryPotato extends Item implements IEnergyContainerItem {
 		setCreativeTab(JAPTA.tab);
 		setUnlocalizedName("batteryPotato");
 		setTextureName(JAPTA.modid+":batteryPotato");
+		setHasSubtypes(true);
+	}
+	
+	public void getSubItems(Item it, CreativeTabs tab, List l) {
+		l.add(new ItemStack(this));
+		l.add(new ItemStack(this, 1, maxAmount));
 	}
 	
 	public EnumAction getItemUseAction(ItemStack stack) {

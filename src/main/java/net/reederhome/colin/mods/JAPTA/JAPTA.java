@@ -7,9 +7,10 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -63,15 +64,16 @@ public class JAPTA {
 		GameRegistry.registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
 		GameRegistry.registerTileEntity(TileEntityTimeMachine.class, "TimeMachine");
 		
-		GameRegistry.addRecipe(new ItemStack(rngQuarry), "s s", "iri", "wgw", 's', Blocks.stone, 'r', Items.redstone, 'i', Items.iron_ingot, 'w', Items.wooden_pickaxe, 'g', Items.gold_ingot);
-		GameRegistry.addRecipe(new ItemStack(mechanicalGenerator), "rrr", "sgs", "sgs", 'r', Items.redstone, 's', Blocks.stone, 'g', Items.gold_nugget);
-		GameRegistry.addRecipe(new ItemStack(lifeConverter), "frf", "rgr", "frf", 'f', Items.rotten_flesh, 'r', Items.redstone, 'g', Items.gold_ingot);
-		GameRegistry.addRecipe(new ItemStack(energyTeleporter), "prp", "rer", "prp", 'p', Items.ender_pearl, 'r', Items.redstone, 'e', Items.ender_eye);
-		GameRegistry.addRecipe(new ItemStack(chargingPlate), "   ", "gpg", "oro", 'g', Items.glowstone_dust, 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', Blocks.redstone_block);
-		GameRegistry.addRecipe(new ItemStack(elevatorShaft), "igi", "igi", "igi", 'i', Items.iron_ingot, 'g', Blocks.glass);
-		GameRegistry.addRecipe(new ItemStack(elevatorTop), "grg", "rer", "rsr", 'r', Items.redstone, 'e', Items.ender_pearl, 's', elevatorShaft, 'g', Items.gold_nugget);
+		GameRegistry.addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "wgw", 's', "stone", 'r', "dustRedstone", 'i', "ingotIron", 'w', Items.wooden_pickaxe, 'g', "ingotGold"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(mechanicalGenerator, "rrr", "sgs", "sgs", 'r', "dustRedstone", 's', "stone", 'g', "nuggetGold"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(lifeConverter, "frf", "rgr", "frf", 'f', Items.rotten_flesh, 'r', "dustRedstone", 'g', "ingotGold"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(energyTeleporter, "prp", "rer", "prp", 'p', Items.ender_pearl, 'r', "dustRedstone", 'e', Items.ender_eye));
+		GameRegistry.addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', "blockRedstone"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(elevatorShaft, "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(elevatorTop, "grg", "rer", "rsr", 'r', "dustRedstone", 'e', Items.ender_pearl, 's', elevatorShaft, 'g', "nuggetGold"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(timeMachine, "oro", "rcr", "oro", 'o', Blocks.obsidian, 'r', "blockRedstone", 'c', Items.clock));
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), Items.potato, Items.gold_nugget, Items.iron_ingot, Items.redstone);
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
 		
 		MinecraftForge.EVENT_BUS.register(this);
 	}
