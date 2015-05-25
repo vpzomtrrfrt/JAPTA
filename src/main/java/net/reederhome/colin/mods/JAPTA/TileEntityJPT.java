@@ -67,16 +67,19 @@ public abstract class TileEntityJPT extends TileEntity implements IEnergyHandler
 				return;
 			}
 			ForgeDirection side = ForgeDirection.getOrientation(s);
+			ForgeDirection opp = side.getOpposite();
 			TileEntity te = worldObj.getTileEntity(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
 			if(te!=null) {
 				if(te instanceof IEnergyHandler) {
 					IEnergyHandler h = (IEnergyHandler) te;
 					if(h.canConnectEnergy(side)) {
-						int r = h.receiveEnergy(side, amount, false);
+						int r = h.receiveEnergy(opp, amount, false);
 						amount-=r;
+						System.out.println(r);
 					}
 				}
 			}
 		}
+		System.out.println("HELLO??");
 	}
 }
