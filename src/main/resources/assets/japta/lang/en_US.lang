@@ -5,6 +5,7 @@ tile.energyTeleporter.name=Endergy Cell
 tile.chargingPlate.name=Charging Plate
 tile.elevatorShaft.name=Elevator Shaft
 tile.elevatorTop.name=Elevator Top
+tile.chestCharger.name=Chest Charger
 item.batteryPotato.name=Battery Potato
 itemGroup.JAPTA=JAPTA
 text.japta.rngQuarry.noTool=Quarry: Click with a tool to equip it.

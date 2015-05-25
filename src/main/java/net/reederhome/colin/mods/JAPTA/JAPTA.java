@@ -40,6 +40,7 @@ public class JAPTA {
 	public static Block elevatorShaft = new BlockElevatorShaft();
 	public static Block elevatorTop = new BlockElevatorTop();
 	public static Block timeMachine = new BlockTimeMachine();
+	public static Block chestCharger = new BlockChestCharger();
 	
 	public static Item batteryPotato = new ItemBatteryPotato();
 	
@@ -53,6 +54,7 @@ public class JAPTA {
 		GameRegistry.registerBlock(elevatorShaft, "elevatorShaft");
 		GameRegistry.registerBlock(elevatorTop, "elevatorTop");
 		GameRegistry.registerBlock(timeMachine, "timeMachine");
+		GameRegistry.registerBlock(chestCharger, "chestCharger");
 		
 		GameRegistry.registerItem(batteryPotato, "batteryPotato");
 		
@@ -63,6 +65,7 @@ public class JAPTA {
 		GameRegistry.registerTileEntity(TileEntityChargingPlate.class, "ChargingPlate");
 		GameRegistry.registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
 		GameRegistry.registerTileEntity(TileEntityTimeMachine.class, "TimeMachine");
+		GameRegistry.registerTileEntity(TileEntityChestCharger.class, "ChestCharger");
 		
 		GameRegistry.addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "wgw", 's', "stone", 'r', "dustRedstone", 'i', "ingotIron", 'w', Items.wooden_pickaxe, 'g', "ingotGold"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(mechanicalGenerator, "rrr", "sgs", "sgs", 'r', "dustRedstone", 's', "stone", 'g', "nuggetGold"));
