@@ -9,10 +9,14 @@ public class TileEntityTimeMachine extends TileEntityJPT {
 	
 	public void updateEntity() {
 		super.updateEntity();
+		int nm = 0;
 		if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && amount >= use) {
-			System.out.println(worldObj.getWorldTime());
 			worldObj.setWorldTime(worldObj.getWorldTime()+jump);
 			amount-=use;
+			nm = 1;
+		}
+		if(!worldObj.isRemote) {
+			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, nm, 3);
 		}
 	};
 	

@@ -12,6 +12,7 @@ public class BlockChestCharger extends BlockContainer {
 		setCreativeTab(JAPTA.tab);
 		setBlockName("chestCharger");
 		setBlockTextureName(JAPTA.modid+":chestCharger");
+		setHardness(5);
 	}
 	
 	@Override

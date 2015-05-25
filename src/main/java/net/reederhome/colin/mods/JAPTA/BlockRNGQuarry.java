@@ -53,7 +53,7 @@ public class BlockRNGQuarry extends BlockContainer {
 		if(!world.isRemote) {
 			if(stack==null) {
 				if(te.itm==null) {
-					p.addChatMessage(new ChatComponentTranslation("text.japta.rngQuarry.noTool"));
+					p.addChatMessage(new ChatComponentTranslation("text.japta.rngQuarry.noTool", te.amount));
 				}
 				else {
 					p.addChatMessage(new ChatComponentTranslation("text.japta.rngQuarry.hasTool", te.itm.func_151000_E(), te.amount));
