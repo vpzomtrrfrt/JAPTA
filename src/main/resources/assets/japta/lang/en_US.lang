@@ -5,6 +5,7 @@ tile.energyTeleporter.name=Endergy Cell
 tile.chargingPlate.name=Charging Plate
 tile.elevatorShaft.name=Elevator Shaft
 tile.elevatorTop.name=Elevator Top
+tile.timeMachine.name=Time Machine
 tile.chestCharger.name=Chest Charger
 item.batteryPotato.name=Battery Potato
 itemGroup.JAPTA=JAPTA

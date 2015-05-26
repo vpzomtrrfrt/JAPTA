@@ -125,7 +125,7 @@ public class JAPTA {
 			else {
 				notified = true;
 			}
-			System.out.println(UpdateCheckThread.ret);
+			//System.out.println(UpdateCheckThread.ret);
 		}
 	}
 }
