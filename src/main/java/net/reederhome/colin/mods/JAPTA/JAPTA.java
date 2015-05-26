@@ -83,7 +83,7 @@ public class JAPTA {
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(elevatorTop, "grg", "rer", "rsr", 'r', "dustRedstone", 'e', Items.ender_pearl, 's', elevatorShaft, 'g', "nuggetGold"));
 		GameRegistry.addRecipe(new ShapedOreRecipe(timeMachine, "oro", "rcr", "oro", 'o', Blocks.obsidian, 'r', "blockRedstone", 'c', Items.clock));
-		GameRegistry.addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "rRr", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', Blocks.chest));
+		GameRegistry.addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', Blocks.chest, 'o', Blocks.obsidian));
 		
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
 		
