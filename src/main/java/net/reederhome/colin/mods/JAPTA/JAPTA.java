@@ -1,21 +1,29 @@
 package net.reederhome.colin.mods.JAPTA;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = JAPTA.modid, name = JAPTA.name)
 public class JAPTA {
@@ -80,6 +88,8 @@ public class JAPTA {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
 		
 		MinecraftForge.EVENT_BUS.register(this);
+		FMLCommonHandler.instance().bus().register(this);
+		new Thread(new UpdateCheckThread(Loader.instance().activeModContainer().getVersion())).start();
 	}
 	
 	@SubscribeEvent
@@ -96,6 +106,26 @@ public class JAPTA {
 				((TileEntityLifeConverter) te).amount=TileEntityLifeConverter.maxAmount;
 			}
 			((TileEntityLifeConverter) te).transmit();
+		}
+	}
+	
+	boolean notified = false;
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void onTick(TickEvent ev) {
+		if(!notified && UpdateCheckThread.ret != null) {
+			if(UpdateCheckThread.ret.equals("update")) {
+				EntityPlayer p = Minecraft.getMinecraft().thePlayer;
+				if(p!=null) {
+					p.addChatMessage(new ChatComponentTranslation("text.japta.newversion"));
+					notified = true;
+				}
+			}
+			else {
+				notified = true;
+			}
+			System.out.println(UpdateCheckThread.ret);
 		}
 	}
 }
