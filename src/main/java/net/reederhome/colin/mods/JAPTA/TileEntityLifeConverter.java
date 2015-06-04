@@ -18,7 +18,7 @@ public class TileEntityLifeConverter extends TileEntityJPT {
 	
 	public void updateEntity() {
 		super.updateEntity();
-		if(worldObj.getBlockMetadata(xCoord, yCoord, zCoord)>0) {
+		if(worldObj.getBlockMetadata(xCoord, yCoord, zCoord)>0 && worldObj.getWorldTime()%9==0) {
 			List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(xCoord-0.5, yCoord-1.5, zCoord-0.5, xCoord+1.5, yCoord+2.5, zCoord+1.5));
 			Iterator<EntityLivingBase> it = l.iterator();
 			while(it.hasNext()&&amount>th*inc/2) {
