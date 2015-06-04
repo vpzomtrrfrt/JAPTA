@@ -7,8 +7,8 @@ import cofh.api.energy.IEnergyHandler;
 
 public class TileEntityMechanicalGenerator extends TileEntityJPT implements IEnergyHandler {
 
-	static final int maxAmount = 100;
-	static final int inc = 2;
+	static final int maxAmount = 20;
+	static final int inc = 1;
 
 	@Override
 	public int receiveEnergy(ForgeDirection from, int maxReceive,
