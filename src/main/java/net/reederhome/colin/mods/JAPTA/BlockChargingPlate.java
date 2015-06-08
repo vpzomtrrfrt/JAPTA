@@ -9,12 +9,17 @@ import net.minecraft.world.World;
 
 public class BlockChargingPlate extends BlockPressurePlate implements ITileEntityProvider {
 
-	public BlockChargingPlate() {
-		super(JAPTA.modid+":chargingPlate", Material.circuits, Sensitivity.players);
+	public BlockChargingPlate(boolean wooden) {
+		super(JAPTA.modid+":chargingPlate"+(wooden?"Wooden":""), Material.circuits, wooden?Sensitivity.everything:Sensitivity.players);
 		setCreativeTab(JAPTA.tab);
-		setBlockName("chargingPlate");
+		setBlockName("chargingPlate"+(wooden?"Wooden":""));
 		setHardness(1);
-		setHarvestLevel("pickaxe", 2);
+		if(wooden) {
+			setHarvestLevel("axe", 0);
+		}
+		else {
+			setHarvestLevel("pickaxe", 2);
+		}
 	}
 
 	@Override

@@ -46,7 +46,8 @@ public class JAPTA {
 	public static Block mechanicalGenerator = new BlockMechanicalGenerator();
 	public static Block lifeConverter = new BlockLifeConverter();
 	public static Block energyTeleporter = new BlockEnergyTeleporter();
-	public static Block chargingPlate = new BlockChargingPlate();
+	public static Block chargingPlate = new BlockChargingPlate(false);
+	public static Block chargingPlateWooden = new BlockChargingPlate(true);
 	public static Block elevatorShaft = new BlockElevatorShaft();
 	public static Block elevatorTop = new BlockElevatorTop();
 	public static Block timeMachine = new BlockTimeMachine();
@@ -68,6 +69,7 @@ public class JAPTA {
 		GameRegistry.registerBlock(lifeConverter, "lifeConverter");
 		GameRegistry.registerBlock(energyTeleporter, "energyTeleporter");
 		GameRegistry.registerBlock(chargingPlate, "chargingPlate");
+		GameRegistry.registerBlock(chargingPlateWooden, "chargingPlateWooden");
 		GameRegistry.registerBlock(elevatorShaft, "elevatorShaft");
 		GameRegistry.registerBlock(elevatorTop, "elevatorTop");
 		GameRegistry.registerBlock(timeMachine, "timeMachine");
@@ -90,6 +92,7 @@ public class JAPTA {
 		addRecipe(new ShapedOreRecipe(lifeConverter, "frf", "rgr", "frf", 'f', Items.rotten_flesh, 'r', "dustRedstone", 'g', "ingotGold"));
 		addRecipe(new ShapedOreRecipe(energyTeleporter, "prp", "rer", "prp", 'p', Items.ender_pearl, 'r', "dustRedstone", 'e', Items.ender_eye));
 		addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', "blockRedstone"));
+		addRecipe(new ShapedOreRecipe(chargingPlateWooden, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.wooden_pressure_plate, 'o', Blocks.obsidian, 'r', "blockRedstone"));
 		addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
 		addRecipe(new ShapedOreRecipe(elevatorTop, "grg", "rer", "rsr", 'r', "dustRedstone", 'e', Items.ender_pearl, 's', elevatorShaft, 'g', "nuggetGold"));
 		addRecipe(new ShapedOreRecipe(timeMachine, "oro", "rcr", "oro", 'o', Blocks.obsidian, 'r', "blockRedstone", 'c', Items.clock));
