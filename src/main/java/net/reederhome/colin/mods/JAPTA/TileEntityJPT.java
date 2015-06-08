@@ -4,6 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.IEnergyHandler;
+import cofh.api.energy.IEnergyReceiver;
 
 public abstract class TileEntityJPT extends TileEntity implements IEnergyHandler {
 
@@ -70,8 +71,8 @@ public abstract class TileEntityJPT extends TileEntity implements IEnergyHandler
 			ForgeDirection opp = side.getOpposite();
 			TileEntity te = worldObj.getTileEntity(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
 			if(te!=null) {
-				if(te instanceof IEnergyHandler) {
-					IEnergyHandler h = (IEnergyHandler) te;
+				if(te instanceof IEnergyReceiver) {
+					IEnergyReceiver h = (IEnergyReceiver) te;
 					if(h.canConnectEnergy(side)) {
 						int r = h.receiveEnergy(opp, amount, false);
 						amount-=r;
