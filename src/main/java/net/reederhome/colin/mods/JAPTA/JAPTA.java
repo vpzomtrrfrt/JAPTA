@@ -8,9 +8,11 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -52,8 +54,14 @@ public class JAPTA {
 	
 	public static Item batteryPotato = new ItemBatteryPotato();
 	
+	public Configuration config;
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent ev) {
+		config = new Configuration(ev.getSuggestedConfigurationFile());
+		config.load();
+		config.addCustomCategoryComment("recipes", "Enable/Disable crafting of certain items");
+		
 		GameRegistry.registerBlock(rngQuarry, "rngQuarry");
 		GameRegistry.registerBlock(mechanicalGenerator, "mechanicalGenerator");
 		GameRegistry.registerBlock(lifeConverter, "lifeConverter");
@@ -75,21 +83,40 @@ public class JAPTA {
 		GameRegistry.registerTileEntity(TileEntityTimeMachine.class, "TimeMachine");
 		GameRegistry.registerTileEntity(TileEntityChestCharger.class, "ChestCharger");
 		
-		GameRegistry.addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "wgw", 's', "stone", 'r', "dustRedstone", 'i', "ingotIron", 'w', Items.wooden_pickaxe, 'g', "ingotGold"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(mechanicalGenerator, "rrr", "sgs", "sgs", 'r', "dustRedstone", 's', "stone", 'g', "nuggetGold"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(lifeConverter, "frf", "rgr", "frf", 'f', Items.rotten_flesh, 'r', "dustRedstone", 'g', "ingotGold"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(energyTeleporter, "prp", "rer", "prp", 'p', Items.ender_pearl, 'r', "dustRedstone", 'e', Items.ender_eye));
-		GameRegistry.addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', "blockRedstone"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(elevatorTop, "grg", "rer", "rsr", 'r', "dustRedstone", 'e', Items.ender_pearl, 's', elevatorShaft, 'g', "nuggetGold"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(timeMachine, "oro", "rcr", "oro", 'o', Blocks.obsidian, 'r', "blockRedstone", 'c', Items.clock));
-		GameRegistry.addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', Blocks.chest, 'o', Blocks.obsidian));
+		addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "wgw", 's', "stone", 'r', "dustRedstone", 'i', "ingotIron", 'w', Items.wooden_pickaxe, 'g', "ingotGold"));
+		addRecipe(new ShapedOreRecipe(mechanicalGenerator, "rrr", "sgs", "sgs", 'r', "dustRedstone", 's', "stone", 'g', "nuggetGold"));
+		addRecipe(new ShapedOreRecipe(lifeConverter, "frf", "rgr", "frf", 'f', Items.rotten_flesh, 'r', "dustRedstone", 'g', "ingotGold"));
+		addRecipe(new ShapedOreRecipe(energyTeleporter, "prp", "rer", "prp", 'p', Items.ender_pearl, 'r', "dustRedstone", 'e', Items.ender_eye));
+		addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', "blockRedstone"));
+		addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
+		addRecipe(new ShapedOreRecipe(elevatorTop, "grg", "rer", "rsr", 'r', "dustRedstone", 'e', Items.ender_pearl, 's', elevatorShaft, 'g', "nuggetGold"));
+		addRecipe(new ShapedOreRecipe(timeMachine, "oro", "rcr", "oro", 'o', Blocks.obsidian, 'r', "blockRedstone", 'c', Items.clock));
+		addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', Blocks.chest, 'o', Blocks.obsidian));
 		
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
+		addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
 		
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
-		new Thread(new UpdateCheckThread(Loader.instance().activeModContainer().getVersion())).start();
+		
+		if(config.getBoolean("Enable Version Checker", "misc", true, "")) {
+			new Thread(new UpdateCheckThread(Loader.instance().activeModContainer().getVersion())).start();
+		}
+		
+		config.save();
+	}
+	
+	public void addRecipe(String name, IRecipe r, boolean def) {
+		if(config.getBoolean(name, "recipes", def, "")) {
+			GameRegistry.addRecipe(r);
+		}
+	}
+	
+	public void addRecipe(String name, IRecipe r) {
+		addRecipe(name, r, true);
+	}
+	
+	public void addRecipe(IRecipe r) {
+		addRecipe(r.getRecipeOutput().getDisplayName(), r);
 	}
 	
 	@SubscribeEvent
