@@ -53,6 +53,7 @@ public class JAPTA {
 	public static Block chestCharger = new BlockChestCharger();
 	
 	public static Item batteryPotato = new ItemBatteryPotato();
+	public static Item rfMeter = new ItemRFMeter();
 	
 	public Configuration config;
 	
@@ -73,6 +74,7 @@ public class JAPTA {
 		GameRegistry.registerBlock(chestCharger, "chestCharger");
 		
 		GameRegistry.registerItem(batteryPotato, "batteryPotato");
+		GameRegistry.registerItem(rfMeter, "rfMeter");
 		
 		GameRegistry.registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
 		GameRegistry.registerTileEntity(TileEntityMechanicalGenerator.class, "MechanicalGenerator");
@@ -94,6 +96,7 @@ public class JAPTA {
 		addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', Blocks.chest, 'o', Blocks.obsidian));
 		
 		addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
+		addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", "d", 'n', "nuggetGold", 'd', "blockRedstone"));
 		
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
