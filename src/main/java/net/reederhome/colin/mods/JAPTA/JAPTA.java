@@ -52,6 +52,7 @@ public class JAPTA {
 	public static Block elevatorTop = new BlockElevatorTop();
 	public static Block timeMachine = new BlockTimeMachine();
 	public static Block chestCharger = new BlockChestCharger();
+	public static Block cakeConverter = new BlockCakeConverter();
 	
 	public static Item batteryPotato = new ItemBatteryPotato();
 	public static Item rfMeter = new ItemRFMeter();
@@ -74,6 +75,7 @@ public class JAPTA {
 		GameRegistry.registerBlock(elevatorTop, "elevatorTop");
 		GameRegistry.registerBlock(timeMachine, "timeMachine");
 		GameRegistry.registerBlock(chestCharger, "chestCharger");
+		GameRegistry.registerBlock(cakeConverter, "cakeConverter");
 		
 		GameRegistry.registerItem(batteryPotato, "batteryPotato");
 		GameRegistry.registerItem(rfMeter, "rfMeter");
@@ -86,6 +88,7 @@ public class JAPTA {
 		GameRegistry.registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
 		GameRegistry.registerTileEntity(TileEntityTimeMachine.class, "TimeMachine");
 		GameRegistry.registerTileEntity(TileEntityChestCharger.class, "ChestCharger");
+		GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
 		
 		addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "wgw", 's', "stone", 'r', "dustRedstone", 'i', "ingotIron", 'w', Items.wooden_pickaxe, 'g', "ingotGold"));
 		addRecipe(new ShapedOreRecipe(mechanicalGenerator, "rrr", "sgs", "sgs", 'r', "dustRedstone", 's', "stone", 'g', "nuggetGold"));
@@ -97,6 +100,7 @@ public class JAPTA {
 		addRecipe(new ShapedOreRecipe(elevatorTop, "grg", "rer", "rsr", 'r', "dustRedstone", 'e', Items.ender_pearl, 's', elevatorShaft, 'g', "nuggetGold"));
 		addRecipe(new ShapedOreRecipe(timeMachine, "oro", "rcr", "oro", 'o', Blocks.obsidian, 'r', "blockRedstone", 'c', Items.clock));
 		addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', Blocks.chest, 'o', Blocks.obsidian));
+		addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Blocks.cake, 'r', "dustRedstone", 'g', "ingotGold"));
 		
 		addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
 		addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", "d", 'n', "nuggetGold", 'd', "blockRedstone"));
