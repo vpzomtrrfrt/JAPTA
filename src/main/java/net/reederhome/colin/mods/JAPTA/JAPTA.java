@@ -61,7 +61,6 @@ public class JAPTA {
 	
 	public static Item batteryPotato = new ItemBatteryPotato();
 	public static Item rfMeter = new ItemRFMeter();
-	public static Item rfBall = new Item().setTextureName(JAPTA.modid+":rfBall");
 	
 	public Configuration config;
 	
@@ -110,6 +109,7 @@ public class JAPTA {
 		addRecipe(new ShapedOreRecipe(timeMachine, "oro", "rcr", "oro", 'o', Blocks.obsidian, 'r', "blockRedstone", 'c', Items.clock));
 		addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', Blocks.chest, 'o', Blocks.obsidian));
 		addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Blocks.cake, 'r', "dustRedstone", 'g', "ingotGold"));
+		addRecipe(new ShapedOreRecipe(fluxBlaster, "dbd", "bgb", "dbd", 'd', "dustRedstone", 'b', "blockRedstone", 'g', "ingotGold"));
 		
 		addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
 		addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", "d", 'n', "nuggetGold", 'd', "blockRedstone"));
