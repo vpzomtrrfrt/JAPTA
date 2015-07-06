@@ -85,7 +85,6 @@ public class JAPTA {
 		
 		GameRegistry.registerItem(batteryPotato, "batteryPotato");
 		GameRegistry.registerItem(rfMeter, "rfMeter");
-		GameRegistry.registerItem(rfBall, "rfBall");
 		
 		GameRegistry.registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
 		GameRegistry.registerTileEntity(TileEntityMechanicalGenerator.class, "MechanicalGenerator");
