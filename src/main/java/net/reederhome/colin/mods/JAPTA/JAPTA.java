@@ -2,6 +2,7 @@ package net.reederhome.colin.mods.JAPTA;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -16,13 +17,16 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -53,9 +57,11 @@ public class JAPTA {
 	public static Block timeMachine = new BlockTimeMachine();
 	public static Block chestCharger = new BlockChestCharger();
 	public static Block cakeConverter = new BlockCakeConverter();
+	public static Block fluxBlaster = new BlockFluxBlaster();
 	
 	public static Item batteryPotato = new ItemBatteryPotato();
 	public static Item rfMeter = new ItemRFMeter();
+	public static Item rfBall = new Item().setTextureName(JAPTA.modid+":rfBall");
 	
 	public Configuration config;
 	
@@ -76,9 +82,11 @@ public class JAPTA {
 		GameRegistry.registerBlock(timeMachine, "timeMachine");
 		GameRegistry.registerBlock(chestCharger, "chestCharger");
 		GameRegistry.registerBlock(cakeConverter, "cakeConverter");
+		GameRegistry.registerBlock(fluxBlaster, "fluxBlaster");
 		
 		GameRegistry.registerItem(batteryPotato, "batteryPotato");
 		GameRegistry.registerItem(rfMeter, "rfMeter");
+		GameRegistry.registerItem(rfBall, "rfBall");
 		
 		GameRegistry.registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
 		GameRegistry.registerTileEntity(TileEntityMechanicalGenerator.class, "MechanicalGenerator");
@@ -89,6 +97,7 @@ public class JAPTA {
 		GameRegistry.registerTileEntity(TileEntityTimeMachine.class, "TimeMachine");
 		GameRegistry.registerTileEntity(TileEntityChestCharger.class, "ChestCharger");
 		GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
+		GameRegistry.registerTileEntity(TileEntityFluxBlaster.class, "FluxBlaster");
 		
 		addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "wgw", 's', "stone", 'r', "dustRedstone", 'i', "ingotIron", 'w', Items.wooden_pickaxe, 'g', "ingotGold"));
 		addRecipe(new ShapedOreRecipe(mechanicalGenerator, "rrr", "sgs", "sgs", 'r', "dustRedstone", 's', "stone", 'g', "nuggetGold"));
