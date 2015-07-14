@@ -58,6 +58,7 @@ public class JAPTA {
 	public static Block chestCharger = new BlockChestCharger();
 	public static Block cakeConverter = new BlockCakeConverter();
 	public static Block fluxBlaster = new BlockFluxBlaster();
+	public static Block mover = new BlockMover();
 	
 	public static Item batteryPotato = new ItemBatteryPotato();
 	public static Item rfMeter = new ItemRFMeter();
@@ -82,6 +83,7 @@ public class JAPTA {
 		GameRegistry.registerBlock(chestCharger, "chestCharger");
 		GameRegistry.registerBlock(cakeConverter, "cakeConverter");
 		GameRegistry.registerBlock(fluxBlaster, "fluxBlaster");
+		GameRegistry.registerBlock(mover, "mover");
 		
 		GameRegistry.registerItem(batteryPotato, "batteryPotato");
 		GameRegistry.registerItem(rfMeter, "rfMeter");
@@ -96,6 +98,7 @@ public class JAPTA {
 		GameRegistry.registerTileEntity(TileEntityChestCharger.class, "ChestCharger");
 		GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
 		GameRegistry.registerTileEntity(TileEntityFluxBlaster.class, "FluxBlaster");
+		GameRegistry.registerTileEntity(TileEntityMover.class, "Mover");
 		
 		addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "wgw", 's', "stone", 'r', "dustRedstone", 'i', "ingotIron", 'w', Items.wooden_pickaxe, 'g', "ingotGold"));
 		addRecipe(new ShapedOreRecipe(mechanicalGenerator, "rrr", "sgs", "sgs", 'r', "dustRedstone", 's', "stone", 'g', "nuggetGold"));
