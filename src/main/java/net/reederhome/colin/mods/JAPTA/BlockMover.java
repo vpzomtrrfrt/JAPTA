@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 public class BlockMover extends BlockContainer {
 
 	IIcon iconFront;
+	IIcon iconBack;
 	
 	public BlockMover() {
 		super(Material.rock);
@@ -31,7 +32,7 @@ public class BlockMover extends BlockContainer {
 	}
 	
 	public IIcon getIcon(int side, int meta) {
-		return (side==meta||side==Facing.oppositeSide[meta])?iconFront:blockIcon;
+		return (side==meta)?iconFront:((side==Facing.oppositeSide[meta])?iconBack:blockIcon);
 	}
 	
 	public void onBlockPlacedBy(World world, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_) {
@@ -41,5 +42,6 @@ public class BlockMover extends BlockContainer {
 	public void registerBlockIcons(IIconRegister ir) {
 		super.registerBlockIcons(ir);
 		iconFront = ir.registerIcon(JAPTA.modid+":moverFront");
+		iconBack = ir.registerIcon(JAPTA.modid+":machineBase");
 	}
 }

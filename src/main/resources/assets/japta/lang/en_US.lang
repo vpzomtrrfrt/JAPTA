@@ -9,6 +9,7 @@ tile.elevatorTop.name=Elevator Top
 tile.timeMachine.name=Time Machine
 tile.chestCharger.name=Chest Charger
 tile.cakeConverter.name=Cake Converter
+tile.mover.name=Mover
 item.batteryPotato.name=Battery Potato
 item.rfMeter.name=RF Meter
 itemGroup.JAPTA=JAPTA
