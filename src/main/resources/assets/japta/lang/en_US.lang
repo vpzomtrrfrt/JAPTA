@@ -11,6 +11,7 @@ tile.chestCharger.name=Chest Charger
 tile.cakeConverter.name=Cake Converter
 tile.mover.name=Mover
 tile.bonemealApplicator.name=Bonemeal Applicator
+tile.fluxBlaster.name=Flux Blaster
 item.batteryPotato.name=Battery Potato
 item.rfMeter.name=RF Meter
 itemGroup.JAPTA=JAPTA

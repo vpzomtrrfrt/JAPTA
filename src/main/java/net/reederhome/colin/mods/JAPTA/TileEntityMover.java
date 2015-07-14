@@ -10,11 +10,11 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEntityMover extends TileEntityJPT {
 
-	static final int use = 2;
+	static final int use = 20;
 	
 	@Override
 	public int getMaxEnergyStored(ForgeDirection from) {
-		return 20;
+		return 200;
 	}
 	
 	public void updateEntity() {

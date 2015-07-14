@@ -115,6 +115,8 @@ public class JAPTA {
 		addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', Blocks.chest, 'o', Blocks.obsidian));
 		addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Blocks.cake, 'r', "dustRedstone", 'g', "ingotGold"));
 		addRecipe(new ShapedOreRecipe(fluxBlaster, "dbd", "bgb", "dbd", 'd', "dustRedstone", 'b', "blockRedstone", 'g', "ingotGold"));
+		addRecipe(new ShapedOreRecipe(bonemealApplicator, "gbg", "brb", "gbg", 'g', "nuggetGold", 'b', new ItemStack(Items.dye, 1, 15), 'r', "blockRedstone"));
+		addRecipe(new ShapedOreRecipe(new ItemStack(mover, 4), "rgr", "gpg", "rgr", 'r', "dustRedstone", 'g', "nuggetGold", 'p', Blocks.piston));
 		
 		addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
 		addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", "d", 'n', "nuggetGold", 'd', "blockRedstone"));
