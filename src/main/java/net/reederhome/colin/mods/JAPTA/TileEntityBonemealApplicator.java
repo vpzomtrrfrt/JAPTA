@@ -21,7 +21,7 @@ public class TileEntityBonemealApplicator extends TileEntityJPT {
 	}
 
 	public void updateEntity() {
-		if(amount>=use && !worldObj.isRemote) {
+		if(amount>=use && !worldObj.isRemote && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) {
 			mealing:
 			for(int s = 0; s < 6; s++) {
 				ForgeDirection side = ForgeDirection.getOrientation(s);
