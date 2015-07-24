@@ -20,6 +20,9 @@ public class TileEntityFluxBlaster extends TileEntityJPT {
 				int cx = xCoord+side.offsetX*i;
 				int cy = yCoord+side.offsetY*i;
 				int cz = zCoord+side.offsetZ*i;
+				while(worldObj.getBlock(cx, cy, cz).equals(JAPTA.elevatorShaft)) {
+					cy++;
+				}
 				TileEntity te = worldObj.getTileEntity(cx, cy, cz);
 				if(te instanceof IEnergyReceiver) {
 					IEnergyReceiver ie = (IEnergyReceiver) te;
