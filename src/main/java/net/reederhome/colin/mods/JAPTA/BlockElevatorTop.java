@@ -14,6 +14,7 @@ public class BlockElevatorTop extends BlockContainer {
 		setCreativeTab(JAPTA.tab);
 		setBlockTextureName(JAPTA.modid+":elevatorTop");
 		setBlockName("elevatorTop");
+		setHardness(1);
 	}
 	
 	public IIcon getIcon(int s, int m) {

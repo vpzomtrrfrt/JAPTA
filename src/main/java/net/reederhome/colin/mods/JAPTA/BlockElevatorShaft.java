@@ -18,6 +18,7 @@ public class BlockElevatorShaft extends Block {
 		setBlockTextureName(JAPTA.modid+":elevatorShaft");
 		setCreativeTab(JAPTA.tab);
 		setBlockName("elevatorShaft");
+		setHardness(1);
 	}
 	
 	public boolean renderAsNormalBlock() {

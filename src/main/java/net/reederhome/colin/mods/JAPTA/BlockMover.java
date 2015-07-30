@@ -20,6 +20,7 @@ public class BlockMover extends BlockContainer {
 		super(Material.rock);
 		setCreativeTab(JAPTA.tab);
 		setBlockName("mover");
+		setHardness(1);
 		setBlockTextureName(JAPTA.modid+":moverSide");
 	}
 	

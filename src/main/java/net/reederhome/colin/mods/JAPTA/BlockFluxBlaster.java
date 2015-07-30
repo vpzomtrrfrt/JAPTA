@@ -18,6 +18,7 @@ public class BlockFluxBlaster extends BlockContainer {
 		setCreativeTab(JAPTA.tab);
 		setBlockName("fluxBlaster");
 		setBlockTextureName(JAPTA.modid+":fluxBlaster_front");
+		setHardness(1);
 	}
 
 	@Override
