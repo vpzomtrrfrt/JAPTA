@@ -1,8 +1,22 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import java.util.HashMap;
+
+import amerifrance.guideapi.GuideAPI;
+import amerifrance.guideapi.api.GuideRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -17,19 +31,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = JAPTA.modid, name = JAPTA.name)
 public class JAPTA {
@@ -121,20 +122,37 @@ public class JAPTA {
 		addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
 		addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", "d", 'n', "nuggetGold", 'd', "blockRedstone"));
 		
+		GuideJAPTA.build();
+		
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
 		
 		if(config.getBoolean("Enable Version Checker", "misc", true, "")) {
 			new Thread(new UpdateCheckThread(Loader.instance().activeModContainer().getVersion())).start();
 		}
-		
+	}
+	
+	@EventHandler
+	public void init(FMLInitializationEvent ev) {
+		addRecipe(new ShapedOreRecipe(GuideRegistry.getItemStackForBook(GuideJAPTA.book), "rrr", "rbr", "rrr", 'r', "dustRedstone", 'b', Items.book));
 		config.save();
 	}
 	
+	static HashMap<Item, IRecipe> recipeMap = new HashMap();
+	
 	public void addRecipe(String name, IRecipe r, boolean def) {
 		if(config.getBoolean(name, "recipes", def, "")) {
+			recipeMap.put(r.getRecipeOutput().getItem(), r);
 			GameRegistry.addRecipe(r);
 		}
+	}
+	
+	public static IRecipe getRecipe(Item output) {
+		return recipeMap.get(output);
+	}
+	
+	public static IRecipe getRecipe(Block output) {
+		return getRecipe(Item.getItemFromBlock(output));
 	}
 	
 	public void addRecipe(String name, IRecipe r) {

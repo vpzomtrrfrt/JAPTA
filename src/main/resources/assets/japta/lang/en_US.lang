@@ -27,3 +27,5 @@ text.japta.energyTeleporter.status=Transport Frequency set to %1$s, %2$d RF
 text.japta.newversion=A new version of JAPTA is available!
 text.japta.rfmeter.rf=That block contains %1$d RF.
 text.japta.rfmeter.no=That block does not hold RF.
+text.japta.guide.category1=Blocks & Items
+text.japta.guide.title=The JAPTA Book
