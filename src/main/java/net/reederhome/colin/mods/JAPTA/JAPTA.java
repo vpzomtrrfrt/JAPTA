@@ -122,8 +122,6 @@ public class JAPTA {
 		addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, ItemBatteryPotato.maxAmount), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
 		addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", "d", 'n', "nuggetGold", 'd', "blockRedstone"));
 		
-		GuideJAPTA.build();
-		
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
 		
@@ -134,7 +132,10 @@ public class JAPTA {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent ev) {
-		addRecipe(new ShapedOreRecipe(GuideRegistry.getItemStackForBook(GuideJAPTA.book), "rrr", "rbr", "rrr", 'r', "dustRedstone", 'b', Items.book));
+		if(Loader.isModLoaded("guideapi")) {
+			GuideJAPTA.build();
+			addRecipe(new ShapedOreRecipe(GuideRegistry.getItemStackForBook(GuideJAPTA.book), "rrr", "rbr", "rrr", 'r', "dustRedstone", 'b', Items.book));
+		}
 		config.save();
 	}
 	

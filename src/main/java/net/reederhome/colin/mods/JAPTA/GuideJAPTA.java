@@ -55,7 +55,7 @@ public class GuideJAPTA {
 				pagesForLongText("The Cake Converter converts between Cake and RF. Right-clicking will change its mode between Deploy (RF->Cake) and Absorb (Cake->RF). It has a range of 4 blocks in each direction for cake absorption but only 1 up and down for cake placement.", JAPTA.cakeConverter),
 				JAPTA.getRecipe(JAPTA.cakeConverter)));
 		entries.add(buildEntry("Flux Blaster",
-				pagesForLongText("The Flux Blaster provides power to all blocks up to 8 blocks in front of it. When placing it, it faces away from you. If it finds an Elevator Shaft, it will power the block above it (probably an Elevator Top).", JAPTA.fluxBlaster),
+				pagesForLongText("The Flux Blaster provides power to all blocks up to 8 blocks in front of it. When placing it, it faces away from you. If it finds an Elevator Shaft, it will power the block above it (probably an Elevator Top).", new ItemStack(JAPTA.fluxBlaster, 1, 3)),
 				JAPTA.getRecipe(JAPTA.fluxBlaster)));
 		entries.add(buildEntry("Bonemeal Applicator",
 				pagesForLongText("The Bonemeal Applicator, when given power and placed next to an inventory containing Bone Meal, will use the Bone Meal on plants in an 8x8x8 cuboid around it. Its decisions of where to apply it are similar to the RNG Quarry.", JAPTA.bonemealApplicator),
@@ -102,6 +102,10 @@ public class GuideJAPTA {
 	}
 	
 	private static List<IPage> pagesForLongText(String text, Item item) {
+		return pagesForLongText(text, new ItemStack(item));
+	}
+	
+	private static List<IPage> pagesForLongText(String text, ItemStack item) {
 		String[] lines = WordUtils.wrap(text, 22).split("\n");
 		List<IPage> tr = new ArrayList<IPage>();
 		String firstPageText = "";
