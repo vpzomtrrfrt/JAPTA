@@ -3,6 +3,7 @@ jdk:
 - oraclejdk7
 - openjdk6
 before_deploy:
+  - gradle build
   - export THE_JAR=$(ls build/libs/JAPTA*.jar)
   - echo "found $THE_JAR for deploying"
 deploy:
