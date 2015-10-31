@@ -1,0 +1,14 @@
+language: java
+jdk:
+- oraclejdk7
+- openjdk6
+before-deploy:
+  - export THE_JAR=$(ls build/libs/JAPTA*.jar
+  - echo "found ${THE_JAR} for deploying"
+deploy:
+  provider: releases
+  api_key:
+    secure: gZlNzUnvB7ESb8NJGsVsmUMAwpOSVi0emv4RtacysymzmJc59xoayxRzBuvNRmdRphUfbA+6scfNl1m78eTSfagsc/7miUK/GvgmQ3T6HlaMHXilmBLRHX9zpGxMLGO+2Ner4deqFkqfZfiOzNOi+fPAtSdus8rU3r8bWIepOQQupllRcz7Zszmxc5uce2lCObHALJS7aBqTJbWLPvQ/EYeODgD3IiLczb0tw3MaG04I2vtC/zTbgmrG2UR9biuiNASBZuc/GZdRseQm8sIXlBpXpfEBTxyMviGC/t1RCRy8h11gSuOr/k6wZzQSyWo+57ZphSgc4AanbBcCMr//IzixpvlfgvZiDY1P6w+xEC9dQD9OkR4IUBkBL5GK959C9+5SHIC9/uyCDJ6kMtTIHRUUQzEzBUd9CcIw2qk1wVMA5bWUtrhoLalvuXlOzRNVdHTSNY+QV4R5uR+dhA5yMFz0xU5I3UyBi8vedwO+Zku5WuKMSHk5KVYgR24MDhf57clgpRiZplE8VjPFNjNYKOoW2bU83vSYuwO3Apb6A7ZrzJYWZNT9BexvYbDnvX19Qkc6385etahACLmQCo3eDzAycLdbgpOGK79Tb+f71268RxsjKRTK1HNYcMGgNWFuB+U7p9Adi5KkRa/t7JJvfDEFS7buyd/uMbVu2TEAffo=
+  file: "${THE_JAR}"
+  on:
+    repo: vpzomtrrfrt/JAPTA
