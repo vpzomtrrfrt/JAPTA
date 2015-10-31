@@ -15,3 +15,4 @@ deploy:
     repo: vpzomtrrfrt/JAPTA
     all_branches: true
     tags: true
+  prerelease: true
