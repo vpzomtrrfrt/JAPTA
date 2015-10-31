@@ -133,8 +133,12 @@ public class JAPTA {
 	@EventHandler
 	public void init(FMLInitializationEvent ev) {
 		if(Loader.isModLoaded("guideapi")) {
-			GuideJAPTA.build();
-			addRecipe(new ShapedOreRecipe(GuideRegistry.getItemStackForBook(GuideJAPTA.book), "rrr", "rbr", "rrr", 'r', "dustRedstone", 'b', Items.book));
+			try {
+				Class.forName("amerifrance.guideapi.pages.PageItemStack");
+				System.out.println("Compatible Guide-API version found, adding book");
+				GuideJAPTA.build();
+				addRecipe(new ShapedOreRecipe(GuideRegistry.getItemStackForBook(GuideJAPTA.book), "rrr", "rbr", "rrr", 'r', "dustRedstone", 'b', Items.book));
+			} catch(Exception e) {}
 		}
 		config.save();
 	}
