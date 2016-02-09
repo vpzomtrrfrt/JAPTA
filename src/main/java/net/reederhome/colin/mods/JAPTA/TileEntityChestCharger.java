@@ -4,18 +4,18 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyHandler;
 
 public class TileEntityChestCharger extends TileEntity implements IEnergyHandler {
 	
 	@Override
-	public int getMaxEnergyStored(ForgeDirection from) {
+	public int getMaxEnergyStored(EnumFacing from) {
 		int tr = 0;
 		for(int s = 0; s < 6; s++) {
-			ForgeDirection side = ForgeDirection.getOrientation(s);
-			TileEntity te = worldObj.getTileEntity(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
+			EnumFacing side = EnumFacing.VALUES[s];
+			TileEntity te = worldObj.getTileEntity(getPos().offset(side));
 			if(te instanceof IInventory) {
 				IInventory inv = (IInventory) te;
 				for(int i = 0; i < inv.getSizeInventory(); i++) {
@@ -30,7 +30,7 @@ public class TileEntityChestCharger extends TileEntity implements IEnergyHandler
 			}
 			if(te instanceof ISidedInventory) {
 				ISidedInventory inv = (ISidedInventory) te;
-				int[] slots = inv.getAccessibleSlotsFromSide(side.getOpposite().ordinal());
+				int[] slots = inv.getSlotsForFace(side.getOpposite());
 				for(int si = 0; si < slots.length; si++) {
 					int i = slots[si];
 					ItemStack st = inv.getStackInSlot(i);
@@ -47,17 +47,17 @@ public class TileEntityChestCharger extends TileEntity implements IEnergyHandler
 	}
 
 	@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
+	public boolean canConnectEnergy(EnumFacing from) {
 		return true;
 	}
 
 	@Override
-	public int receiveEnergy(ForgeDirection from, int maxReceive,
+	public int receiveEnergy(EnumFacing from, int maxReceive,
 			boolean simulate) {
 		int tr = 0;
 		for(int s = 0; s < 6; s++) {
-			ForgeDirection side = ForgeDirection.getOrientation(s);
-			TileEntity te = worldObj.getTileEntity(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
+			EnumFacing side = EnumFacing.VALUES[s];
+			TileEntity te = worldObj.getTileEntity(getPos().offset(side));
 			if(te instanceof IInventory) {
 				IInventory inv = (IInventory) te;
 				for(int i = 0; i < inv.getSizeInventory(); i++) {
@@ -72,7 +72,7 @@ public class TileEntityChestCharger extends TileEntity implements IEnergyHandler
 			}
 			if(te instanceof ISidedInventory) {
 				ISidedInventory inv = (ISidedInventory) te;
-				int[] slots = inv.getAccessibleSlotsFromSide(side.getOpposite().ordinal());
+				int[] slots = inv.getSlotsForFace(side.getOpposite());
 				for(int si = 0; si < slots.length; si++) {
 					int i = slots[si];
 					ItemStack st = inv.getStackInSlot(i);
@@ -89,17 +89,17 @@ public class TileEntityChestCharger extends TileEntity implements IEnergyHandler
 	}
 
 	@Override
-	public int extractEnergy(ForgeDirection from, int maxExtract,
+	public int extractEnergy(EnumFacing from, int maxExtract,
 			boolean simulate) {
 		return 0;
 	}
 
 	@Override
-	public int getEnergyStored(ForgeDirection from) {
+	public int getEnergyStored(EnumFacing from) {
 		int tr = 0;
 		for(int s = 0; s < 6; s++) {
-			ForgeDirection side = ForgeDirection.getOrientation(s);
-			TileEntity te = worldObj.getTileEntity(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
+			EnumFacing side = EnumFacing.VALUES[s];
+			TileEntity te = worldObj.getTileEntity(getPos().offset(side));
 			if(te instanceof IInventory) {
 				IInventory inv = (IInventory) te;
 				for(int i = 0; i < inv.getSizeInventory(); i++) {
@@ -114,7 +114,7 @@ public class TileEntityChestCharger extends TileEntity implements IEnergyHandler
 			}
 			if(te instanceof ISidedInventory) {
 				ISidedInventory inv = (ISidedInventory) te;
-				int[] slots = inv.getAccessibleSlotsFromSide(side.getOpposite().ordinal());
+				int[] slots = inv.getSlotsForFace(side.getOpposite());
 				for(int si = 0; si < slots.length; si++) {
 					int i = slots[si];
 					ItemStack st = inv.getStackInSlot(i);

@@ -1,42 +1,45 @@
 package net.reederhome.colin.mods.JAPTA;
 
-import java.util.Random;
-
+import net.minecraft.block.BlockCake;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 
-public class TileEntityCakeConverter extends TileEntityJPT {
+public class TileEntityCakeConverter extends TileEntityJPT implements ITickable {
 
 	int use = 18000;
 	public static final int maxAmount = 100000;
 	
 	@Override
-	public int getMaxEnergyStored(ForgeDirection from) {
+	public int getMaxEnergyStored(EnumFacing from) {
 		return maxAmount;
 	}
 	
-	public void updateEntity() {
-		super.updateEntity();
-		int m = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+	public void update() {
+		BlockPos me = getPos();
+		IBlockState bs = worldObj.getBlockState(me);
 		int r = 4;
 		if(worldObj.isRemote) return;
-		if(worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) return;
-		if(m==0) {
-			for(int x = xCoord-r; x <= xCoord+r; x++) {
-				for(int y = yCoord-r; y <= yCoord+r; y++) {
-					for(int z = zCoord-r; z <= zCoord+r; z++) {
+		if(worldObj.isBlockIndirectlyGettingPowered(me) > 0) return;
+		if(bs.getValue(BlockCakeConverter.MODE)) {
+			for(int x = me.getX()-r; x <= me.getX()+r; x++) {
+				for(int y = me.getY()-r; y <= me.getY()+r; y++) {
+					for(int z = me.getZ()-r; z <= me.getZ()+r; z++) {
+						BlockPos cp = new BlockPos(x, y, z);
 						if(amount+use<=maxAmount) {
-							if(worldObj.getBlock(x, y, z).equals(Blocks.cake)) {
-								int c = worldObj.getBlockMetadata(x, y, z);
+							IBlockState cbs = worldObj.getBlockState(cp);
+							if(cbs.getBlock().equals(Blocks.cake)) {
+								int c = cbs.getValue(BlockCake.BITES);
 								c++;
 								amount+=use;
 								if(c>=6) {
-									worldObj.setBlockToAir(x, y, z);
+									worldObj.setBlockToAir(cp);
 								}
 								else {
-									worldObj.setBlockMetadataWithNotify(x, y, z, c, 2);
+									worldObj.setBlockState(cp, cbs.withProperty(BlockCake.BITES, c));
 								}
-								
 							}
 						}
 					}
@@ -52,27 +55,25 @@ public class TileEntityCakeConverter extends TileEntityJPT {
 					break;
 				}
 				int c = p;
-				int x = xCoord-r;
-				int y = yCoord-1;
-				int z = zCoord-r;
+				BlockPos cp = me.add(-r, -1, -r);
 				while(c>4*r*r) {
 					c-=4*r*r;
-					y++;
+					cp = cp.up();
 				}
 				while(c>2*r) {
 					c-=2*r;
-					x++;
+					cp = cp.offset(EnumFacing.NORTH);
 				}
-				z+=c;
-				boolean isCake = worldObj.getBlock(x, y, z).equals(Blocks.cake);
-				if((worldObj.isAirBlock(x, y, z) || isCake) && Blocks.cake.canBlockStay(worldObj, x, y, z)) {
-					int cm = isCake?worldObj.getBlockMetadata(x, y, z):6;
+				cp = cp.offset(EnumFacing.EAST);
+				IBlockState cbs = worldObj.getBlockState(cp);
+				boolean isCake = cbs.getBlock().equals(Blocks.cake);
+				if((worldObj.isAirBlock(cp) || isCake) && worldObj.getBlockState(cp.down()).getBlock().isSideSolid(worldObj, cp.down(), EnumFacing.UP)) {
+					int cm = isCake?cbs.getValue(BlockCake.BITES):6;
 					while(amount>=use && cm>0) {
 						cm--;
 						amount-=use;
 					}
-					worldObj.setBlock(x, y, z, Blocks.cake);
-					worldObj.setBlockMetadataWithNotify(x, y, z, cm, 2);
+					worldObj.setBlockState(cp, Blocks.cake.getDefaultState().withProperty(BlockCake.BITES, cm));
 				}
 			}
 		}

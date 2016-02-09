@@ -2,68 +2,39 @@ package net.reederhome.colin.mods.JAPTA;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockElevatorShaft extends Block {
-
-	IIcon bottom;
 	public BlockElevatorShaft() {
 		super(Material.glass);
-		setBlockTextureName(JAPTA.modid+":elevatorShaft");
 		setCreativeTab(JAPTA.tab);
-		setBlockName("elevatorShaft");
+		setUnlocalizedName("elevatorShaft");
 		setHardness(1);
 	}
-	
-	public boolean renderAsNormalBlock() {
-		return false;
+
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
+		return AxisAlignedBB.fromBounds(pos.getX(), pos.getY()-0.3, pos.getZ(), pos.getX()+1, pos.getY()+1, pos.getZ()+1);
 	}
-	
-	public void registerBlockIcons(IIconRegister ir) {
-		super.registerBlockIcons(ir);
-		bottom = ir.registerIcon(JAPTA.modid+":elevatorShaftBottom");
-	}
-	
-	public IIcon getIcon(int s, int m) {
-		if(s<2) {
-			return bottom;
-		}
-		return super.getIcon(s, m);
-	}
-	
-	public boolean isOpaqueCube() {
-		return false;
-	}
-	
-	public int getRenderBlockPass() {
-		return 1;
-	}
-	
-	public boolean shouldSideBeRendered(IBlockAccess b, int x, int y, int z, int s) {
-		return true;
-	}
-	
-	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k) {
-		return AxisAlignedBB.getBoundingBox(i, j-0.3, k, (i + 1), (j + 1), (k + 1));
-	}
-	
-	public void onEntityCollidedWithBlock(World w, int x, int y, int z, Entity ent) {
+
+	@Override
+	public void onEntityCollidedWithBlock(World w, BlockPos pos, Entity ent) {
 		if(ent instanceof EntityLivingBase) {
 			EntityLivingBase e = (EntityLivingBase) ent;
-			if(e.posX>x&&e.posZ>z&&e.posX<x+1&&e.posZ<z+1) {
-				int ty = y;
+			if(e.posX>pos.getX()&&e.posZ>pos.getZ()&&e.posX<pos.getX()+1&&e.posZ<pos.getZ()+1) {
+				BlockPos cp = pos;
 				boolean found = false;
-				while(ty<w.getHeight() && !found) {
-					if(w.getBlock(x, ty, z).equals(this)) {
-						ty++;
+				while(cp.getY() < w.getHeight() && !found) {
+					if(w.getBlockState(cp).getBlock().equals(this)) {
+						cp = cp.up();
 					}
-					else if(w.getBlock(x, ty, z).equals(JAPTA.elevatorTop)) {
+					else if(w.getBlockState(cp).getBlock().equals(JAPTA.elevatorTop)) {
 						found = true;
 					}
 					else {
@@ -71,10 +42,10 @@ public class BlockElevatorShaft extends Block {
 					}
 				}
 				if(found && !w.isRemote) {
-					TileEntityElevatorTop te = (TileEntityElevatorTop) w.getTileEntity(x, ty, z);
-					int use = te.getEnergyCost(ty-y);
+					TileEntityElevatorTop te = (TileEntityElevatorTop) w.getTileEntity(cp);
+					int use = te.getEnergyCost(cp.getY()-pos.getY());
 					if(te.amount>=use) {
-						e.setPositionAndUpdate(e.posX, ty+1, e.posZ);
+						e.setPositionAndUpdate(e.posX, cp.getY()+1, e.posZ);
 						w.playSoundAtEntity(e, "mob.chicken.plop", 1, 1);
 						te.amount-=use;
 					}

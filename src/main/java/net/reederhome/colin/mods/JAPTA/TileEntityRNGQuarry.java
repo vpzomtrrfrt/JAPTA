@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,9 +15,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Facing;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 
 
 public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.IEnergyHandler {
@@ -51,39 +52,36 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 		int i = 0;
 		while(amount>=consume&&i<1) {
 			i++;
-			int x = xCoord+new Random().nextInt(range*2)-range;
-			int y = yCoord-1;
-			int z = zCoord+new Random().nextInt(range*2)-range;
-			while((worldObj.isAirBlock(x, y, z)||worldObj.getBlock(x, y, z).getMaterial().isLiquid())&&y>0) {
-				y--;
+			BlockPos cp = getPos();
+			cp = cp.add(new Random().nextInt(range*2)-range, -1, new Random().nextInt(range*2)-range);
+			while((worldObj.isAirBlock(cp)||worldObj.getBlockState(cp).getBlock().getMaterial().isLiquid())&&cp.getY()>0) {
+				cp = cp.down();
 			}
-			if(y==0) continue;
-			List<EntityLivingBase> ents = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(x, y, z, x+1, yCoord, z+1));
+			if(cp.getY()==0) continue;
+			List<EntityLivingBase> ents = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.fromBounds(cp.getX(), cp.getY(), cp.getZ(), cp.getX()+1, getPos().getY(), cp.getZ()+1));
 			if(ents.size()>0) {
 				EntityLivingBase ent = ents.get(0);
 				ent.attackEntityFrom(quarryDamage, 10);
 				amount-=consume/5;
 			}
 			else {
-				Block b = worldObj.getBlock(x, y, z);
-				int meta = worldObj.getBlockMetadata(x, y, z);
+				IBlockState bs = worldObj.getBlockState(cp);
+				Block b = bs.getBlock();
 				int hl = 0;
 				if(itm!=null) {
-					hl = itm.getItem().getHarvestLevel(itm, b.getHarvestTool(meta));
+					hl = itm.getItem().getHarvestLevel(itm, b.getHarvestTool(bs));
 					if(hl==-1) hl=0;
 				}
 				//System.out.println("harvest level: "+hl);
-				int bhl = b.getHarvestLevel(meta);
-				if(bhl<=hl&&b.getBlockHardness(worldObj, x, y, z)!=-1) {
-					ArrayList<ItemStack> drops = b.getDrops(worldObj, x, y, z, meta, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, itm));
+				int bhl = b.getHarvestLevel(bs);
+				if(bhl<=hl&&b.getBlockHardness(worldObj, cp)!=-1) {
+					List<ItemStack> drops = b.getDrops(worldObj, cp, bs, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, itm));
 					Iterator<ItemStack> it = drops.iterator();
 					while(it.hasNext()) {
 						ItemStack s = it.next();
 						for(int si = 0; si < 6; si++) {
-							int cx = xCoord+Facing.offsetsXForSide[si];
-							int cy = yCoord+Facing.offsetsYForSide[si];
-							int cz = zCoord+Facing.offsetsZForSide[si];
-							TileEntity te = worldObj.getTileEntity(cx, cy, cz);
+							BlockPos sp = getPos().offset(EnumFacing.VALUES[si]);
+							TileEntity te = worldObj.getTileEntity(sp);
 							if(te!=null) {
 								if(te instanceof IInventory) {
 									IInventory inv = (IInventory)te;
@@ -125,11 +123,12 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 							}
 						}
 						if(s!=null) {
-							EntityItem ei = new EntityItem(worldObj, xCoord, yCoord+1, zCoord, s);
+							BlockPos me = getPos();
+							EntityItem ei = new EntityItem(worldObj, me.getX(), me.getY()+1, me.getZ(), s);
 							worldObj.spawnEntityInWorld(ei);
 						}
 					}
-					worldObj.setBlockToAir(x, y, z);
+					worldObj.setBlockToAir(cp);
 					amount-=consume;
 					if(Math.random()<0.9&&itm!=null&&itm.isItemStackDamageable()&&bhl>0) {
 						itm.setItemDamage(itm.getItemDamage()+1);
@@ -143,12 +142,12 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 	}
 	
 	@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
+	public boolean canConnectEnergy(EnumFacing from) {
 		return true;
 	}
 
 	@Override
-	public int receiveEnergy(ForgeDirection from, int maxReceive,
+	public int receiveEnergy(EnumFacing from, int maxReceive,
 			boolean simulate) {
 		int tr = 0;
 		if(amount+maxReceive>maxAmount) {
@@ -164,18 +163,18 @@ public class TileEntityRNGQuarry extends TileEntity implements cofh.api.energy.I
 	}
 
 	@Override
-	public int extractEnergy(ForgeDirection from, int maxExtract,
+	public int extractEnergy(EnumFacing from, int maxExtract,
 			boolean simulate) {
 		return 0;
 	}
 
 	@Override
-	public int getEnergyStored(ForgeDirection from) {
+	public int getEnergyStored(EnumFacing from) {
 		return amount;
 	}
 
 	@Override
-	public int getMaxEnergyStored(ForgeDirection from) {
+	public int getMaxEnergyStored(EnumFacing from) {
 		return maxAmount;
 	}
 

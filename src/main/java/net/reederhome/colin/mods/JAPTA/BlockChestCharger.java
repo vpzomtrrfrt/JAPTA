@@ -10,8 +10,7 @@ public class BlockChestCharger extends BlockContainer {
 	public BlockChestCharger() {
 		super(Material.rock);
 		setCreativeTab(JAPTA.tab);
-		setBlockName("chestCharger");
-		setBlockTextureName(JAPTA.modid+":chestCharger");
+		setUnlocalizedName("chestCharger");
 		setHardness(5);
 	}
 	

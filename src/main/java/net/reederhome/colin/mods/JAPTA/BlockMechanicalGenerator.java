@@ -6,30 +6,27 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockMechanicalGenerator extends BlockContainer {
-
-	IIcon topIcon;
 	
 	public BlockMechanicalGenerator() {
 		super(Material.rock);
 		setCreativeTab(JAPTA.tab);
-		setBlockName("mechanicalGenerator");
-		setBlockTextureName(JAPTA.modid+":mechanicalGenerator");
 		setHardness(4);
 		setHarvestLevel("pickaxe", 2);
 	}
-	
-	public void onNeighborBlockChange(World world, int x, int y, int z, Block b) {
-		TileEntityMechanicalGenerator te = (TileEntityMechanicalGenerator) world.getTileEntity(x, y, z);
+
+	@Override
+	public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock) {
+		TileEntityMechanicalGenerator te = (TileEntityMechanicalGenerator) world.getTileEntity(pos);
 		if(te.amount+te.inc<te.maxAmount) {
 			te.amount+=te.inc;
 		}
@@ -42,14 +39,5 @@ public class BlockMechanicalGenerator extends BlockContainer {
 	@Override
 	public TileEntity createNewTileEntity(World arg0, int arg1) {
 		return new TileEntityMechanicalGenerator();
-	}
-	
-	public void registerBlockIcons(IIconRegister ir) {
-		super.registerBlockIcons(ir);
-		topIcon = ir.registerIcon(getTextureName()+"Top");
-	}
-	
-	public IIcon getIcon(int side, int meta) {
-		return side<2?topIcon:blockIcon;
 	}
 }

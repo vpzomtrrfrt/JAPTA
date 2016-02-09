@@ -2,34 +2,22 @@ package net.reederhome.colin.mods.JAPTA;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockTimeMachine extends BlockContainer {
 
-	IIcon activeIcon;
+	public static final PropertyBool ACTIVE = PropertyBool.create("active");
+
 	public BlockTimeMachine() {
 		super(Material.circuits);
-		setBlockName("timeMachine");
-		setBlockTextureName(JAPTA.modid+":timeMachine");
+		setUnlocalizedName("timeMachine");
 		setCreativeTab(JAPTA.tab);
 		setHardness(5);
-	}
-	
-	public void registerBlockIcons(IIconRegister ir) {
-		super.registerBlockIcons(ir);
-		activeIcon = ir.registerIcon(textureName+"Active");
-	}
-	
-	public IIcon getIcon(int side, int meta) {
-		if(meta==0) {
-			return blockIcon;
-		}
-		else {
-			return activeIcon;
-		}
 	}
 	
 	@Override
@@ -37,4 +25,13 @@ public class BlockTimeMachine extends BlockContainer {
 		return new TileEntityTimeMachine();
 	}
 
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		boolean tr = false;
+		TileEntity te = world.getTileEntity(pos);
+		if(te instanceof TileEntityTimeMachine) {
+			tr = ((TileEntityTimeMachine)te).active;
+		}
+		return state.withProperty(ACTIVE, tr);
+	}
 }

@@ -2,56 +2,65 @@ package net.reederhome.colin.mods.JAPTA;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class BlockLifeConverter extends BlockContainer {
 
-	IIcon iconHeal;
-	IIcon iconAbsorb;
-	
+	public static final PropertyBool MODE = PropertyBool.create("mode");
+
 	public BlockLifeConverter() {
 		super(Material.rock);
 		setCreativeTab(JAPTA.tab);
-		setBlockTextureName(JAPTA.modid+":lifeConverter");
-		setBlockName("lifeConverter");
+		setUnlocalizedName("lifeConverter");
 		setHardness(2);
 		setHarvestLevel("pickaxe", 2);
+		setDefaultState(getBlockState().getBaseState().withProperty(MODE, true));
 	}
 	
 	@Override
 	public TileEntity createNewTileEntity(World arg0, int arg1) {
 		return new TileEntityLifeConverter();
 	}
-	
-	public IIcon getIcon(int side, int meta) {
-		return meta==0?iconAbsorb:iconHeal;
-	}
-	
-	public void registerBlockIcons(IIconRegister ir) {
-		iconAbsorb = ir.registerIcon(getTextureName()+"Absorb");
-		iconHeal = ir.registerIcon(getTextureName()+"Heal");
-	}
-	
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer p, int s, float f1, float f2, float f3) {
+
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer p, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if(!world.isRemote) {
-			int meta = world.getBlockMetadata(x, y, z);
-			if(meta==0) {
-				meta=5;
-			}
-			else {
-				meta=0;
-			}
-			IChatComponent chat = new ChatComponentTranslation("text.japta.lifeConverter.mode"+(meta==0?"Absorb":"Heal"));
+			boolean mode = state.getValue(MODE);
+			mode = !mode;
+			IChatComponent chat = new ChatComponentTranslation("text.japta.lifeConverter.mode"+(mode?"Absorb":"Heal"));
 			p.addChatMessage(chat);
-			world.setBlockMetadataWithNotify(x, y, z, meta, 3);
+			world.setBlockState(pos, state.withProperty(MODE, mode));
 		}
 		return true;
 	}
 
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		if(state.getValue(MODE)) {
+			return 0;
+		}
+		else {
+			return 5;
+		}
+	}
+
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return getBlockState().getBaseState().withProperty(MODE, meta == 0);
+	}
+
+	@Override
+	public BlockState getBlockState() {
+		return new BlockState(this, new IProperty[] {MODE});
+	}
 }

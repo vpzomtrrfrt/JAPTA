@@ -20,7 +20,6 @@ public class ItemBatteryPotato extends Item implements IEnergyContainerItem {
 		setMaxStackSize(1);
 		setCreativeTab(JAPTA.tab);
 		setUnlocalizedName("batteryPotato");
-		setTextureName(JAPTA.modid+":batteryPotato");
 		setHasSubtypes(true);
 	}
 	
@@ -30,7 +29,7 @@ public class ItemBatteryPotato extends Item implements IEnergyContainerItem {
 	}
 	
 	public EnumAction getItemUseAction(ItemStack stack) {
-		return EnumAction.eat;
+		return EnumAction.EAT;
 	}
 	
 	public int getMaxItemUseDuration(ItemStack stack) {

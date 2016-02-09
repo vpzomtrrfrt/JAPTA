@@ -9,3 +9,6 @@ MinecraftForge*
 *.txt
 *.swp
 .settings
+run
+*.i*
+out

@@ -2,7 +2,8 @@ package net.reederhome.colin.mods.JAPTA;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
 
@@ -21,12 +22,12 @@ public abstract class TileEntityJPT extends TileEntity implements IEnergyHandler
 	}
 	
 	@Override
-	public boolean canConnectEnergy(ForgeDirection from) {
+	public boolean canConnectEnergy(EnumFacing from) {
 		return true;
 	}
 
 	@Override
-	public int receiveEnergy(ForgeDirection from, int maxReceive,
+	public int receiveEnergy(EnumFacing from, int maxReceive,
 			boolean simulate) {
 		int tr;
 		if(amount+maxReceive<=getMaxEnergyStored(from)) {
@@ -42,7 +43,7 @@ public abstract class TileEntityJPT extends TileEntity implements IEnergyHandler
 	}
 
 	@Override
-	public int extractEnergy(ForgeDirection from, int maxExtract,
+	public int extractEnergy(EnumFacing from, int maxExtract,
 			boolean simulate) {
 		int tr;
 		if(maxExtract<amount) {
@@ -58,17 +59,17 @@ public abstract class TileEntityJPT extends TileEntity implements IEnergyHandler
 	}
 
 	@Override
-	public int getEnergyStored(ForgeDirection from) {
+	public int getEnergyStored(EnumFacing from) {
 		return amount;
 	}
 	
-	public void transmit(int s) {
+	public void transmit(EnumFacing side) {
 		if(amount<=0) {
 			return;
 		}
-		ForgeDirection side = ForgeDirection.getOrientation(s);
-		ForgeDirection opp = side.getOpposite();
-		TileEntity te = worldObj.getTileEntity(xCoord+side.offsetX, yCoord+side.offsetY, zCoord+side.offsetZ);
+		EnumFacing opp = side.getOpposite();
+		BlockPos sp = getPos().offset(side);
+		TileEntity te = worldObj.getTileEntity(sp);
 		if(te!=null) {
 			if(te instanceof IEnergyReceiver) {
 				IEnergyReceiver h = (IEnergyReceiver) te;
@@ -78,6 +79,10 @@ public abstract class TileEntityJPT extends TileEntity implements IEnergyHandler
 				}
 			}
 		}
+	}
+
+	public void transmit(int s) {
+		transmit(EnumFacing.VALUES[s]);
 	}
 	
 	public void transmit() {

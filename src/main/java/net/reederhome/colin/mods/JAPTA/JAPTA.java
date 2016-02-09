@@ -4,17 +4,6 @@ import java.util.HashMap;
 
 import amerifrance.guideapi.GuideAPI;
 import amerifrance.guideapi.api.GuideRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
@@ -25,10 +14,21 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -50,7 +50,6 @@ public class JAPTA {
 	public static Block rngQuarry = new BlockRNGQuarry();
 	public static Block mechanicalGenerator = new BlockMechanicalGenerator();
 	public static Block lifeConverter = new BlockLifeConverter();
-	public static Block energyTeleporter = new BlockEnergyTeleporter();
 	public static Block chargingPlate = new BlockChargingPlate(false);
 	public static Block chargingPlateWooden = new BlockChargingPlate(true);
 	public static Block elevatorShaft = new BlockElevatorShaft();
@@ -67,7 +66,7 @@ public class JAPTA {
 	
 	public Configuration config;
 	
-	@EventHandler
+	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent ev) {
 		config = new Configuration(ev.getSuggestedConfigurationFile());
 		config.load();
@@ -76,7 +75,6 @@ public class JAPTA {
 		GameRegistry.registerBlock(rngQuarry, "rngQuarry");
 		GameRegistry.registerBlock(mechanicalGenerator, "mechanicalGenerator");
 		GameRegistry.registerBlock(lifeConverter, "lifeConverter");
-		GameRegistry.registerBlock(energyTeleporter, "energyTeleporter");
 		GameRegistry.registerBlock(chargingPlate, "chargingPlate");
 		GameRegistry.registerBlock(chargingPlateWooden, "chargingPlateWooden");
 		GameRegistry.registerBlock(elevatorShaft, "elevatorShaft");
@@ -94,7 +92,6 @@ public class JAPTA {
 		GameRegistry.registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
 		GameRegistry.registerTileEntity(TileEntityMechanicalGenerator.class, "MechanicalGenerator");
 		GameRegistry.registerTileEntity(TileEntityLifeConverter.class, "LifeConverter");
-		GameRegistry.registerTileEntity(TileEntityEnergyTeleporter.class, "EnergyTeleporter");
 		GameRegistry.registerTileEntity(TileEntityChargingPlate.class, "ChargingPlate");
 		GameRegistry.registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
 		GameRegistry.registerTileEntity(TileEntityTimeMachine.class, "TimeMachine");
@@ -107,7 +104,6 @@ public class JAPTA {
 		addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "wgw", 's', "stone", 'r', "dustRedstone", 'i', "ingotIron", 'w', Items.wooden_pickaxe, 'g', "ingotGold"));
 		addRecipe(new ShapedOreRecipe(mechanicalGenerator, "rrr", "sgs", "sgs", 'r', "dustRedstone", 's', "stone", 'g', "nuggetGold"));
 		addRecipe(new ShapedOreRecipe(lifeConverter, "frf", "rgr", "frf", 'f', Items.rotten_flesh, 'r', "dustRedstone", 'g', "ingotGold"));
-		addRecipe(new ShapedOreRecipe(energyTeleporter, "prp", "rer", "prp", 'p', Items.ender_pearl, 'r', "dustRedstone", 'e', Items.ender_eye));
 		addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', "blockRedstone"));
 		addRecipe(new ShapedOreRecipe(chargingPlateWooden, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.wooden_pressure_plate, 'o', Blocks.obsidian, 'r', "blockRedstone"));
 		addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
@@ -124,13 +120,9 @@ public class JAPTA {
 		
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
-		
-		if(config.getBoolean("Enable Version Checker", "misc", true, "")) {
-			new Thread(new UpdateCheckThread(Loader.instance().activeModContainer().getVersion())).start();
-		}
 	}
 	
-	@EventHandler
+	@Mod.EventHandler
 	public void init(FMLInitializationEvent ev) {
 		if(Loader.isModLoaded("guideapi")) {
 			try {
@@ -170,11 +162,10 @@ public class JAPTA {
 	
 	@SubscribeEvent
 	public void onLivingHurt(LivingHurtEvent ev) {
-		int x = (int)Math.floor(ev.entity.posX);
-		int y = (int)Math.floor(ev.entity.posY-1);
-		int z = (int)Math.floor(ev.entity.posZ);
-		TileEntity te = ev.entity.worldObj.getTileEntity(x,y,z);
-		if(te instanceof TileEntityLifeConverter&&ev.entity.worldObj.getBlockMetadata(x, y, z)==0) {
+		BlockPos pos = new BlockPos((int)Math.floor(ev.entity.posX), (int)Math.floor(ev.entity.posY-1), (int)Math.floor(ev.entity.posZ));
+		TileEntity te = ev.entity.worldObj.getTileEntity(pos);
+		// TODO fix this
+		if(te instanceof TileEntityLifeConverter&&(Boolean)ev.entity.worldObj.getBlockState(pos).getValue(null)) {
 			if(((TileEntityLifeConverter) te).amount+ev.ammount*TileEntityLifeConverter.inc<=TileEntityLifeConverter.maxAmount) {
 				((TileEntityLifeConverter) te).amount+=ev.ammount*TileEntityLifeConverter.inc;
 			}

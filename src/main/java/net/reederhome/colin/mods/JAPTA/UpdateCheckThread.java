@@ -7,8 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import cpw.mods.fml.common.Loader;
-
 public class UpdateCheckThread implements Runnable {
 
 	static String ret = null;

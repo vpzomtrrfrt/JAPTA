@@ -1,27 +1,27 @@
 package net.reederhome.colin.mods.JAPTA;
 
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 
-public class TileEntityTimeMachine extends TileEntityJPT {
+public class TileEntityTimeMachine extends TileEntityJPT implements ITickable {
 
 	int use = 200;
 	int jump = 9;
+
+	boolean active = false;
 	
-	public void updateEntity() {
-		super.updateEntity();
-		int nm = 0;
-		if(!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord) && amount >= use) {
+	public void update() {
+		boolean nm = false;
+		if(worldObj.isBlockIndirectlyGettingPowered(getPos()) == 0 && amount >= use) {
 			worldObj.setWorldTime(worldObj.getWorldTime()+jump);
 			amount-=use;
-			nm = 1;
+			nm = true;
 		}
-		if(!worldObj.isRemote) {
-			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, nm, 3);
-		}
+		active = nm;
 	};
 	
 	@Override
-	public int getMaxEnergyStored(ForgeDirection from) {
+	public int getMaxEnergyStored(EnumFacing from) {
 		return 10000;
 	}
 

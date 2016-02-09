@@ -10,8 +10,7 @@ public class BlockBonemealApplicator extends BlockContainer {
 	public BlockBonemealApplicator() {
 		super(Material.rock);
 		setCreativeTab(JAPTA.tab);
-		setBlockName("bonemealApplicator");
-		setBlockTextureName(JAPTA.modid+":bonemealApplicator");
+		setUnlocalizedName("bonemealApplicator");
 		setHardness(1);
 	}
 
