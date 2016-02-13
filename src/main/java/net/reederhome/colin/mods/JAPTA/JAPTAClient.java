@@ -1,0 +1,25 @@
+package net.reederhome.colin.mods.JAPTA;
+
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.item.Item;
+
+public class JAPTAClient {
+
+    public static void registerClientThings() {
+        registerBlock(JAPTA.cakeConverter, "cakeConverter");
+    }
+
+    public static void registerItem(Item item, int meta, ModelResourceLocation loc) {
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, meta, loc);
+    }
+
+    public static void registerItem(Item item, String name) {
+        registerItem(item, 0, new ModelResourceLocation(JAPTA.MODID+":"+name, "inventory"));
+    }
+
+    public static void registerBlock(Block block, String name) {
+        registerItem(Item.getItemFromBlock(block), name);
+    }
+}

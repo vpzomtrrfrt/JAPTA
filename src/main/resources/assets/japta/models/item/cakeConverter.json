@@ -1,5 +1,5 @@
 {
-	"parent": "japta:block/cakeConverter",
+	"parent": "japta:block/cakeConverterDeploy",
 	"display": {
 		"rotation": [ 10, -45, 170 ],
 		"translation": [ 0, 1.5, -2.75 ],
