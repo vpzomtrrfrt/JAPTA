@@ -1,0 +1,6 @@
+{
+	"variants": {
+		"mode=false": {"model": "japta:cakeConverterDeploy"},
+		"mode=true": {"model": "japta:cakeConverterAbsorb"}
+	}
+}
