@@ -58,11 +58,3 @@ processResources
         exclude 'mcmod.info'
     }
 }
-
-repositories {
-  maven { url 'http://tehnut.info/maven/' }
-}
-
-dependencies {
-  compile "info.amerifrance.guideapi:Guide-API:1.7.10-1.0.1-22:deobf"
-}
