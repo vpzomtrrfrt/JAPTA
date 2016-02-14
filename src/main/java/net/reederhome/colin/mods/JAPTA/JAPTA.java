@@ -1,6 +1,7 @@
 package net.reederhome.colin.mods.JAPTA;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -15,6 +16,8 @@ public class JAPTA {
 
     public static Block cakeConverter;
 
+    public static Item rfMeter;
+
     private Configuration config;
 
     @Mod.EventHandler
@@ -25,7 +28,13 @@ public class JAPTA {
 
         cakeConverter = new BlockCakeConverter();
 
+        rfMeter = new ItemRFMeter();
+
         GameRegistry.registerBlock(cakeConverter, "cakeConverter");
+
+        GameRegistry.registerItem(rfMeter, "rfMeter");
+
+        GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
 
         config.save();
     }

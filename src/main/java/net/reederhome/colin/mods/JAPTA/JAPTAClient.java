@@ -9,6 +9,8 @@ public class JAPTAClient {
 
     public static void registerClientThings() {
         registerBlock(JAPTA.cakeConverter, "cakeConverter");
+
+        registerItem(JAPTA.rfMeter, "rfMeter");
     }
 
     public static void registerItem(Item item, int meta, ModelResourceLocation loc) {

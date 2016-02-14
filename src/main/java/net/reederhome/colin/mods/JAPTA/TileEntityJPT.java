@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
 public abstract class TileEntityJPT extends TileEntity {
-    private int stored = 0;
+    public int stored = 0;
 
     public int getEnergyStored(EnumFacing from) {
         return stored;

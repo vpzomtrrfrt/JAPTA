@@ -12,12 +12,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public abstract class BlockConverter extends BlockContainer {
-    private static final PropertyEnum<EnumConverterType> MODE = PropertyEnum.create("mode", EnumConverterType.class);
+    public static final PropertyEnum<EnumConverterType> MODE = PropertyEnum.create("mode", EnumConverterType.class);
 
     public BlockConverter() {
         super(Material.rock);
         setUnlocalizedName("converter"+getConverterType());
         setDefaultState(blockState.getBaseState().withProperty(MODE, EnumConverterType.ABSORB));
+        setHardness(2);
     }
 
     @Override
