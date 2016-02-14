@@ -9,6 +9,7 @@ public class JAPTAClient {
 
     public static void registerClientThings() {
         registerBlock(JAPTA.cakeConverter, "cakeConverter");
+        registerBlock(JAPTA.fluxHopper, "fluxHopper");
 
         registerItem(JAPTA.rfMeter, "rfMeter");
     }

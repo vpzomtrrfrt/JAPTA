@@ -15,6 +15,7 @@ public class JAPTA {
     public static final String MODID = "japta";
 
     public static Block cakeConverter;
+    public static Block fluxHopper;
 
     public static Item rfMeter;
 
@@ -27,14 +28,17 @@ public class JAPTA {
         config.addCustomCategoryComment("recipes", "Enable/Disable crafting of certain items");
 
         cakeConverter = new BlockCakeConverter();
+        fluxHopper = new BlockFluxHopper();
 
         rfMeter = new ItemRFMeter();
 
         GameRegistry.registerBlock(cakeConverter, "cakeConverter");
+        GameRegistry.registerBlock(fluxHopper, "fluxHopper");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
 
         GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
+        GameRegistry.registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
 
         config.save();
     }

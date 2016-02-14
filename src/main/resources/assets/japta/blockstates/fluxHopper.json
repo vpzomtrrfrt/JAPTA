@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=down": { "model": "japta:fluxhopper_down" },
+        "facing=north": { "model": "japta:fluxhopper_side" },
+        "facing=south": { "model": "japta:fluxhopper_side", "y": 180 },
+        "facing=west": { "model": "japta:fluxhopper_side", "y": 270 },
+        "facing=east": { "model": "japta:fluxhopper_side", "y": 90 }
+    }
+}
