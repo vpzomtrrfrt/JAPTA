@@ -1,0 +1,6 @@
+{
+	"variants": {
+		"powered=false": {"model": "japta:chargingPlate_up"},
+		"powered=true": {"model": "japta:chargingPlate_down"}
+	}
+}

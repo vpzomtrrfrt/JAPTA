@@ -16,6 +16,7 @@ public class ItemRFMeter extends Item {
         super();
         setMaxStackSize(1);
         setUnlocalizedName("rfMeter");
+        setCreativeTab(JAPTA.tab);
     }
 
     @Override

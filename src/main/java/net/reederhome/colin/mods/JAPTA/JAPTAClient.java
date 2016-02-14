@@ -10,8 +10,10 @@ public class JAPTAClient {
     public static void registerClientThings() {
         registerBlock(JAPTA.cakeConverter, "cakeConverter");
         registerBlock(JAPTA.fluxHopper, "fluxHopper");
+        registerBlock(JAPTA.chargingPlate, "chargingPlate");
 
         registerItem(JAPTA.rfMeter, "rfMeter");
+        registerItem(JAPTA.batteryPotato, "batteryPotato");
     }
 
     public static void registerItem(Item item, int meta, ModelResourceLocation loc) {

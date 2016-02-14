@@ -19,6 +19,7 @@ public abstract class BlockConverter extends BlockContainer {
         setUnlocalizedName("converter"+getConverterType());
         setDefaultState(blockState.getBaseState().withProperty(MODE, EnumConverterType.ABSORB));
         setHardness(2);
+        setCreativeTab(JAPTA.tab);
     }
 
     @Override
