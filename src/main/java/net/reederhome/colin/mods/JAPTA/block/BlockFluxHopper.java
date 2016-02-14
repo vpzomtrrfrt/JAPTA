@@ -1,4 +1,4 @@
-package net.reederhome.colin.mods.JAPTA;
+package net.reederhome.colin.mods.JAPTA.block;
 
 import com.google.common.base.Predicate;
 import net.minecraft.block.BlockContainer;
@@ -11,14 +11,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
+import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityFluxHopper;
 
 public class BlockFluxHopper extends BlockContainer {
 
     public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class, new Predicate<EnumFacing>() {
         @Override
-        public boolean apply(@Nullable EnumFacing input) {
+        public boolean apply(EnumFacing input) {
             return input != EnumFacing.UP;
         }
     });
@@ -39,7 +39,7 @@ public class BlockFluxHopper extends BlockContainer {
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         EnumFacing dir = facing.getOpposite();
-        if(dir == EnumFacing.UP) {
+        if (dir == EnumFacing.UP) {
             dir = EnumFacing.DOWN;
         }
         return getDefaultState().withProperty(FACING, dir);

@@ -1,4 +1,4 @@
-package net.reederhome.colin.mods.JAPTA;
+package net.reederhome.colin.mods.JAPTA.item;
 
 import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.creativetab.CreativeTabs;
@@ -7,6 +7,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class ItemBatteryPotato extends Item implements IEnergyContainerItem {
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World worldIn, EntityPlayer p) {
-        if(p.canEat(false) && stack.getItemDamage()+USE <= stack.getMaxDamage()) {
+        if (p.canEat(false) && stack.getItemDamage() + USE <= stack.getMaxDamage()) {
             p.setItemInUse(stack, getMaxItemUseDuration(stack));
         }
         return stack;
@@ -58,14 +59,13 @@ public class ItemBatteryPotato extends Item implements IEnergyContainerItem {
     public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
         int remaining = getMaxEnergyStored(container) - getEnergyStored(container);
         int tr;
-        if(maxReceive < remaining) {
+        if (maxReceive < remaining) {
             tr = maxReceive;
-        }
-        else {
+        } else {
             tr = remaining;
         }
-        if(!simulate) {
-            container.setItemDamage(container.getItemDamage()-tr);
+        if (!simulate) {
+            container.setItemDamage(container.getItemDamage() - tr);
         }
         return tr;
     }
@@ -74,21 +74,20 @@ public class ItemBatteryPotato extends Item implements IEnergyContainerItem {
     public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
         int tr;
         int stored = getEnergyStored(container);
-        if(maxExtract < stored) {
+        if (maxExtract < stored) {
             tr = maxExtract;
-        }
-        else {
+        } else {
             tr = stored;
         }
-        if(!simulate) {
-            container.setItemDamage(container.getItemDamage()+tr);
+        if (!simulate) {
+            container.setItemDamage(container.getItemDamage() + tr);
         }
         return tr;
     }
 
     @Override
     public int getEnergyStored(ItemStack container) {
-        return getMaxDamage()-container.getItemDamage();
+        return getMaxDamage() - container.getItemDamage();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package net.reederhome.colin.mods.JAPTA;
+package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
@@ -9,6 +9,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
+import net.reederhome.colin.mods.JAPTA.EnumConverterMode;
+import net.reederhome.colin.mods.JAPTA.block.BlockConverter;
 
 public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyProvider, IEnergyReceiver, ITickable {
     public static final int RANGE = 4;
@@ -21,12 +23,12 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
 
     @Override
     public void update() {
-        if(worldObj.isRemote) return;
+        if (worldObj.isRemote) return;
         IBlockState me = worldObj.getBlockState(getPos());
         try {
-            EnumConverterType mode = me.getValue(BlockConverter.MODE);
+            EnumConverterMode mode = me.getValue(BlockConverter.MODE);
             dancing:
-            if (mode == EnumConverterType.ABSORB) {
+            if (mode == EnumConverterMode.ABSORB) {
                 for (int x = -RANGE; x < RANGE; x++) {
                     for (int y = -RANGE; y < RANGE; y++) {
                         for (int z = -RANGE; z < RANGE; z++) {
@@ -75,7 +77,7 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
                     }
                 }
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -2,7 +2,7 @@ package net.reederhome.colin.mods.JAPTA;
 
 import net.minecraft.util.IStringSerializable;
 
-public enum EnumConverterType implements IStringSerializable {
+public enum EnumConverterMode implements IStringSerializable {
     ABSORB("Absorb"),
     DEPLOY("Deploy");
 
@@ -12,12 +12,12 @@ public enum EnumConverterType implements IStringSerializable {
         return name;
     }
 
-    EnumConverterType(String name) {
+    EnumConverterMode(String name) {
         this.name = name;
     }
 
-    public EnumConverterType getOpposite() {
-        switch(this) {
+    public EnumConverterMode getOpposite() {
+        switch (this) {
             case ABSORB:
                 return DEPLOY;
             default:

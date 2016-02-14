@@ -1,7 +1,8 @@
-package net.reederhome.colin.mods.JAPTA;
+package net.reederhome.colin.mods.JAPTA.block;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityCakeConverter;
 
 public class BlockCakeConverter extends BlockConverter {
 

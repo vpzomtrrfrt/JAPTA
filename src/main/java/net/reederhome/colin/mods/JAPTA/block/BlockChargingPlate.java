@@ -1,4 +1,4 @@
-package net.reederhome.colin.mods.JAPTA;
+package net.reederhome.colin.mods.JAPTA.block;
 
 import net.minecraft.block.BlockBasePressurePlate;
 import net.minecraft.block.ITileEntityProvider;
@@ -6,11 +6,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
+import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityChargingPlate;
 
 import java.util.List;
 
@@ -31,18 +32,18 @@ public class BlockChargingPlate extends BlockBasePressurePlate implements ITileE
         return new TileEntityChargingPlate();
     }
 
-    protected List<EntityPlayer> getPlayers(World world, BlockPos pos) {
+    public List<EntityPlayer> getPlayers(World world, BlockPos pos) {
         return world.getEntitiesWithinAABB(EntityPlayer.class, getSensitiveAABB(pos));
     }
 
     @Override
     protected int computeRedstoneStrength(World world, BlockPos pos) {
-        return getPlayers(world, pos).isEmpty()?0:15;
+        return getPlayers(world, pos).isEmpty() ? 0 : 15;
     }
 
     @Override
     protected int getRedstoneStrength(IBlockState state) {
-        return state.getValue(POWERED)?15:0;
+        return state.getValue(POWERED) ? 15 : 0;
     }
 
     @Override
@@ -57,11 +58,11 @@ public class BlockChargingPlate extends BlockBasePressurePlate implements ITileE
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(POWERED)?1:0;
+        return state.getValue(POWERED) ? 1 : 0;
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(POWERED, meta>0);
+        return getDefaultState().withProperty(POWERED, meta > 0);
     }
 }

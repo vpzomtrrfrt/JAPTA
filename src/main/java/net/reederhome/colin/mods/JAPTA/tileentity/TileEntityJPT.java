@@ -1,4 +1,5 @@
-package net.reederhome.colin.mods.JAPTA;
+package net.reederhome.colin.mods.JAPTA.tileentity;
+
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
@@ -21,28 +22,26 @@ public abstract class TileEntityJPT extends TileEntity {
 
     public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate) {
         int tr;
-        if(stored > maxExtract) {
+        if (stored > maxExtract) {
             tr = maxExtract;
-        }
-        else {
+        } else {
             tr = stored;
         }
-        if(!simulate) {
+        if (!simulate) {
             stored -= tr;
         }
         return tr;
     }
 
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
-        int avail = getMaxEnergyStored(from)-getEnergyStored(from);
+        int avail = getMaxEnergyStored(from) - getEnergyStored(from);
         int tr;
-        if(maxReceive < avail) {
+        if (maxReceive < avail) {
             tr = maxReceive;
-        }
-        else {
+        } else {
             tr = avail;
         }
-        if(!simulate) {
+        if (!simulate) {
             stored += tr;
         }
         return tr;
@@ -62,7 +61,7 @@ public abstract class TileEntityJPT extends TileEntity {
 
     public void transmit(EnumFacing side) {
         TileEntity te = worldObj.getTileEntity(getPos().offset(side));
-        if(te instanceof IEnergyReceiver) {
+        if (te instanceof IEnergyReceiver) {
             stored -= ((IEnergyReceiver) te).receiveEnergy(side.getOpposite(), stored, false);
         }
     }
@@ -72,8 +71,8 @@ public abstract class TileEntityJPT extends TileEntity {
     }
 
     public void transmit() {
-        for(int i = 0; i < 6; i++) {
-            if(stored == 0) {
+        for (int i = 0; i < 6; i++) {
+            if (stored == 0) {
                 break;
             }
             transmit(i);

@@ -21,7 +21,7 @@ public class JAPTAClient {
     }
 
     public static void registerItem(Item item, String name) {
-        registerItem(item, 0, new ModelResourceLocation(JAPTA.MODID+":"+name, "inventory"));
+        registerItem(item, 0, new ModelResourceLocation(JAPTA.MODID + ":" + name, "inventory"));
     }
 
     public static void registerBlock(Block block, String name) {
