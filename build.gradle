@@ -14,8 +14,8 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
-
 apply plugin: 'forge'
+apply plugin: 'curseforge'
 
 version = "0.7.5"
 group= "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -68,4 +68,11 @@ repositories {
 
 dependencies {
   compile "info.amerifrance.guideapi:Guide-API:1.7.10-1.0.1-22:deobf"
+}
+
+curse {
+    apiKey = System.env.CURSE_API_KEY != null ? "$System.env.CURSE_API_KEY" : ''
+    projectId = '241891'
+    addGameVersion '1.7.10'
+    releaseType = 'beta'
 }
