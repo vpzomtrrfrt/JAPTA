@@ -1,5 +1,5 @@
 {
-	"parent": "japta:block/chargingPlate_inventory",
+	"parent": "japta:block/elevatorTop",
 	"display": {
 		"thirdperson": {
 			"rotation": [ 10, -45, 170 ],

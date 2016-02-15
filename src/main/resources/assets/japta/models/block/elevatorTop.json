@@ -1,0 +1,6 @@
+{
+	"parent": "japta:block/elevatorShaft",
+	"textures": {
+		"top": "japta:blocks/elevatorTop"
+	}
+}

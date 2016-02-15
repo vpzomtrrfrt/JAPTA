@@ -11,6 +11,8 @@ public class JAPTAClient {
         registerBlock(JAPTA.cakeConverter, "cakeConverter");
         registerBlock(JAPTA.fluxHopper, "fluxHopper");
         registerBlock(JAPTA.chargingPlate, "chargingPlate");
+        registerBlock(JAPTA.elevatorShaft, "elevatorShaft");
+        registerBlock(JAPTA.elevatorTop, "elevatorTop");
 
         registerItem(JAPTA.rfMeter, "rfMeter");
         registerItem(JAPTA.batteryPotato, "batteryPotato");

@@ -1,0 +1,56 @@
+{
+	"textures": {
+		"all": "japta:blocks/elevatorShaft",
+		"top": "japta:blocks/elevatorShaft"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [15, 16, 1],
+			"faces": {
+				"up": {"texture": "#top"},
+				"down": {"texture": "#all"},
+				"east": {"texture": "#all"},
+				"west": {"texture": "#all"},
+				"north": {"texture": "#all"},
+				"south": {"texture": "#all"}
+			}
+		},
+		{
+			"from": [15, 0, 0],
+			"to": [16, 16, 15],
+			"faces": {
+				"up": {"texture": "#top"},
+				"down": {"texture": "#all"},
+				"east": {"texture": "#all"},
+				"west": {"texture": "#all"},
+				"north": {"texture": "#all"},
+				"south": {"texture": "#all"}
+			}
+		},
+		{
+			"from": [1, 0, 15],
+			"to": [16, 16, 16],
+			"faces": {
+				"up": {"texture": "#top"},
+				"down": {"texture": "#all"},
+				"east": {"texture": "#all"},
+				"west": {"texture": "#all"},
+				"north": {"texture": "#all"},
+				"south": {"texture": "#all"}
+			}
+		},
+		{
+			"from": [0, 0, 1],
+			"to": [1, 16, 16],
+			"faces": {
+				"up": {"texture": "#top"},
+				"down": {"texture": "#all"},
+				"east": {"texture": "#all"},
+				"west": {"texture": "#all"},
+				"north": {"texture": "#all"},
+				"south": {"texture": "#all"}
+			}
+		}
+	]
+}
