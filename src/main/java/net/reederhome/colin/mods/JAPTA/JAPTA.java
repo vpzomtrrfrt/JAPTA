@@ -1,11 +1,20 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -68,12 +77,40 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityChargingPlate.class, "ChargingPlate");
         GameRegistry.registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
 
-        config.save();
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Mod.EventHandler
     @SideOnly(Side.CLIENT)
     public void clientInit(FMLInitializationEvent ev) {
         JAPTAClient.registerClientThings();
+
+        if(config.get("Enable Version Checker", "misc", true, "").getBoolean()) {
+            new Thread(new UpdateCheckThread(Loader.instance().activeModContainer().getVersion())).start();
+        }
+    }
+
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent ev) {
+        config.save();
+    }
+
+    private boolean notified = false;
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void onTick(TickEvent ev) {
+        if(!notified && UpdateCheckThread.ret != null) {
+            if(UpdateCheckThread.ret.equals("update")) {
+                EntityPlayer p = Minecraft.getMinecraft().thePlayer;
+                if(p != null) {
+                    p.addChatComponentMessage(new ChatComponentTranslation("text.japta.newversion"));
+                    notified = true;
+                }
+            }
+            else {
+                notified = true;
+            }
+        }
     }
 }
