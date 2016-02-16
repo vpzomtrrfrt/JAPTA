@@ -3,7 +3,7 @@ jdk:
 - oraclejdk7
 before_deploy:
   - ./gradlew build
-  - export THE_JAR=$(ls build/libs/JAPTA*.jar)
+  - export THE_JAR=$(ls build/libs/JAPTA*.jar | head -n 1)
   - echo "found $THE_JAR for deploying"
 deploy:
   - provider: releases
