@@ -3,7 +3,10 @@ package net.reederhome.colin.mods.JAPTA;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -18,6 +21,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.reederhome.colin.mods.JAPTA.block.*;
 import net.reederhome.colin.mods.JAPTA.item.ItemBatteryPotato;
 import net.reederhome.colin.mods.JAPTA.item.ItemRFMeter;
@@ -76,6 +81,15 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
         GameRegistry.registerTileEntity(TileEntityChargingPlate.class, "ChargingPlate");
         GameRegistry.registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', "dustRedstone"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(elevatorTop, "grg", "rer", "rsr", 'r', "dustRedstone", 'e', Items.ender_pearl, 's', elevatorShaft, 'g', "nuggetGold"));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", 'n', "nuggetGold", 'd', "dustRedstone"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
 
         MinecraftForge.EVENT_BUS.register(this);
     }
