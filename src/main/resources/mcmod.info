@@ -1,8 +1,8 @@
 [
 {
-  "modid": "JAPTA",
+  "modid": "japta",
   "name": "JAPTA",
-  "description": "A little mod I'm making",
+  "description": "A few neat blocks and items for RF",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "authorList": ["VpzomTrrfrt"]
