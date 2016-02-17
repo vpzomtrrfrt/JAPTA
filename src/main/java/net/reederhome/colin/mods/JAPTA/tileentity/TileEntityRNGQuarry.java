@@ -42,7 +42,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
                 IBlockState state = worldObj.getBlockState(cp);
                 int thl = 0;
                 if (item != null) {
-                    thl = Math.min(thl, item.getItem().getHarvestLevel(item, state.getBlock().getHarvestTool(state)));
+                    thl = Math.max(thl, item.getItem().getHarvestLevel(item, state.getBlock().getHarvestTool(state)));
                 }
                 int bhl = state.getBlock().getHarvestLevel(state);
                 if (thl >= bhl && state.getBlock().getBlockHardness(worldObj, cp) != -1) {
