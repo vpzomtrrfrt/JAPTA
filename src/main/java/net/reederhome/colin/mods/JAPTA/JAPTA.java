@@ -99,6 +99,10 @@ public class JAPTA {
         GameRegistry.addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', "dustRedstone"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
         GameRegistry.addRecipe(new ShapedOreRecipe(elevatorTop, "grg", "rer", "rsr", 'r', "dustRedstone", 'e', Items.ender_pearl, 's', elevatorShaft, 'g', "nuggetGold"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(fluxBlaster, "grg", "rir", "grg", 'g', "nuggetGold", 'r', "dustRedstone", 'i', "ingotIron"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(itemBlaster, "grg", "rcr", "grg", 'g', "nuggetGold", 'r', "dustRedstone", 'c', "chest"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "PgS", 's', "stone", 'i', "ingotIron", 'r', "dustRedstone", 'P', Items.wooden_pickaxe, 'g', "ingotGold", 'S', Items.wooden_shovel));
+        GameRegistry.addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', "chest", 'o', Blocks.obsidian));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", 'n', "nuggetGold", 'd', "dustRedstone"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
