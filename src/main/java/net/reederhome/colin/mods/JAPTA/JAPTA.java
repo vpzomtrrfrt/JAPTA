@@ -47,6 +47,8 @@ public class JAPTA {
     public static BlockChargingPlate chargingPlate;
     public static BlockElevatorShaft elevatorShaft;
     public static BlockElevatorTop elevatorTop;
+    public static BlockFluxBlaster fluxBlaster;
+    public static BlockItemBlaster itemBlaster;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -64,6 +66,8 @@ public class JAPTA {
         chargingPlate = new BlockChargingPlate();
         elevatorShaft = new BlockElevatorShaft();
         elevatorTop = new BlockElevatorTop();
+        fluxBlaster = new BlockFluxBlaster();
+        itemBlaster = new BlockItemBlaster();
 
         rfMeter = new ItemRFMeter();
         batteryPotato = new ItemBatteryPotato();
@@ -73,6 +77,8 @@ public class JAPTA {
         GameRegistry.registerBlock(chargingPlate, "chargingPlate");
         GameRegistry.registerBlock(elevatorShaft, "elevatorShaft");
         GameRegistry.registerBlock(elevatorTop, "elevatorTop");
+        GameRegistry.registerBlock(fluxBlaster, "fluxBlaster");
+        GameRegistry.registerBlock(itemBlaster, "itemBlaster");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
@@ -81,6 +87,8 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
         GameRegistry.registerTileEntity(TileEntityChargingPlate.class, "ChargingPlate");
         GameRegistry.registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
+        GameRegistry.registerTileEntity(TileEntityFluxBlaster.class, "FluxBlaster");
+        GameRegistry.registerTileEntity(TileEntityItemBlaster.class, "ItemBlaster");
 
         GameRegistry.addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
         GameRegistry.addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));

@@ -12,6 +12,7 @@ tile.converterCake.name=Cake Converter
 tile.mover.name=Mover
 tile.bonemealApplicator.name=Bonemeal Applicator
 tile.fluxBlaster.name=Flux Blaster
+tile.itemBlaster.name=Item Blaster
 tile.fluxHopper.name=Flux Hopper
 item.batteryPotato.name=Battery Potato
 item.rfMeter.name=RF Meter
