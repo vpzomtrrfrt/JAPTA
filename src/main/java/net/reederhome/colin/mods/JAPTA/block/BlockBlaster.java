@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 public abstract class BlockBlaster extends BlockContainer {
 
@@ -24,6 +25,8 @@ public abstract class BlockBlaster extends BlockContainer {
         super(Material.rock);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         setUnlocalizedName(getBlasterType()+"Blaster");
+        setHardness(1);
+        setCreativeTab(JAPTA.tab);
     }
 
     protected abstract String getBlasterType();

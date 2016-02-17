@@ -15,6 +15,7 @@ public class JAPTAClient {
         registerBlock(JAPTA.elevatorTop, "elevatorTop");
         registerBlock(JAPTA.fluxBlaster, "fluxBlaster");
         registerBlock(JAPTA.itemBlaster, "itemBlaster");
+        registerBlock(JAPTA.rngQuarry, "rngQuarry");
 
         registerItem(JAPTA.rfMeter, "rfMeter");
         registerItem(JAPTA.batteryPotato, "batteryPotato");

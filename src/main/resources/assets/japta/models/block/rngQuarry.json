@@ -1,0 +1,11 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "japta:blocks/rngQuarryTop",
+		"up": "japta:blocks/rngQuarryTop",
+		"north": "japta:blocks/rngQuarry",
+		"south": "japta:blocks/rngQuarry",
+		"east": "japta:blocks/rngQuarry",
+		"west": "japta:blocks/rngQuarry"
+	}
+}

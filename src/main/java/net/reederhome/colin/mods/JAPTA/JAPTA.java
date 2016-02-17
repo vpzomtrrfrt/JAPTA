@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -26,10 +25,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.reederhome.colin.mods.JAPTA.block.*;
 import net.reederhome.colin.mods.JAPTA.item.ItemBatteryPotato;
 import net.reederhome.colin.mods.JAPTA.item.ItemRFMeter;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityCakeConverter;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityChargingPlate;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityElevatorTop;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityFluxHopper;
+import net.reederhome.colin.mods.JAPTA.tileentity.*;
 
 @Mod(name = "JAPTA", modid = JAPTA.MODID)
 public class JAPTA {
@@ -49,6 +45,7 @@ public class JAPTA {
     public static BlockElevatorTop elevatorTop;
     public static BlockFluxBlaster fluxBlaster;
     public static BlockItemBlaster itemBlaster;
+    public static BlockRNGQuarry rngQuarry;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -68,6 +65,7 @@ public class JAPTA {
         elevatorTop = new BlockElevatorTop();
         fluxBlaster = new BlockFluxBlaster();
         itemBlaster = new BlockItemBlaster();
+        rngQuarry = new BlockRNGQuarry();
 
         rfMeter = new ItemRFMeter();
         batteryPotato = new ItemBatteryPotato();
@@ -79,6 +77,7 @@ public class JAPTA {
         GameRegistry.registerBlock(elevatorTop, "elevatorTop");
         GameRegistry.registerBlock(fluxBlaster, "fluxBlaster");
         GameRegistry.registerBlock(itemBlaster, "itemBlaster");
+        GameRegistry.registerBlock(rngQuarry, "rngQuarry");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
@@ -89,6 +88,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
         GameRegistry.registerTileEntity(TileEntityFluxBlaster.class, "FluxBlaster");
         GameRegistry.registerTileEntity(TileEntityItemBlaster.class, "ItemBlaster");
+        GameRegistry.registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
 
         GameRegistry.addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
         GameRegistry.addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));

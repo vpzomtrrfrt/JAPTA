@@ -1,4 +1,4 @@
-package net.reederhome.colin.mods.JAPTA.block;
+package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -10,6 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.*;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
+import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
 
 public class TileEntityItemBlaster extends TileEntity implements IInventory, ITickable {
 
