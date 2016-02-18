@@ -1,7 +1,7 @@
 {
     "variants": {
-        "facing=down":  { "model": "japta:itemBlaster", "x": 180 },
-        "facing=up":    { "model": "japta:itemBlaster" },
+        "facing=down":  { "model": "japta:itemBlaster", "x": 90 },
+        "facing=up":    { "model": "japta:itemBlaster", "x": 270 },
         "facing=north": { "model": "japta:itemBlaster" },
         "facing=south": { "model": "japta:itemBlaster", "y": 180 },
         "facing=west":  { "model": "japta:itemBlaster", "y": 270 },

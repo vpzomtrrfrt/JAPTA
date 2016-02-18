@@ -1,0 +1,8 @@
+{
+	"parent": "block/piston",
+	"textures": {
+		"bottom": "japta:blocks/machineBase",
+		"side": "japta:blocks/moverSide",
+		"platform": "japta:blocks/moverFront"
+	}
+}

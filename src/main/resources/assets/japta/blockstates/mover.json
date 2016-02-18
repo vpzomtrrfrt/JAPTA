@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"facing=up": {"model": "japta:mover", "x": 270},
+		"facing=down": {"model": "japta:mover", "x": 90},
+		"facing=north": {"model": "japta:mover"},
+		"facing=south": {"model": "japta:mover", "y": 180},
+		"facing=west": {"model": "japta:mover", "y": 270},
+		"facing=east": {"model": "japta:mover", "y": 90}
+	}
+}
