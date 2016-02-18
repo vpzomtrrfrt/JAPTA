@@ -48,6 +48,7 @@ public class JAPTA {
     public static BlockRNGQuarry rngQuarry;
     public static BlockChestCharger chestCharger;
     public static BlockMover mover;
+    public static BlockBonemealApplicator bonemealApplicator;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -70,6 +71,8 @@ public class JAPTA {
         rngQuarry = new BlockRNGQuarry();
         chestCharger = new BlockChestCharger();
         mover = new BlockMover();
+        bonemealApplicator = new BlockBonemealApplicator();
+
 
         rfMeter = new ItemRFMeter();
         batteryPotato = new ItemBatteryPotato();
@@ -84,6 +87,7 @@ public class JAPTA {
         GameRegistry.registerBlock(rngQuarry, "rngQuarry");
         GameRegistry.registerBlock(chestCharger, "chestCharger");
         GameRegistry.registerBlock(mover, "mover");
+        GameRegistry.registerBlock(bonemealApplicator, "bonemealApplicator");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
@@ -97,6 +101,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
         GameRegistry.registerTileEntity(TileEntityChestCharger.class, "ChestCharger");
         GameRegistry.registerTileEntity(TileEntityMover.class, "Mover");
+        GameRegistry.registerTileEntity(TileEntityBonemealApplicator.class, "BonemealApplicator");
 
         GameRegistry.addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
         GameRegistry.addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));

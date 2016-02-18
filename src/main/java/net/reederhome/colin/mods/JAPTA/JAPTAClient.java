@@ -18,6 +18,7 @@ public class JAPTAClient {
         registerBlock(JAPTA.rngQuarry, "rngQuarry");
         registerBlock(JAPTA.chestCharger, "chestCharger");
         registerBlock(JAPTA.mover, "mover");
+        registerBlock(JAPTA.bonemealApplicator, "bonemealApplicator");
 
         registerItem(JAPTA.rfMeter, "rfMeter");
         registerItem(JAPTA.batteryPotato, "batteryPotato");
