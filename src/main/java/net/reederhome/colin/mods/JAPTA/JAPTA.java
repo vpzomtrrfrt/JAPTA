@@ -112,6 +112,8 @@ public class JAPTA {
         GameRegistry.addRecipe(new ShapedOreRecipe(itemBlaster, "grg", "rcr", "grg", 'g', "nuggetGold", 'r', "dustRedstone", 'c', "chest"));
         GameRegistry.addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "PgS", 's', "stone", 'i', "ingotIron", 'r', "dustRedstone", 'P', Items.wooden_pickaxe, 'g', "ingotGold", 'S', Items.wooden_shovel));
         GameRegistry.addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', "chest", 'o', Blocks.obsidian));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(mover, 4), "rgr", "gpg", "rgr", 'r', "dustRedstone", 'g', "nuggetGold", 'p', Blocks.piston));
+        GameRegistry.addRecipe(new ShapedOreRecipe(bonemealApplicator, "gbg", "brb", "gbg", 'g', "nuggetGold", 'r', "dustRedstone", 'b', new ItemStack(Items.dye, 1, 15)));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", 'n', "nuggetGold", 'd', "dustRedstone"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
