@@ -15,8 +15,8 @@ import net.minecraft.util.ITickable;
 import java.util.Random;
 
 public class TileEntityBonemealApplicator extends TileEntityJPT implements IEnergyReceiver, ITickable {
-    public static final int USE = 100;
-    public static final int RANGE = 4;
+    public static int USE = 100;
+    public static int RANGE = 4;
 
     @Override
     public int getMaxEnergyStored(EnumFacing from) {

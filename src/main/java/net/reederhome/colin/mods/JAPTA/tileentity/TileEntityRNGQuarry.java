@@ -20,7 +20,7 @@ import java.util.Random;
 
 public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceiver, ITickable {
 
-    public static final int RANGE = 8;
+    public static int RANGE = 8;
     public static final int USE = 500;
 
     public ItemStack item = null;

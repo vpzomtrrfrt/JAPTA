@@ -16,7 +16,7 @@ import net.reederhome.colin.mods.JAPTA.JAPTA;
 public abstract class BlockBlaster extends BlockContainer {
 
     public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
-    public static final int RANGE = 8;
+    public static int RANGE = 8;
 
     @Override
     public abstract TileEntity createNewTileEntity(World worldIn, int meta);

@@ -14,8 +14,8 @@ import java.util.List;
 
 public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyReceiver, ITickable {
 
-    public static final int USE_BASE = 1000;
-    public static final int USE_EXTRA = 100;
+    public static int USE_BASE = 1000;
+    public static int USE_EXTRA = 100;
 
     @Override
     public int getMaxEnergyStored(EnumFacing from) {

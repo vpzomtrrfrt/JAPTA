@@ -13,8 +13,8 @@ import net.reederhome.colin.mods.JAPTA.EnumConverterMode;
 import net.reederhome.colin.mods.JAPTA.block.BlockConverter;
 
 public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyProvider, IEnergyReceiver, ITickable {
-    public static final int RANGE = 4;
-    public static final int BITE_VALUE = 18000;
+    public static int RANGE = 4;
+    public static int BITE_VALUE = 18000;
 
     @Override
     public int getMaxEnergyStored(EnumFacing from) {

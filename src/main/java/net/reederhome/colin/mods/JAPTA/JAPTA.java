@@ -7,6 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -103,20 +104,30 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityMover.class, "Mover");
         GameRegistry.registerTileEntity(TileEntityBonemealApplicator.class, "BonemealApplicator");
 
-        GameRegistry.addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', "dustRedstone"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(elevatorTop, "grg", "rer", "rsr", 'r', "dustRedstone", 'e', Items.ender_pearl, 's', elevatorShaft, 'g', "nuggetGold"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(fluxBlaster, "grg", "rir", "grg", 'g', "nuggetGold", 'r', "dustRedstone", 'i', "ingotIron"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(itemBlaster, "grg", "rcr", "grg", 'g', "nuggetGold", 'r', "dustRedstone", 'c', "chest"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "PgS", 's', "stone", 'i', "ingotIron", 'r', "dustRedstone", 'P', Items.wooden_pickaxe, 'g', "ingotGold", 'S', Items.wooden_shovel));
-        GameRegistry.addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', "chest", 'o', Blocks.obsidian));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(mover, 4), "rgr", "gpg", "rgr", 'r', "dustRedstone", 'g', "nuggetGold", 'p', Blocks.piston));
-        GameRegistry.addRecipe(new ShapedOreRecipe(bonemealApplicator, "gbg", "brb", "gbg", 'g', "nuggetGold", 'r', "dustRedstone", 'b', new ItemStack(Items.dye, 1, 15)));
+        addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
+        addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
+        addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', "dustRedstone"));
+        addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
+        addRecipe(new ShapedOreRecipe(elevatorTop, "grg", "rer", "rsr", 'r', "dustRedstone", 'e', Items.ender_pearl, 's', elevatorShaft, 'g', "nuggetGold"));
+        addRecipe(new ShapedOreRecipe(fluxBlaster, "grg", "rir", "grg", 'g', "nuggetGold", 'r', "dustRedstone", 'i', "ingotIron"));
+        addRecipe(new ShapedOreRecipe(itemBlaster, "grg", "rcr", "grg", 'g', "nuggetGold", 'r', "dustRedstone", 'c', "chest"));
+        addRecipe(new ShapedOreRecipe(rngQuarry, "s s", "iri", "PgS", 's', "stone", 'i', "ingotIron", 'r', "dustRedstone", 'P', Items.wooden_pickaxe, 'g', "ingotGold", 'S', Items.wooden_shovel));
+        addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', "chest", 'o', Blocks.obsidian));
+        addRecipe(new ShapedOreRecipe(new ItemStack(mover, 4), "rgr", "gpg", "rgr", 'r', "dustRedstone", 'g', "nuggetGold", 'p', Blocks.piston));
+        addRecipe(new ShapedOreRecipe(bonemealApplicator, "gbg", "brb", "gbg", 'g', "nuggetGold", 'r', "dustRedstone", 'b', new ItemStack(Items.dye, 1, 15)));
 
-        GameRegistry.addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", 'n', "nuggetGold", 'd', "dustRedstone"));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
+        addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", 'n', "nuggetGold", 'd', "dustRedstone"));
+        addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
+
+        BlockBlaster.RANGE = config.get("machines.blaster", "range", BlockBlaster.RANGE).getInt();
+        TileEntityRNGQuarry.RANGE = config.get("machines.rngQuarry", "range", TileEntityRNGQuarry.RANGE).getInt();
+        TileEntityBonemealApplicator.RANGE = config.get("machines.bonemealApplicator", "range", TileEntityBonemealApplicator.RANGE).getInt();
+        TileEntityBonemealApplicator.USE = config.get("machines.bonemealApplicator", "cost", TileEntityBonemealApplicator.USE).getInt();
+        TileEntityCakeConverter.RANGE = config.get("machines.cakeConverter", "range", TileEntityCakeConverter.RANGE).getInt();
+        TileEntityCakeConverter.BITE_VALUE = config.get("machines.cakeConverter", "biteValue", TileEntityCakeConverter.BITE_VALUE).getInt();
+        TileEntityElevatorTop.USE_BASE = config.get("machines.elevator", "baseCost", TileEntityElevatorTop.USE_BASE).getInt();
+        TileEntityElevatorTop.USE_EXTRA = config.get("machines.elevator", "costPerBlock", TileEntityElevatorTop.USE_EXTRA).getInt();
+        TileEntityMover.USE = config.get("machines.mover", "cost", TileEntityMover.USE).getInt();
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -126,7 +137,7 @@ public class JAPTA {
     public void clientInit(FMLInitializationEvent ev) {
         JAPTAClient.registerClientThings();
 
-        if(config.get("Enable Version Checker", "misc", true, "").getBoolean()) {
+        if(config.get("misc", "Enable Version Checker", true, "").getBoolean()) {
             new Thread(new UpdateCheckThread(Loader.instance().activeModContainer().getVersion())).start();
         }
     }
@@ -152,6 +163,24 @@ public class JAPTA {
             else {
                 notified = true;
             }
+        }
+    }
+
+    public void addRecipe(IRecipe recipe) {
+        addRecipe(recipe, recipe.getRecipeOutput());
+    }
+
+    public void addRecipe(IRecipe recipe, ItemStack stack) {
+        addRecipe(recipe, stack.getDisplayName());
+    }
+
+    public void addRecipe(IRecipe recipe, String name) {
+        addRecipe(recipe, name, true);
+    }
+
+    public void addRecipe(IRecipe recipe, String name, boolean defaultEnabled) {
+        if(config.get("recipes", name, defaultEnabled, "").getBoolean()) {
+            GameRegistry.addRecipe(recipe);
         }
     }
 }

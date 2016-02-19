@@ -13,7 +13,7 @@ import net.reederhome.colin.mods.JAPTA.block.BlockMover;
 import java.util.List;
 
 public class TileEntityMover extends TileEntityJPT implements IEnergyReceiver, ITickable {
-    public static final int USE = 40;
+    public static int USE = 40;
 
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
