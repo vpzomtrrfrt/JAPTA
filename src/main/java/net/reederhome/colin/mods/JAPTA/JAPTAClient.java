@@ -20,6 +20,10 @@ public class JAPTAClient {
         registerBlock(JAPTA.mover, "mover");
         registerBlock(JAPTA.bonemealApplicator, "bonemealApplicator");
 
+        for(int i = 0; i < 16; i++) {
+            registerBlock(JAPTA.powerCabinet, i, "powerCabinet"+i);
+        }
+
         registerItem(JAPTA.rfMeter, "rfMeter");
         registerItem(JAPTA.batteryPotato, "batteryPotato");
     }
@@ -28,11 +32,19 @@ public class JAPTAClient {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, meta, loc);
     }
 
+    public static void registerItem(Item item, int meta, String name) {
+        registerItem(item, meta, new ModelResourceLocation(JAPTA.MODID + ":" + name, "inventory"));
+    }
+
     public static void registerItem(Item item, String name) {
-        registerItem(item, 0, new ModelResourceLocation(JAPTA.MODID + ":" + name, "inventory"));
+        registerItem(item, 0, name);
     }
 
     public static void registerBlock(Block block, String name) {
-        registerItem(Item.getItemFromBlock(block), name);
+        registerBlock(block, 0, name);
+    }
+
+    public static void registerBlock(Block block, int meta, String name) {
+        registerItem(Item.getItemFromBlock(block), meta, name);
     }
 }

@@ -50,6 +50,8 @@ public class JAPTA {
     public static BlockChestCharger chestCharger;
     public static BlockMover mover;
     public static BlockBonemealApplicator bonemealApplicator;
+    public static BlockPowerCabinet powerCabinet;
+    public static BlockPowerCabinetBase powerCabinetBase;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -73,7 +75,8 @@ public class JAPTA {
         chestCharger = new BlockChestCharger();
         mover = new BlockMover();
         bonemealApplicator = new BlockBonemealApplicator();
-
+        powerCabinet = new BlockPowerCabinet();
+        powerCabinetBase = new BlockPowerCabinetBase();
 
         rfMeter = new ItemRFMeter();
         batteryPotato = new ItemBatteryPotato();
@@ -89,6 +92,8 @@ public class JAPTA {
         GameRegistry.registerBlock(chestCharger, "chestCharger");
         GameRegistry.registerBlock(mover, "mover");
         GameRegistry.registerBlock(bonemealApplicator, "bonemealApplicator");
+        GameRegistry.registerBlock(powerCabinetBase, "powerCabinetBase");
+        GameRegistry.registerBlock(powerCabinet, "powerCabinet");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
@@ -103,6 +108,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityChestCharger.class, "ChestCharger");
         GameRegistry.registerTileEntity(TileEntityMover.class, "Mover");
         GameRegistry.registerTileEntity(TileEntityBonemealApplicator.class, "BonemealApplicator");
+        GameRegistry.registerTileEntity(TileEntityPowerCabinetBase.class, "PowerCabinetBase");
 
         addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
         addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));

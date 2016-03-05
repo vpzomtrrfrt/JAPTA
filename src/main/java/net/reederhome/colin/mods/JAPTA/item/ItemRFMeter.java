@@ -25,13 +25,16 @@ public class ItemRFMeter extends Item {
         if (!world.isRemote) {
             TileEntity te = world.getTileEntity(pos);
             int value = -2;
+            int max = -1;
             if (te instanceof IEnergyReceiver) {
                 value = ((IEnergyReceiver) te).getEnergyStored(side);
+                max = ((IEnergyReceiver) te).getMaxEnergyStored(side);
             } else if (te instanceof IEnergyProvider) {
                 value = ((IEnergyProvider) te).getEnergyStored(side);
+                max = ((IEnergyProvider) te).getMaxEnergyStored(side);
             }
             if (value != -2) {
-                player.addChatComponentMessage(new ChatComponentTranslation("text.japta.rfmeter.rf", value));
+                player.addChatComponentMessage(new ChatComponentTranslation("text.japta.rfmeter.rf", value, max));
             } else {
                 player.addChatComponentMessage(new ChatComponentTranslation("text.japta.rfmeter.no"));
             }

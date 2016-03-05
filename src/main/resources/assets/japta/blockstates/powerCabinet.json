@@ -1,0 +1,20 @@
+{
+	"variants": {
+		"value=0": {"model": "japta:powerCabinet0"},
+		"value=1": {"model": "japta:powerCabinet1"},
+		"value=2": {"model": "japta:powerCabinet2"},
+		"value=3": {"model": "japta:powerCabinet3"},
+		"value=4": {"model": "japta:powerCabinet4"},
+		"value=5": {"model": "japta:powerCabinet5"},
+		"value=6": {"model": "japta:powerCabinet6"},
+		"value=7": {"model": "japta:powerCabinet7"},
+		"value=8": {"model": "japta:powerCabinet8"},
+		"value=9": {"model": "japta:powerCabinet9"},
+		"value=10": {"model": "japta:powerCabinet10"},
+		"value=11": {"model": "japta:powerCabinet11"},
+		"value=12": {"model": "japta:powerCabinet12"},
+		"value=13": {"model": "japta:powerCabinet13"},
+		"value=14": {"model": "japta:powerCabinet14"},
+		"value=15": {"model": "japta:powerCabinet15"}
+	}
+}

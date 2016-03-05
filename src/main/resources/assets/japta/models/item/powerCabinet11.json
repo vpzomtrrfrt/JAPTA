@@ -1,0 +1,10 @@
+{
+	"parent": "japta:block/powerCabinet11",
+	"display": {
+		"thirdperson": {
+			"rotation": [ 111, -45, 1711 ],
+			"translation": [ 11, 1.5, -2.75 ],
+			"scale": [ 11.375, 11.375, 11.375 ]
+		}
+	}
+}
