@@ -145,7 +145,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     @Override
     public void update() {
         if(cooldown <= 0) {
-            EnumFacing facing = worldObj.getBlockState(getPos()).getValue(BlockBlaster.FACING);
+            EnumFacing facing = JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockBlaster.FACING);
             for (int i = 1; i <= BlockBlaster.RANGE; i++) {
                 BlockPos cp = getPos().offset(facing, i);
                 while (worldObj.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {

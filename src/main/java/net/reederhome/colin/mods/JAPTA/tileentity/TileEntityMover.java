@@ -8,6 +8,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockMover;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class TileEntityMover extends TileEntityJPT implements IEnergyReceiver, I
     public void update() {
         long time = worldObj.getTotalWorldTime();
         BlockPos me = getPos();
-        EnumFacing facing = worldObj.getBlockState(me).getValue(BlockMover.FACING);
+        EnumFacing facing = JAPTA.safeGetValue(worldObj.getBlockState(me), BlockMover.FACING);
         transmit(facing);
         BlockPos front = me.offset(facing);
         List<Entity> l = worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.fromBounds(me.getX(), me.getY()+1, me.getZ(), me.getX()+1, me.getY()+2, me.getZ()+1));
