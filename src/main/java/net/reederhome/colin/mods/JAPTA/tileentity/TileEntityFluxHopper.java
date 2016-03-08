@@ -5,6 +5,7 @@ import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockFluxHopper;
 
 public class TileEntityFluxHopper extends TileEntityJPT implements IEnergyReceiver, IEnergyProvider, ITickable {
@@ -23,7 +24,7 @@ public class TileEntityFluxHopper extends TileEntityJPT implements IEnergyReceiv
             }
         }
         if (stored > 0) {
-            EnumFacing facing = worldObj.getBlockState(getPos()).getValue(BlockFluxHopper.FACING);
+            EnumFacing facing = JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockFluxHopper.FACING);
             TileEntity target = worldObj.getTileEntity(getPos().offset(facing));
             if (target instanceof IEnergyReceiver) {
                 stored -= ((IEnergyReceiver) target).receiveEnergy(facing.getOpposite(), stored, false);

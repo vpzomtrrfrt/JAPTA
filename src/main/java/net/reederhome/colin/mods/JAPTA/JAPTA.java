@@ -1,5 +1,7 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -181,6 +183,22 @@ public class JAPTA {
     public void addRecipe(IRecipe recipe, String name, boolean defaultEnabled) {
         if(config.get("recipes", name, defaultEnabled, "").getBoolean()) {
             GameRegistry.addRecipe(recipe);
+        }
+    }
+
+    public static<T extends Comparable<T>> T safeGetValue(IBlockState state, IProperty<T> prop) {
+        T tr = null;
+        try {
+            tr = state.getValue(prop);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        if(tr == null) {
+            // hopefully this won't happen, but it seems it does
+            return prop.getAllowedValues().iterator().next();
+        }
+        else {
+            return tr;
         }
     }
 }

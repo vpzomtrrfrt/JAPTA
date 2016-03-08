@@ -18,7 +18,7 @@ public class TileEntityFluxBlaster extends TileEntityJPT implements IEnergyRecei
     @Override
     public void update() {
         if(stored > 0) {
-            EnumFacing facing = worldObj.getBlockState(getPos()).getValue(BlockBlaster.FACING);
+            EnumFacing facing = JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockBlaster.FACING);
             for(int i = 1; i <= BlockBlaster.RANGE; i++) {
                 BlockPos cp = getPos().offset(facing, i);
                 while(worldObj.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {

@@ -10,6 +10,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.EnumConverterMode;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockConverter;
 
 public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyProvider, IEnergyReceiver, ITickable {
@@ -26,7 +27,7 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
         if (worldObj.isRemote) return;
         IBlockState me = worldObj.getBlockState(getPos());
         try {
-            EnumConverterMode mode = me.getValue(BlockConverter.MODE);
+            EnumConverterMode mode = JAPTA.safeGetValue(me, BlockConverter.MODE);
             dancing:
             if (mode == EnumConverterMode.ABSORB) {
                 for (int x = -RANGE; x < RANGE; x++) {
@@ -84,6 +85,11 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
 
     @Override
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
-        return false;
+        return oldState.getBlock() != newSate.getBlock();
+    }
+
+    public TileEntityCakeConverter() {
+        super();
+        System.out.println("new cake converter");
     }
 }
