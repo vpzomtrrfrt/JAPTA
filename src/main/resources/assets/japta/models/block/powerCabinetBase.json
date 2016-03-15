@@ -2,6 +2,6 @@
 	"parent": "block/cube_column",
 	"textures": {
 		"end": "japta:blocks/machineBase",
-		"side": "japta:blocks/powerCabinet1"
+		"side": "japta:blocks/powerCabinetBase"
 	}
 }

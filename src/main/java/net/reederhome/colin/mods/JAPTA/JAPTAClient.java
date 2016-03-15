@@ -19,6 +19,7 @@ public class JAPTAClient {
         registerBlock(JAPTA.chestCharger, "chestCharger");
         registerBlock(JAPTA.mover, "mover");
         registerBlock(JAPTA.bonemealApplicator, "bonemealApplicator");
+        registerBlock(JAPTA.powerCabinetBase, "powerCabinetBase");
 
         for(int i = 0; i < 16; i++) {
             registerBlock(JAPTA.powerCabinet, i, "powerCabinet"+i);

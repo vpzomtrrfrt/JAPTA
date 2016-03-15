@@ -5,6 +5,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 public class BlockPowerCabinet extends Block {
     public static final PropertyInteger VALUE = PropertyInteger.create("value", 0, 15);
@@ -27,5 +32,16 @@ public class BlockPowerCabinet extends Block {
     @Override
     public int getMetaFromState(IBlockState state) {
         return state.getValue(VALUE);
+    }
+
+    @Override
+    public int damageDropped(IBlockState state) {
+        return getMetaFromState(state);
+    }
+
+    @Override
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+        list.add(new ItemStack(itemIn, 1, 0));
+        list.add(new ItemStack(itemIn, 1, 15));
     }
 }

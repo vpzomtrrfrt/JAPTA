@@ -27,6 +27,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.reederhome.colin.mods.JAPTA.block.*;
 import net.reederhome.colin.mods.JAPTA.item.ItemBatteryPotato;
+import net.reederhome.colin.mods.JAPTA.item.ItemBlockPowerCabinet;
 import net.reederhome.colin.mods.JAPTA.item.ItemRFMeter;
 import net.reederhome.colin.mods.JAPTA.tileentity.*;
 
@@ -95,7 +96,7 @@ public class JAPTA {
         GameRegistry.registerBlock(mover, "mover");
         GameRegistry.registerBlock(bonemealApplicator, "bonemealApplicator");
         GameRegistry.registerBlock(powerCabinetBase, "powerCabinetBase");
-        GameRegistry.registerBlock(powerCabinet, "powerCabinet");
+        GameRegistry.registerBlock(powerCabinet, ItemBlockPowerCabinet.class, "powerCabinet");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
