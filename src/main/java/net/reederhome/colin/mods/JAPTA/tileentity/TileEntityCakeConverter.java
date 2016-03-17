@@ -90,6 +90,5 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
 
     public TileEntityCakeConverter() {
         super();
-        System.out.println("new cake converter");
     }
 }
