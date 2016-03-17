@@ -81,14 +81,18 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        item = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Item"));
+        if(tag.hasKey("Item")) {
+            item = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Item"));
+        }
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
-        NBTTagCompound nbt = new NBTTagCompound();
-        item.writeToNBT(nbt);
-        tag.setTag("Item", nbt);
+        if(item != null) {
+            NBTTagCompound nbt = new NBTTagCompound();
+            item.writeToNBT(nbt);
+            tag.setTag("Item", nbt);
+        }
     }
 }
