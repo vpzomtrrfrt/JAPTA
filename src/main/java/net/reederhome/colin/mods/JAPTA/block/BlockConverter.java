@@ -3,12 +3,15 @@ package net.reederhome.colin.mods.JAPTA.block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.EnumConverterMode;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
@@ -25,8 +28,8 @@ public abstract class BlockConverter extends BlockContainer {
     }
 
     @Override
-    public BlockState createBlockState() {
-        return new BlockState(this, MODE);
+    public BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, MODE);
     }
 
     @Override
@@ -44,12 +47,12 @@ public abstract class BlockConverter extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer p, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer p, EnumHand hand, ItemStack stack, EnumFacing p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_, float p_onBlockActivated_10_) {
         if (!w.isRemote) {
             EnumConverterMode mode = state.getValue(MODE);
             mode = mode.getOpposite();
             w.setBlockState(pos, state.withProperty(MODE, mode));
-            p.addChatComponentMessage(new ChatComponentTranslation("text.japta.converter.mode", getModeName(mode), getConverterType()));
+            p.addChatComponentMessage(new TextComponentTranslation("text.japta.converter.mode", getModeName(mode), getConverterType()));
         }
         return true;
     }
@@ -61,7 +64,7 @@ public abstract class BlockConverter extends BlockContainer {
     public abstract String getConverterType();
 
     @Override
-    public int getRenderType() {
-        return 3;
+    public EnumBlockRenderType getRenderType(IBlockState p_getRenderType_1_) {
+        return EnumBlockRenderType.MODEL;
     }
 }

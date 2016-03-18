@@ -4,8 +4,9 @@ import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
@@ -43,19 +44,19 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
                 d++;
             }
             int cost = getEnergyCost(d);
-            List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.fromBounds(me.getX(), me.getY()+1, me.getZ(), me.getX()+1, me.getY()+1.5, me.getZ()+1));
+            List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY()+1, me.getZ(), me.getX()+1, me.getY()+1.5, me.getZ()+1));
             for(EntityLivingBase b : l) {
                 if(stored >= cost && b.isSneaking()) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() - d - 1, me.getZ() + 0.5);
-                    worldObj.playSoundAtEntity(b, "mob.chicken.plop", 1, 1);
+                    b.func_184185_a(SoundEvents.field_187665_Y, 1, 1);
                     stored -= cost;
                 }
             }
-            List<EntityLivingBase> l2 = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.fromBounds(me.getX(), me.getY() - d - 1, me.getZ(), me.getX()+1, me.getY() - d, me.getZ()+1));
+            List<EntityLivingBase> l2 = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() - d - 1, me.getZ(), me.getX()+1, me.getY() - d, me.getZ()+1));
             for(EntityLivingBase b : l2) {
                 if(stored >= cost && b.motionY > 0) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() + 1, me.getZ() + 0.5);
-                    worldObj.playSoundAtEntity(b, "mob.chicken.plop", 1, 1);
+                    b.func_184185_a(SoundEvents.field_187665_Y, 1, 1);
                     stored -= cost;
                 }
             }

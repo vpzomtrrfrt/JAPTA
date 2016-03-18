@@ -10,7 +10,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
@@ -165,7 +165,7 @@ public class JAPTA {
             if(UpdateCheckThread.ret.equals("update")) {
                 EntityPlayer p = Minecraft.getMinecraft().thePlayer;
                 if(p != null) {
-                    p.addChatComponentMessage(new ChatComponentTranslation("text.japta.newversion"));
+                    p.addChatComponentMessage(new TextComponentTranslation("text.japta.newversion"));
                     notified = true;
                 }
             }

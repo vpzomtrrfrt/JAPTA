@@ -2,12 +2,11 @@ package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityJPT;
 
 public class TileEntityFluxBlaster extends TileEntityJPT implements IEnergyReceiver, ITickable {
     @Override

@@ -4,11 +4,14 @@ import net.minecraft.block.BlockBasePressurePlate;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityChargingPlate;
@@ -33,7 +36,17 @@ public class BlockChargingPlate extends BlockBasePressurePlate implements ITileE
     }
 
     public List<EntityPlayer> getPlayers(World world, BlockPos pos) {
-        return world.getEntitiesWithinAABB(EntityPlayer.class, getSensitiveAABB(pos));
+        return world.getEntitiesWithinAABB(EntityPlayer.class, field_185511_c.func_186670_a(pos));
+    }
+
+    @Override
+    protected void func_185507_b(World world, BlockPos pos) {
+        world.func_184133_a(null, pos, SoundEvents.field_187847_fZ, SoundCategory.BLOCKS, .3f, .6f);
+    }
+
+    @Override
+    protected void func_185508_c(World world, BlockPos pos) {
+        world.func_184133_a(null, pos, SoundEvents.field_187847_fZ, SoundCategory.BLOCKS, .3f, .5f);
     }
 
     @Override
@@ -52,8 +65,8 @@ public class BlockChargingPlate extends BlockBasePressurePlate implements ITileE
     }
 
     @Override
-    protected BlockState createBlockState() {
-        return new BlockState(this, POWERED);
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, POWERED);
     }
 
     @Override

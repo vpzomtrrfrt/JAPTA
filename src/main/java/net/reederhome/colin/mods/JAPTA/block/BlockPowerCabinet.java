@@ -3,7 +3,7 @@ package net.reederhome.colin.mods.JAPTA.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -23,8 +23,8 @@ public class BlockPowerCabinet extends Block {
     }
 
     @Override
-    protected BlockState createBlockState() {
-        return new BlockState(this, VALUE);
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, VALUE);
     }
 
     @Override

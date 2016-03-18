@@ -1,17 +1,17 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
-import net.minecraft.block.BlockHopper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityHopper;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
@@ -36,17 +36,17 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
         if (stored >= USE) {
             for (int i = 0; i < 2; i++) { // try twice to find a valid spot
                 BlockPos cp = me.add(new Random().nextInt(RANGE * 2) - RANGE, -1, new Random().nextInt(RANGE * 2) - RANGE);
-                while (worldObj.isAirBlock(cp) || worldObj.getBlockState(cp).getBlock().getMaterial().isLiquid()) {
+                IBlockState state = worldObj.getBlockState(cp);
+                while (worldObj.isAirBlock(cp) || state.getBlock().getMaterial(state).isLiquid()) {
                     cp = cp.down();
                 }
-                IBlockState state = worldObj.getBlockState(cp);
                 int thl = 0;
                 if (item != null) {
                     thl = Math.max(thl, item.getItem().getHarvestLevel(item, state.getBlock().getHarvestTool(state)));
                 }
                 int bhl = state.getBlock().getHarvestLevel(state);
-                if (thl >= bhl && state.getBlock().getBlockHardness(worldObj, cp) != -1) {
-                    List<ItemStack> drops = state.getBlock().getDrops(worldObj, cp, state, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, item));
+                if (thl >= bhl && state.getBlock().getBlockHardness(state, worldObj, cp) != -1) {
+                    List<ItemStack> drops = state.getBlock().getDrops(worldObj, cp, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.field_185308_t, item));
                     worldObj.setBlockToAir(cp);
                     for (ItemStack drop : drops) {
                         for(EnumFacing side : EnumFacing.VALUES) {

@@ -2,13 +2,16 @@ package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityHopper;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
 
@@ -107,8 +110,8 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     }
 
     @Override
-    public IChatComponent getDisplayName() {
-        return new ChatComponentTranslation(getName());
+    public ITextComponent getDisplayName() {
+        return new TextComponentTranslation(getName());
     }
 
     public TileEntityItemBlaster() {

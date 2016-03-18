@@ -4,12 +4,13 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 
@@ -32,8 +33,8 @@ public abstract class BlockBlaster extends BlockContainer {
     protected abstract String getBlasterType();
 
     @Override
-    protected BlockState createBlockState() {
-        return new BlockState(this, FACING);
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING);
     }
 
     @Override
@@ -47,13 +48,13 @@ public abstract class BlockBlaster extends BlockContainer {
     }
 
     @Override
-    public int getRenderType() {
-        return 3;
+    public EnumBlockRenderType getRenderType(IBlockState p_getRenderType_1_) {
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        EnumFacing ts = BlockPistonBase.getFacingFromEntity(worldIn, pos, placer);
+        EnumFacing ts = BlockPistonBase.func_185647_a(pos, placer);
         if(!placer.isSneaking()) {
             ts = ts.getOpposite();
         }
