@@ -3,8 +3,8 @@ package net.reederhome.colin.mods.JAPTA;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumConverterMode implements IStringSerializable {
-    ABSORB("Absorb"),
-    DEPLOY("Deploy");
+    ABSORB("absorb"),
+    DEPLOY("deploy");
 
     private String name;
 
