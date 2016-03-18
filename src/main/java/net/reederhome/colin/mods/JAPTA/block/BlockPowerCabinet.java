@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class BlockPowerCabinet extends Block {
     public BlockPowerCabinet() {
         super(Material.rock);
         setDefaultState(blockState.getBaseState().withProperty(VALUE, 0));
+        setCreativeTab(JAPTA.tab);
+        setUnlocalizedName("powerCabinet");
     }
 
     @Override

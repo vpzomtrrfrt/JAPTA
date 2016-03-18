@@ -2,6 +2,7 @@ package net.reederhome.colin.mods.JAPTA;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 
@@ -21,9 +22,14 @@ public class JAPTAClient {
         registerBlock(JAPTA.bonemealApplicator, "bonemealApplicator");
         registerBlock(JAPTA.powerCabinetBase, "powerCabinetBase");
 
+        ModelResourceLocation[] powerCabinetLocations = new ModelResourceLocation[16];
+
         for(int i = 0; i < 16; i++) {
             registerBlock(JAPTA.powerCabinet, i, "powerCabinet"+i);
+            powerCabinetLocations[i] = locationForName("powerCabinet"+i);
         }
+
+        ModelBakery.registerItemVariants(Item.getItemFromBlock(JAPTA.powerCabinet), powerCabinetLocations);
 
         registerItem(JAPTA.rfMeter, "rfMeter");
         registerItem(JAPTA.batteryPotato, "batteryPotato");
@@ -34,7 +40,7 @@ public class JAPTAClient {
     }
 
     public static void registerItem(Item item, int meta, String name) {
-        registerItem(item, meta, new ModelResourceLocation(JAPTA.MODID + ":" + name, "inventory"));
+        registerItem(item, meta, locationForName(name));
     }
 
     public static void registerItem(Item item, String name) {
@@ -47,5 +53,9 @@ public class JAPTAClient {
 
     public static void registerBlock(Block block, int meta, String name) {
         registerItem(Item.getItemFromBlock(block), meta, name);
+    }
+
+    private static ModelResourceLocation locationForName(String name) {
+        return new ModelResourceLocation(JAPTA.MODID + ":" + name, "inventory");
     }
 }

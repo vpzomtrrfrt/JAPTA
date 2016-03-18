@@ -4,6 +4,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityPowerCabinetBase;
 
 public class BlockPowerCabinetBase extends BlockContainer {
@@ -19,5 +20,7 @@ public class BlockPowerCabinetBase extends BlockContainer {
 
     public BlockPowerCabinetBase() {
         super(Material.iron);
+        setCreativeTab(JAPTA.tab);
+        setUnlocalizedName("powerCabinetBase");
     }
 }
