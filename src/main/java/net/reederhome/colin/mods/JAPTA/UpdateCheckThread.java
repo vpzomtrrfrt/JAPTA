@@ -19,7 +19,7 @@ public class UpdateCheckThread implements Runnable {
     @Override
     public void run() {
         try {
-            URL url = new URL("http://colin.reederhome.net/mc/modupdatecheck.php/vpzomtrrfrt/JAPTA?v=" + ver);
+            URL url = new URL("http://colin.reederhome.net/mc/modupdatecheck.php/vpzomtrrfrt/JAPTA-1.9?v=" + ver);
             URLConnection conn = url.openConnection();
             InputStreamReader isr = new InputStreamReader(conn.getInputStream());
             BufferedReader br = new BufferedReader(isr);
