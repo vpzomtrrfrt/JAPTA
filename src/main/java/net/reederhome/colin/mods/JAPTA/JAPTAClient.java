@@ -55,7 +55,7 @@ public class JAPTAClient {
         registerItem(Item.getItemFromBlock(block), meta, name);
     }
 
-    private static ModelResourceLocation locationForName(String name) {
+    protected static ModelResourceLocation locationForName(String name) {
         return new ModelResourceLocation(JAPTA.MODID + ":" + name, "inventory");
     }
 }

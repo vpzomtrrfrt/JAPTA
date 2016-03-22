@@ -1,5 +1,6 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import amerifrance.guideapi.api.GuideRegistry;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -31,9 +32,10 @@ import net.reederhome.colin.mods.JAPTA.item.ItemBlockPowerCabinet;
 import net.reederhome.colin.mods.JAPTA.item.ItemRFMeter;
 import net.reederhome.colin.mods.JAPTA.tileentity.*;
 
-@Mod(name = "JAPTA", modid = JAPTA.MODID)
+@Mod(name = "JAPTA", modid = JAPTA.MODID, dependencies = JAPTA.DEPENDS)
 public class JAPTA {
     public static final String MODID = "japta";
+    public static final String DEPENDS = "after:guideapi";
 
     public static CreativeTabs tab = new CreativeTabs("japta") {
         @Override
@@ -139,6 +141,14 @@ public class JAPTA {
         TileEntityMover.USE = config.get("machines.mover", "cost", TileEntityMover.USE).getInt();
 
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent ev) {
+        if(Loader.isModLoaded("guideapi")) {
+            GuideJAPTA.build();
+            addRecipe(new ShapedOreRecipe(GuideRegistry.getItemStackForBook(GuideJAPTA.book), "rrr", "rbr", "rrr", 'r', "dustRedstone", 'b', Items.book));
+        }
     }
 
     @Mod.EventHandler
