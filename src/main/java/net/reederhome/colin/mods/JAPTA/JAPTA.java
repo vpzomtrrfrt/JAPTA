@@ -58,6 +58,7 @@ public class JAPTA {
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
+    public static ItemRFMeter diagnosticTool;
 
     private Configuration config;
 
@@ -81,8 +82,9 @@ public class JAPTA {
         powerCabinet = new BlockPowerCabinet();
         powerCabinetBase = new BlockPowerCabinetBase();
 
-        rfMeter = new ItemRFMeter();
+        rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
+        diagnosticTool = new ItemRFMeter(true);
 
         GameRegistry.registerBlock(cakeConverter, "cakeConverter");
         GameRegistry.registerBlock(fluxHopper, "fluxHopper");
@@ -100,6 +102,7 @@ public class JAPTA {
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
+        GameRegistry.registerItem(diagnosticTool, "diagnosticTool");
 
         GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
         GameRegistry.registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
