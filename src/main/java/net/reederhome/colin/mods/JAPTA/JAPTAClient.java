@@ -33,6 +33,7 @@ public class JAPTAClient {
 
         registerItem(JAPTA.rfMeter, "rfMeter");
         registerItem(JAPTA.batteryPotato, "batteryPotato");
+        registerItem(JAPTA.diagnosticTool, "diagnosticTool");
     }
 
     public static void registerItem(Item item, int meta, ModelResourceLocation loc) {
