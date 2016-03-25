@@ -2,17 +2,18 @@ package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
+import net.minecraft.util.*;
+import net.minecraft.world.IBlockAccess;
+import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 import java.util.List;
 
-public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyReceiver, ITickable {
+public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyReceiver, ITickable, IDiagnosable {
 
     public static int USE_BASE = 1000;
     public static int USE_EXTRA = 100;
@@ -60,5 +61,26 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
                 }
             }
         }
+    }
+
+    @Override
+    public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
+        int i = 1;
+        boolean air;
+        while(true) {
+            IBlockState state = world.getBlockState(pos.down(i));
+            if(state.getBlock() == JAPTA.elevatorShaft) {
+                i++;
+            }
+            else {
+                air = state.getBlock() == Blocks.air;
+                break;
+            }
+        }
+        sender.addChatMessage(new ChatComponentTranslation("tile.elevatorTop.diagnostic", i, getEnergyCost(i)));
+        if(!air) {
+            sender.addChatMessage(new ChatComponentTranslation("tile.elevatorTop.diagnostic.noAir"));
+        }
+        return true;
     }
 }
