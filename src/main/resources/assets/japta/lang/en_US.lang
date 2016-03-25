@@ -1,4 +1,5 @@
 tile.rngQuarry.name=RNG Quarry
+tile.rngQuarry.diagnostic.notMining=Hasn't mined in 10 ticks, check that the tool supplied can mine the blocks below
 tile.mechanicalGenerator.name=Mechanical Generator
 tile.lifeConverter.name=Life Converter
 tile.energyTeleporter.name=Endergy Cell

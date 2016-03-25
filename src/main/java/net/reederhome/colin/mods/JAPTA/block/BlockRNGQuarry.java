@@ -29,7 +29,9 @@ public class BlockRNGQuarry extends BlockContainer {
 
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        placer.addChatMessage(new ChatComponentTranslation("text.japta.rngQuarry.noTool", 0));
+        if(!worldIn.isRemote) {
+            placer.addChatMessage(new ChatComponentTranslation("text.japta.rngQuarry.noTool", 0));
+        }
         return getDefaultState();
     }
 

@@ -3,6 +3,7 @@ package net.reederhome.colin.mods.JAPTA.tileentity;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.BlockHopper;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -12,18 +13,23 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.world.IBlockAccess;
+import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 
 import java.util.List;
 import java.util.Random;
 
-public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceiver, ITickable {
+public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceiver, ITickable, IDiagnosable {
 
     public static int RANGE = 8;
     public static final int USE = 500;
 
     public ItemStack item = null;
+
+    private long lastMinedTick;
 
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
@@ -72,6 +78,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
                             item = null;
                         }
                     }
+                    lastMinedTick = worldObj.getTotalWorldTime();
                     break;
                 }
             }
@@ -94,5 +101,14 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
             item.writeToNBT(nbt);
             tag.setTag("Item", nbt);
         }
+    }
+
+    @Override
+    public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
+        if(lastMinedTick+10 < worldObj.getTotalWorldTime() && stored >= USE) {
+            sender.addChatMessage(new ChatComponentTranslation("tile.rngQuarry.diagnostic.notMining"));
+            return true;
+        }
+        return false;
     }
 }
