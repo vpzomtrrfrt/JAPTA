@@ -9,12 +9,17 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.tileentity.TileEntity;
+<<<<<<< HEAD
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+=======
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+>>>>>>> 2b97984cdb8eaceb13ca04d0856ae5bf7ed3cfce
 import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;

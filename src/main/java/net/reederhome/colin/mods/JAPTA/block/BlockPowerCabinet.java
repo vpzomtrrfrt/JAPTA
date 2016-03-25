@@ -5,14 +5,21 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.world.IBlockAccess;
+import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
+import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityPowerCabinetBase;
 
 import java.util.List;
 
-public class BlockPowerCabinet extends Block {
+public class BlockPowerCabinet extends Block implements IDiagnosable {
     public static final PropertyInteger VALUE = PropertyInteger.create("value", 0, 15);
 
     public BlockPowerCabinet() {
@@ -46,5 +53,29 @@ public class BlockPowerCabinet extends Block {
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
         list.add(new ItemStack(itemIn, 1, 0));
         list.add(new ItemStack(itemIn, 1, 15));
+    }
+
+    @Override
+    public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
+        IBlockState state = world.getBlockState(pos);
+        sender.addChatMessage(new ChatComponentTranslation("tile.powerCabinet.diagnostic", TileEntityPowerCabinetBase.META_VALUE*state.getValue(VALUE)));
+        BlockPos cp = pos.down();
+        while(true) {
+            IBlockState cs = world.getBlockState(cp);
+            if(cs.getBlock() != this) {
+                break;
+            }
+            else {
+                cp = cp.down();
+            }
+        }
+        TileEntity te = world.getTileEntity(cp);
+        if(te instanceof TileEntityPowerCabinetBase) {
+            sender.addChatMessage(new ChatComponentTranslation("tile.powerCabinet.diagnostic2", ((TileEntityPowerCabinetBase) te).getEnergyStored(null)));
+        }
+        else {
+            sender.addChatMessage(new ChatComponentTranslation("tile.powerCabinet.diagnostic3"));
+        }
+        return true;
     }
 }

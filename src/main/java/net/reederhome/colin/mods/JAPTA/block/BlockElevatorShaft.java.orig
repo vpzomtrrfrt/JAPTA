@@ -3,11 +3,14 @@ package net.reederhome.colin.mods.JAPTA.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+<<<<<<< HEAD
+=======
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
+>>>>>>> 2b97984cdb8eaceb13ca04d0856ae5bf7ed3cfce
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityElevatorTop;
 

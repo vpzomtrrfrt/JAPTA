@@ -163,10 +163,12 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
                         if (ret != null) {
                             fs.stackSize++;
                         }
-                        getFirstStack(false); // clear out the zero if it's there
+                        else {
+                            getFirstStack(false); // clear out the zero if it's there
+                            cooldown = 8;
+                            return;
+                        }
                     }
-                    cooldown = 8;
-                    return;
                 }
             }
         }

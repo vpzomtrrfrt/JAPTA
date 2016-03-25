@@ -42,6 +42,11 @@ public class ItemRFMeter extends Item {
             }
             boolean someinfo = false;
             if (value != -2) {
+<<<<<<< HEAD
+                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter.rf", value, max));
+            } else {
+                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter.no"));
+=======
                 player.addChatComponentMessage(new ChatComponentTranslation("text.japta.rfmeter.rf", value, max));
                 someinfo = true;
             }
@@ -59,6 +64,7 @@ public class ItemRFMeter extends Item {
             }
             if(!someinfo) {
                 player.addChatComponentMessage(new ChatComponentTranslation("text.japta.rfmeter."+(advanced?"advancedNo":"no")));
+>>>>>>> 2b97984cdb8eaceb13ca04d0856ae5bf7ed3cfce
             }
         }
         return EnumActionResult.SUCCESS;

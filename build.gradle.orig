@@ -23,7 +23,11 @@ group= "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini/
 archivesBaseName = "JAPTA-1.9"
 
 minecraft {
+<<<<<<< HEAD
     version = "1.9-12.16.0.1767-1.9"
+=======
+    version = "1.8.9-11.15.1.1722"
+>>>>>>> 2b97984cdb8eaceb13ca04d0856ae5bf7ed3cfce
     runDir = "run"
 
     mappings = "stable_20"

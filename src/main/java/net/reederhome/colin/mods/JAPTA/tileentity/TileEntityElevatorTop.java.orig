@@ -2,13 +2,21 @@ package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+<<<<<<< HEAD
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+=======
+import net.minecraft.util.*;
+import net.minecraft.world.IBlockAccess;
+import net.reederhome.colin.mods.JAPTA.IDiagnosable;
+>>>>>>> 2b97984cdb8eaceb13ca04d0856ae5bf7ed3cfce
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 import java.util.List;

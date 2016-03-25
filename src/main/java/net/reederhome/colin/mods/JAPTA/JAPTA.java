@@ -55,9 +55,11 @@ public class JAPTA {
     public static BlockBonemealApplicator bonemealApplicator;
     public static BlockPowerCabinet powerCabinet;
     public static BlockPowerCabinetBase powerCabinetBase;
+    public static BlockHeatConverter heatConverter;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
+    public static ItemRFMeter diagnosticTool;
 
     private Configuration config;
 
@@ -80,9 +82,11 @@ public class JAPTA {
         bonemealApplicator = new BlockBonemealApplicator();
         powerCabinet = new BlockPowerCabinet();
         powerCabinetBase = new BlockPowerCabinetBase();
+        heatConverter = new BlockHeatConverter();
 
-        rfMeter = new ItemRFMeter();
+        rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
+        diagnosticTool = new ItemRFMeter(true);
 
         GameRegistry.registerBlock(cakeConverter, "cakeConverter");
         GameRegistry.registerBlock(fluxHopper, "fluxHopper");
@@ -97,9 +101,11 @@ public class JAPTA {
         GameRegistry.registerBlock(bonemealApplicator, "bonemealApplicator");
         GameRegistry.registerBlock(powerCabinetBase, "powerCabinetBase");
         GameRegistry.registerBlock(powerCabinet, ItemBlockPowerCabinet.class, "powerCabinet");
+        GameRegistry.registerBlock(heatConverter, "heatConverter");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
+        GameRegistry.registerItem(diagnosticTool, "diagnosticTool");
 
         GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
         GameRegistry.registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
@@ -112,6 +118,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityMover.class, "Mover");
         GameRegistry.registerTileEntity(TileEntityBonemealApplicator.class, "BonemealApplicator");
         GameRegistry.registerTileEntity(TileEntityPowerCabinetBase.class, "PowerCabinetBase");
+        GameRegistry.registerTileEntity(TileEntityHeatConverter.class, "HeatConverter");
 
         addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
         addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
@@ -124,9 +131,13 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(chestCharger, "rRr", "gcg", "oRo", 'r', "dustRedstone", 'R', "blockRedstone", 'g', "nuggetGold", 'c', "chest", 'o', Blocks.obsidian));
         addRecipe(new ShapedOreRecipe(new ItemStack(mover, 4), "rgr", "gpg", "rgr", 'r', "dustRedstone", 'g', "nuggetGold", 'p', Blocks.piston));
         addRecipe(new ShapedOreRecipe(bonemealApplicator, "gbg", "brb", "gbg", 'g', "nuggetGold", 'r', "dustRedstone", 'b', new ItemStack(Items.dye, 1, 15)));
+        addRecipe(new ShapedOreRecipe(powerCabinet, " i ", "iri", " i ", 'i', "ingotIron", 'r', "blockRedstone"));
+        addRecipe(new ShapedOreRecipe(powerCabinetBase, "lll", "gcg", 'l', "dyeBlue", 'g', "ingotGold", 'c', powerCabinet));
+        addRecipe(new ShapedOreRecipe(heatConverter, "frf", "rgr", "frf", 'f', Blocks.furnace, 'r', "dustRedstone", 'g', "ingotGold"));
 
         addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", 'n', "nuggetGold", 'd', "dustRedstone"));
         addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
+        addRecipe(new ShapelessOreRecipe(diagnosticTool, rfMeter, "dyeBlue"));
 
         BlockBlaster.RANGE = config.get("machines.blaster", "range", BlockBlaster.RANGE).getInt();
         TileEntityRNGQuarry.RANGE = config.get("machines.rngQuarry", "range", TileEntityRNGQuarry.RANGE).getInt();

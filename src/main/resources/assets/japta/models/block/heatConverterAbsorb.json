@@ -1,0 +1,7 @@
+{
+	"parent": "block/cube_column",
+	"textures": {
+		"side": "japta:blocks/heatConverterAbsorb",
+		"end": "japta:blocks/machineBase"
+	}
+}
