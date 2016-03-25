@@ -1,5 +1,5 @@
 {
-	"parent": "japta:block/elevatorShaft",
+	"parent": "japta:block/elevatorShaft_inventory",
 	"display": {
 		"thirdperson": {
 			"rotation": [ 10, -45, 170 ],

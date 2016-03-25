@@ -1,5 +1,5 @@
 {
-    "parent": "japta:block/mover",
+    "parent": "japta:block/mover_inventory",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],
