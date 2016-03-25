@@ -13,6 +13,7 @@ tile.elevatorTop.diagnostic.noAir=No air beneath elevator, disabled
 tile.timeMachine.name=Time Machine
 tile.chestCharger.name=Chest Charger
 tile.converterCake.name=Cake Converter
+tile.converterHeat.name=Heat Converter
 tile.mover.name=Mover
 tile.bonemealApplicator.name=Bonemeal Applicator
 tile.bonemealApplicator.diagnostic.noBonemeal=No Bone Meal found, disabled
