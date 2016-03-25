@@ -11,7 +11,7 @@ import net.reederhome.colin.mods.JAPTA.block.BlockFluxHopper;
 public class TileEntityFluxHopper extends TileEntityJPT implements IEnergyReceiver, IEnergyProvider, ITickable {
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
-        return 60000;
+        return 6000;
     }
 
     @Override
