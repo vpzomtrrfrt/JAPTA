@@ -9,10 +9,11 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 
@@ -82,12 +83,12 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
         }
         int redstone = worldObj.isBlockIndirectlyGettingPowered(pos);
         if(!bonemeal) {
-            sender.addChatMessage(new ChatComponentTranslation("tile.bonemealApplicator.diagnostic.noBonemeal"));
+            sender.addChatMessage(new TextComponentTranslation("tile.bonemealApplicator.diagnostic.noBonemeal"));
             return true;
         }
         else {
             if(redstone > 0) {
-                sender.addChatMessage(new ChatComponentTranslation("tile.bonemealApplicator.diagnostic.redstone"));
+                sender.addChatMessage(new TextComponentTranslation("tile.bonemealApplicator.diagnostic.redstone"));
                 return true;
             }
         }

@@ -16,6 +16,7 @@ import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 
@@ -46,7 +47,6 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
                 while (worldObj.isAirBlock(cp) || state.getBlock().getMaterial(state).isLiquid()) {
                     cp = cp.down();
                 }
-                IBlockState state = worldObj.getBlockState(cp);
                 int thl = 0;
                 if (item != null) {
                     thl = Math.max(thl, item.getItem().getHarvestLevel(item, state.getBlock().getHarvestTool(state)));
@@ -107,7 +107,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
     @Override
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
         if(lastMinedTick+10 < worldObj.getTotalWorldTime() && stored >= USE) {
-            sender.addChatMessage(new ChatComponentTranslation("tile.rngQuarry.diagnostic.notMining"));
+            sender.addChatMessage(new TextComponentTranslation("tile.rngQuarry.diagnostic.notMining"));
             return true;
         }
         return false;

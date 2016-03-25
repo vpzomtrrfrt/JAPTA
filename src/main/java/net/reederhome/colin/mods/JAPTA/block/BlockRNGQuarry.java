@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -33,7 +32,7 @@ public class BlockRNGQuarry extends BlockContainer {
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         if(!worldIn.isRemote) {
-            placer.addChatMessage(new ChatComponentTranslation("text.japta.rngQuarry.noTool", 0));
+            placer.addChatMessage(new TextComponentTranslation("text.japta.rngQuarry.noTool", 0));
         }
         return getDefaultState();
     }

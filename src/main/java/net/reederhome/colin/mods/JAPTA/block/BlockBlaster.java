@@ -10,10 +10,10 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
@@ -70,11 +70,11 @@ public abstract class BlockBlaster extends BlockContainer implements IDiagnosabl
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
         EnumFacing side = state.getValue(FACING);
-        sender.addChatMessage(new ChatComponentTranslation("tile.blaster.diagnostic.top", side.getName()));
+        sender.addChatMessage(new TextComponentTranslation("tile.blaster.diagnostic.top", side.getName()));
         for(int i = 1; i <= RANGE; i++) {
             BlockPos cp = pos.offset(side, i);
             IBlockState cs = world.getBlockState(cp);
-            sender.addChatMessage(new ChatComponentText(cs.getBlock().getUnlocalizedName()));
+            sender.addChatMessage(new TextComponentString(cs.getBlock().getUnlocalizedName()));
         }
         return true;
     }

@@ -10,8 +10,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
@@ -58,7 +58,7 @@ public class BlockPowerCabinet extends Block implements IDiagnosable {
     @Override
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
-        sender.addChatMessage(new ChatComponentTranslation("tile.powerCabinet.diagnostic", TileEntityPowerCabinetBase.META_VALUE*state.getValue(VALUE)));
+        sender.addChatMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic", TileEntityPowerCabinetBase.META_VALUE*state.getValue(VALUE)));
         BlockPos cp = pos.down();
         while(true) {
             IBlockState cs = world.getBlockState(cp);
@@ -71,10 +71,10 @@ public class BlockPowerCabinet extends Block implements IDiagnosable {
         }
         TileEntity te = world.getTileEntity(cp);
         if(te instanceof TileEntityPowerCabinetBase) {
-            sender.addChatMessage(new ChatComponentTranslation("tile.powerCabinet.diagnostic2", ((TileEntityPowerCabinetBase) te).getEnergyStored(null)));
+            sender.addChatMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic2", ((TileEntityPowerCabinetBase) te).getEnergyStored(null)));
         }
         else {
-            sender.addChatMessage(new ChatComponentTranslation("tile.powerCabinet.diagnostic3"));
+            sender.addChatMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic3"));
         }
         return true;
     }
