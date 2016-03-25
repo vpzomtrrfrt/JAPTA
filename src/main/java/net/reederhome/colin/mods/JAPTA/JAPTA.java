@@ -55,6 +55,7 @@ public class JAPTA {
     public static BlockBonemealApplicator bonemealApplicator;
     public static BlockPowerCabinet powerCabinet;
     public static BlockPowerCabinetBase powerCabinetBase;
+    public static BlockHeatConverter heatConverter;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -81,6 +82,7 @@ public class JAPTA {
         bonemealApplicator = new BlockBonemealApplicator();
         powerCabinet = new BlockPowerCabinet();
         powerCabinetBase = new BlockPowerCabinetBase();
+        heatConverter = new BlockHeatConverter();
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
@@ -99,6 +101,7 @@ public class JAPTA {
         GameRegistry.registerBlock(bonemealApplicator, "bonemealApplicator");
         GameRegistry.registerBlock(powerCabinetBase, "powerCabinetBase");
         GameRegistry.registerBlock(powerCabinet, ItemBlockPowerCabinet.class, "powerCabinet");
+        GameRegistry.registerBlock(heatConverter, "heatConverter");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
@@ -115,6 +118,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityMover.class, "Mover");
         GameRegistry.registerTileEntity(TileEntityBonemealApplicator.class, "BonemealApplicator");
         GameRegistry.registerTileEntity(TileEntityPowerCabinetBase.class, "PowerCabinetBase");
+        GameRegistry.registerTileEntity(TileEntityHeatConverter.class, "HeatConverter");
 
         addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
         addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
