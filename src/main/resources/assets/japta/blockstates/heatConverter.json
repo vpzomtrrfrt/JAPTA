@@ -1,0 +1,6 @@
+{
+	"variants": {
+		"mode=deploy": {"model": "japta:heatConverterHeat"},
+		"mode=absorb": {"model": "japta:heatConverterAbsorb"}
+	}
+}

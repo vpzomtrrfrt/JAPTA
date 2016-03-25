@@ -11,6 +11,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.reederhome.colin.mods.JAPTA.EnumConverterMode;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockConverter;
 
 public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyReceiver, IEnergyProvider, ITickable {
@@ -27,7 +28,7 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
         TileEntity te = worldObj.getTileEntity(dest);
         if (te instanceof TileEntityFurnace) {
             TileEntityFurnace furnace = (TileEntityFurnace) te;
-            EnumConverterMode mode = worldObj.getBlockState(getPos()).getValue(BlockConverter.MODE);
+            EnumConverterMode mode = JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockConverter.MODE);
             if (mode == EnumConverterMode.ABSORB) {
                 if(stored > 0) {
                     transmit();
@@ -35,6 +36,18 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
                 if (getMaxEnergyStored(null) >= stored + USE) {
                     if (furnace.isBurning()) {
                         stored += USE;
+                    }
+                    else {
+                        ItemStack stack = furnace.getStackInSlot(1);
+                        int burnTime = TileEntityFurnace.getItemBurnTime(stack);
+                        if(burnTime > 0) {
+                            stack.stackSize--;
+                            if(stack.stackSize < 1) {
+                                furnace.setInventorySlotContents(1, stack.getItem().getContainerItem(stack));
+                            }
+                            furnace.setField(0, burnTime);
+                            BlockFurnace.setState(true, worldObj, dest);
+                        }
                     }
                 }
             } else {
