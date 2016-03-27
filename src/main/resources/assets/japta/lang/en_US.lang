@@ -1,5 +1,6 @@
 tile.rngQuarry.name=RNG Quarry
 tile.rngQuarry.diagnostic.notMining=Hasn't mined in 10 ticks, check that the tool supplied can mine the blocks below
+tile.rngQuarry.diagnostic.brokenTool=The supplied tool is broken
 tile.mechanicalGenerator.name=Mechanical Generator
 tile.lifeConverter.name=Life Converter
 tile.energyTeleporter.name=Endergy Cell
