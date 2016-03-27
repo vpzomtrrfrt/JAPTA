@@ -62,6 +62,19 @@ public class BlockRNGQuarry extends BlockContainer {
     }
 
     @Override
+    public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
+        super.onBlockClicked(world, pos, player);
+        if(player.isSneaking()) {
+            TileEntityRNGQuarry te = (TileEntityRNGQuarry) world.getTileEntity(pos);
+            if(te.item != null) {
+                if(player.inventory.addItemStackToInventory(te.item)) {
+                    te.item = null;
+                }
+            }
+        }
+    }
+
+    @Override
     public EnumBlockRenderType getRenderType(IBlockState p_getRenderType_1_) {
         return EnumBlockRenderType.MODEL;
     }
