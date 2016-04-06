@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityChestCharger;
 
-public class BlockChestCharger extends BlockContainer {
+public class BlockChestCharger extends BlockModelContainer {
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityChestCharger();
@@ -18,10 +18,5 @@ public class BlockChestCharger extends BlockContainer {
         setHardness(2);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("chestCharger");
-    }
-
-    @Override
-    public int getRenderType() {
-        return 3;
     }
 }

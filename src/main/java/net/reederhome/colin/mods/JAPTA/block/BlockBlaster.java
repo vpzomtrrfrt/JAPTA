@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 
-public abstract class BlockBlaster extends BlockContainer implements IDiagnosable {
+public abstract class BlockBlaster extends BlockModelContainer implements IDiagnosable {
 
     public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
     public static int RANGE = 8;
@@ -49,11 +49,6 @@ public abstract class BlockBlaster extends BlockContainer implements IDiagnosabl
     @Override
     public int getMetaFromState(IBlockState state) {
         return state.getValue(FACING).getIndex();
-    }
-
-    @Override
-    public int getRenderType() {
-        return 3;
     }
 
     @Override

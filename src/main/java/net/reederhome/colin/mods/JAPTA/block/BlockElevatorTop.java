@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityElevatorTop;
 
-public class BlockElevatorTop extends BlockContainer {
+public class BlockElevatorTop extends BlockModelContainer {
     public BlockElevatorTop() {
         super(Material.glass);
         setCreativeTab(JAPTA.tab);
@@ -25,8 +25,4 @@ public class BlockElevatorTop extends BlockContainer {
         return new TileEntityElevatorTop();
     }
 
-    @Override
-    public int getRenderType() {
-        return 3;
-    }
 }

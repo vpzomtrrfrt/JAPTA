@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityMover;
 
-public class BlockMover extends BlockContainer {
+public class BlockMover extends BlockModelContainer {
 
     public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
 
@@ -49,10 +49,5 @@ public class BlockMover extends BlockContainer {
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         return getDefaultState().withProperty(FACING, BlockPistonBase.getFacingFromEntity(worldIn, pos, placer));
-    }
-
-    @Override
-    public int getRenderType() {
-        return 3;
     }
 }

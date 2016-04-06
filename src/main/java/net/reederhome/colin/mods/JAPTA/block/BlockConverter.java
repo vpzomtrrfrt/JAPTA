@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.EnumConverterMode;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 
-public abstract class BlockConverter extends BlockContainer {
+public abstract class BlockConverter extends BlockModelContainer {
     public static final PropertyEnum<EnumConverterMode> MODE = PropertyEnum.create("mode", EnumConverterMode.class);
 
     public BlockConverter() {
@@ -60,8 +60,4 @@ public abstract class BlockConverter extends BlockContainer {
 
     public abstract String getConverterType();
 
-    @Override
-    public int getRenderType() {
-        return 3;
-    }
 }

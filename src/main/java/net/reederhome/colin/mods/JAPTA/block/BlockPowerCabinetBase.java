@@ -7,15 +7,10 @@ import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityPowerCabinetBase;
 
-public class BlockPowerCabinetBase extends BlockContainer {
+public class BlockPowerCabinetBase extends BlockModelContainer {
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityPowerCabinetBase();
-    }
-
-    @Override
-    public int getRenderType() {
-        return 3;
     }
 
     public BlockPowerCabinetBase() {

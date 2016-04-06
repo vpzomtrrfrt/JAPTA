@@ -9,7 +9,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -56,12 +58,28 @@ public class JAPTA {
     public static BlockPowerCabinet powerCabinet;
     public static BlockPowerCabinetBase powerCabinetBase;
     public static BlockHeatConverter heatConverter;
+    public static BlockFurnaceBooster furnaceBooster;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
     public static ItemRFMeter diagnosticTool;
 
     private Configuration config;
+
+    public static boolean canSmelt(TileEntityFurnace te) {
+        // took this from decompiled forge
+        if (te.getStackInSlot(0) == null) {
+            return false;
+        } else {
+            ItemStack itemstack = FurnaceRecipes.instance().getSmeltingResult(te.getStackInSlot(0));
+            if (itemstack == null) return false;
+            ItemStack resultSlot = te.getStackInSlot(2);
+            if (resultSlot == null) return true;
+            if (!resultSlot.isItemEqual(itemstack)) return false;
+            int result = resultSlot.stackSize + itemstack.stackSize;
+            return result <= te.getInventoryStackLimit() && result <= resultSlot.getMaxStackSize();
+        }
+    }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent ev) {
@@ -83,6 +101,7 @@ public class JAPTA {
         powerCabinet = new BlockPowerCabinet();
         powerCabinetBase = new BlockPowerCabinetBase();
         heatConverter = new BlockHeatConverter();
+        furnaceBooster = new BlockFurnaceBooster();
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
@@ -102,6 +121,7 @@ public class JAPTA {
         GameRegistry.registerBlock(powerCabinetBase, "powerCabinetBase");
         GameRegistry.registerBlock(powerCabinet, ItemBlockPowerCabinet.class, "powerCabinet");
         GameRegistry.registerBlock(heatConverter, "heatConverter");
+        GameRegistry.registerBlock(furnaceBooster, "furnaceBooster");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
@@ -119,6 +139,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityBonemealApplicator.class, "BonemealApplicator");
         GameRegistry.registerTileEntity(TileEntityPowerCabinetBase.class, "PowerCabinetBase");
         GameRegistry.registerTileEntity(TileEntityHeatConverter.class, "HeatConverter");
+        GameRegistry.registerTileEntity(TileEntityFurnaceBooster.class, "FurnaceBooster");
 
         addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
         addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));

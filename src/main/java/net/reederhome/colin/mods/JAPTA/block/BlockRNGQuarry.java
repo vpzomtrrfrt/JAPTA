@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityRNGQuarry;
 
-public class BlockRNGQuarry extends BlockContainer {
+public class BlockRNGQuarry extends BlockModelContainer {
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityRNGQuarry();
@@ -70,10 +70,5 @@ public class BlockRNGQuarry extends BlockContainer {
                 }
             }
         }
-    }
-
-    @Override
-    public int getRenderType() {
-        return 3;
     }
 }

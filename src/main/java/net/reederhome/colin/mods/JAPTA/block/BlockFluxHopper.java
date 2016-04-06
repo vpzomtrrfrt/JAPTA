@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityFluxHopper;
 
-public class BlockFluxHopper extends BlockContainer {
+public class BlockFluxHopper extends BlockModelContainer {
 
     public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class, new Predicate<EnumFacing>() {
         @Override
@@ -58,11 +58,6 @@ public class BlockFluxHopper extends BlockContainer {
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
-    }
-
-    @Override
-    public int getRenderType() {
-        return 3;
     }
 
     @Override
