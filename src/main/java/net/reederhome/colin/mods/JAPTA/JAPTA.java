@@ -1,5 +1,7 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -59,10 +61,13 @@ public class JAPTA {
     public static BlockPowerCabinetBase powerCabinetBase;
     public static BlockHeatConverter heatConverter;
     public static BlockFurnaceBooster furnaceBooster;
+    public static Block machineBase;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
     public static ItemRFMeter diagnosticTool;
+    public static Item coilReception;
+    public static Item coilTransmission;
 
     private Configuration config;
 
@@ -102,10 +107,13 @@ public class JAPTA {
         powerCabinetBase = new BlockPowerCabinetBase();
         heatConverter = new BlockHeatConverter();
         furnaceBooster = new BlockFurnaceBooster();
+        machineBase = new Block(Material.rock).setHardness(1).setUnlocalizedName("machineBase").setCreativeTab(tab);
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
         diagnosticTool = new ItemRFMeter(true);
+        coilReception = new Item().setUnlocalizedName("coilReception").setCreativeTab(tab);
+        coilTransmission = new Item().setUnlocalizedName("coilTransmission").setCreativeTab(tab);
 
         GameRegistry.registerBlock(cakeConverter, "cakeConverter");
         GameRegistry.registerBlock(fluxHopper, "fluxHopper");
@@ -122,10 +130,13 @@ public class JAPTA {
         GameRegistry.registerBlock(powerCabinet, ItemBlockPowerCabinet.class, "powerCabinet");
         GameRegistry.registerBlock(heatConverter, "heatConverter");
         GameRegistry.registerBlock(furnaceBooster, "furnaceBooster");
+        GameRegistry.registerBlock(machineBase, "machineBase");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
         GameRegistry.registerItem(diagnosticTool, "diagnosticTool");
+        GameRegistry.registerItem(coilReception, "coilReception");
+        GameRegistry.registerItem(coilTransmission, "coilTransmission");
 
         GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
         GameRegistry.registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
@@ -141,7 +152,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityHeatConverter.class, "HeatConverter");
         GameRegistry.registerTileEntity(TileEntityFurnaceBooster.class, "FurnaceBooster");
 
-        addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
+        /*addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "rgr", "frf", 'f', Items.cake, 'r', "dustRedstone", 'g', "ingotGold"));
         addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
         addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oro", 'g', "dustGlowstone", 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 'r', "dustRedstone"));
         addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
@@ -154,11 +165,32 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(bonemealApplicator, "gbg", "brb", "gbg", 'g', "nuggetGold", 'r', "dustRedstone", 'b', new ItemStack(Items.dye, 1, 15)));
         addRecipe(new ShapedOreRecipe(powerCabinet, " i ", "iri", " i ", 'i', "ingotIron", 'r', "blockRedstone"));
         addRecipe(new ShapedOreRecipe(powerCabinetBase, "lll", "gcg", 'l', "dyeBlue", 'g', "ingotGold", 'c', powerCabinet));
-        addRecipe(new ShapedOreRecipe(heatConverter, "frf", "rgr", "frf", 'f', Blocks.furnace, 'r', "dustRedstone", 'g', "ingotGold"));
+        addRecipe(new ShapedOreRecipe(heatConverter, "frf", "rgr", "frf", 'f', Blocks.furnace, 'r', "dustRedstone", 'g', "ingotGold"));*/
 
         addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", 'n', "nuggetGold", 'd', "dustRedstone"));
         addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", "ingotIron", "dustRedstone"));
         addRecipe(new ShapelessOreRecipe(diagnosticTool, rfMeter, "dyeBlue"));
+
+        addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "gmg", "ftf", 'f', Items.cake, 'r', coilReception, 'g', "nuggetGold", 'm', machineBase, 't', coilTransmission));
+        addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
+        addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oto", 'g', "dustGlowstone", 'p', Blocks.stone_pressure_plate, 'o', Blocks.obsidian, 't', coilTransmission));
+        addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
+        addRecipe(new ShapedOreRecipe(elevatorTop, "gcg", "geg", "rsr", 'g', "nuggetGold", 'c', coilReception, 'e', Items.ender_pearl, 's', elevatorShaft, 'r', "dustRedstone"));
+        addRecipe(new ShapedOreRecipe(fluxBlaster, "gdg", "rmt", "gdg", 'g', "nuggetGold", 'd', Blocks.dispenser, 'r', coilReception, 'm', machineBase, 't', coilTransmission));
+        addRecipe(new ShapedOreRecipe(itemBlaster, "gdg", "cmc", "gdg", 'g', "nuggetGold", 'd', Blocks.dispenser, 'c', "chest", 'm', machineBase));
+        addRecipe(new ShapedOreRecipe(rngQuarry, "srs", "imi", "PgS", 's', "stone", 'i', "ingotIron", 'm', machineBase, 'g', "nuggetGold", 'P', Items.wooden_pickaxe, 'S', Items.wooden_shovel, 'r', coilReception));
+        addRecipe(new ShapedOreRecipe(chestCharger, "rhr", "cmt", "rhr", 'r', "dustRedstone", 'h', "chest", 'c', coilReception, 'm', machineBase, 't', coilTransmission));
+        addRecipe(new ShapedOreRecipe(new ItemStack(mover, 4), "rpr", "gmg", "rcr", 'r', "dustRedstone", 'p', Blocks.piston, 'm', machineBase, 'g', "nuggetGold", 'c', coilReception));
+        addRecipe(new ShapedOreRecipe(bonemealApplicator, "gbg", "bmb", "gcg", 'g', "nuggetGold", 'b', new ItemStack(Items.dye, 1, 15), 'm', machineBase, 'c', coilReception));
+        addRecipe(new ShapedOreRecipe(powerCabinet, " i ", "iri", " i ", 'i', "ingotIron", 'r', "blockRedstone"));
+        addRecipe(new ShapedOreRecipe(powerCabinetBase, "lrl", "gcg", 'l', "dyeBlue", 'r', coilReception, 'g', "nuggetGold", 'c', powerCabinet));
+        addRecipe(new ShapedOreRecipe(heatConverter, "frf", "gmg", "ftf", 'f', Blocks.furnace, 'r', coilReception, 'g', "nuggetGold", 't', coilTransmission, 'm', machineBase));
+        addRecipe(new ShapedOreRecipe(furnaceBooster, " r ", "rfr", " r ", 'r', "dustRedstone", 'f', Blocks.furnace));
+        addRecipe(new ShapedOreRecipe(machineBase, "gig", "iri", "gig", 'g', "nuggetGold", 'i', "ingotIron", 'r', "dustRedstone"));
+        addRecipe(new ShapedOreRecipe(coilReception, "rg ", " i ", " gr", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
+        addRecipe(new ShapedOreRecipe(coilTransmission, " gr", " i ", "rg ", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
+
+        // rf meter
 
         BlockBlaster.RANGE = config.get("machines.blaster", "range", BlockBlaster.RANGE).getInt();
         TileEntityRNGQuarry.RANGE = config.get("machines.rngQuarry", "range", TileEntityRNGQuarry.RANGE).getInt();
