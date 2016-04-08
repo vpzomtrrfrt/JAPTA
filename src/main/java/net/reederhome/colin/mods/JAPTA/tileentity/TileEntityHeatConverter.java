@@ -15,6 +15,7 @@ import net.reederhome.colin.mods.JAPTA.block.BlockConverter;
 
 public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyReceiver, IEnergyProvider, ITickable {
     public static final int USE = 20;
+    public int boosters = 0;
 
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
@@ -23,46 +24,48 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
 
     @Override
     public void update() {
-        BlockPos dest = getPos().down();
-        TileEntity te = worldObj.getTileEntity(dest);
-        if (te instanceof TileEntityFurnace) {
-            TileEntityFurnace furnace = (TileEntityFurnace) te;
-            EnumConverterMode mode = JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockConverter.MODE);
-            if (mode == EnumConverterMode.ABSORB) {
-                if(stored > 0) {
-                    transmit();
-                }
-                if (getMaxEnergyStored(null) >= stored + USE) {
-                    if (furnace.isBurning()) {
-                        stored += USE;
+        synchronized (this) {
+            BlockPos dest = getPos().down();
+            TileEntity te = worldObj.getTileEntity(dest);
+            if (te instanceof TileEntityFurnace) {
+                TileEntityFurnace furnace = (TileEntityFurnace) te;
+                EnumConverterMode mode = JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockConverter.MODE);
+                if (mode == EnumConverterMode.ABSORB) {
+                    if (stored > 0) {
+                        transmit();
                     }
-                    else {
-                        ItemStack stack = furnace.getStackInSlot(1);
-                        int burnTime = TileEntityFurnace.getItemBurnTime(stack);
-                        if(burnTime > 0) {
-                            stack.stackSize--;
-                            if(stack.stackSize < 1) {
-                                furnace.setInventorySlotContents(1, stack.getItem().getContainerItem(stack));
+                    if (getMaxEnergyStored(null) >= stored + USE) {
+                        if (furnace.isBurning()) {
+                            stored += USE;
+                        } else {
+                            ItemStack stack = furnace.getStackInSlot(1);
+                            int burnTime = TileEntityFurnace.getItemBurnTime(stack);
+                            if (burnTime > 0) {
+                                stack.stackSize--;
+                                if (stack.stackSize < 1) {
+                                    furnace.setInventorySlotContents(1, stack.getItem().getContainerItem(stack));
+                                }
+                                furnace.setField(0, burnTime);
+                                BlockFurnace.setState(true, worldObj, dest);
                             }
-                            furnace.setField(0, burnTime);
+                        }
+                    }
+                } else {
+                    if (furnace.isBurning()) {
+                        if (JAPTA.canSmelt(furnace) && furnace.getField(0) < 2 + boosters && stored >= USE) {
+                            furnace.setField(0, furnace.getField(0) + 1 + boosters);
+                            stored -= USE * (1 + boosters);
+                        }
+                    } else {
+                        if (JAPTA.canSmelt(furnace) && stored >= USE * furnace.getCookTime(furnace.getStackInSlot(0))) {
+                            furnace.setField(0, 2);
+                            stored -= USE;
                             BlockFurnace.setState(true, worldObj, dest);
                         }
                     }
                 }
-            } else {
-                if (furnace.isBurning()) {
-                    if (JAPTA.canSmelt(furnace) && furnace.getField(0) < 2 && stored >= USE) {
-                        furnace.setField(0, furnace.getField(0) + 1);
-                        stored -= USE;
-                    }
-                } else {
-                    if (JAPTA.canSmelt(furnace) && stored >= USE * furnace.getCookTime(furnace.getStackInSlot(0))) {
-                        furnace.setField(0, 2);
-                        stored -= USE;
-                        BlockFurnace.setState(true, worldObj, dest);
-                    }
-                }
             }
+            boosters = 0;
         }
     }
 
