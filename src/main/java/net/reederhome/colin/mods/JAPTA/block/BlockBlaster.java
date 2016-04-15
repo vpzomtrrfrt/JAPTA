@@ -1,6 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.block;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;

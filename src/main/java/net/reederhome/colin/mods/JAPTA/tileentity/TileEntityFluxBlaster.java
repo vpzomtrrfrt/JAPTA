@@ -7,7 +7,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityJPT;
 
 public class TileEntityFluxBlaster extends TileEntityJPT implements IEnergyReceiver, ITickable {
     @Override

@@ -1,5 +1,6 @@
 package net.reederhome.colin.mods.JAPTA.item;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -15,8 +16,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Set;
 
 public class ItemPoweredMultiTool extends ItemJPT {
+
+    public static final int USE = 200;
 
     private ToolMaterial getMaterial(ItemStack stack, String type) {
         NBTTagCompound materials = getMaterialsTag(stack);
@@ -46,7 +50,7 @@ public class ItemPoweredMultiTool extends ItemJPT {
     }
 
     private boolean isDead(ItemStack stack) {
-        return stack.getItemDamage() >= stack.getMaxDamage();
+        return stack.getItemDamage()+USE > stack.getMaxDamage();
     }
 
     @Override
@@ -67,10 +71,12 @@ public class ItemPoweredMultiTool extends ItemJPT {
     public int getMaxDamage(ItemStack stack) {
         NBTTagCompound materials = getMaterialsTag(stack);
         int tr = 0;
-        for (String type : materials.getKeySet()) {
-            tr += getMaterial(stack, type).getMaxUses();
+        if(materials != null) {
+            for (String type : materials.getKeySet()) {
+                tr += getMaterial(stack, type).getMaxUses();
+            }
         }
-        return tr;
+        return tr*USE;
     }
 
     @Override
@@ -111,7 +117,7 @@ public class ItemPoweredMultiTool extends ItemJPT {
     @Override
     public boolean onBlockDestroyed(ItemStack stack, World world, Block block, BlockPos pos, EntityLivingBase player) {
         if (!isDead(stack)) {
-            stack.damageItem(1, player);
+            stack.damageItem(USE, player);
         }
         return true;
     }
@@ -119,7 +125,7 @@ public class ItemPoweredMultiTool extends ItemJPT {
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
         if (!isDead(stack)) {
-            stack.damageItem(1, attacker);
+            stack.damageItem(USE, attacker);
         }
         return true;
     }
@@ -151,8 +157,23 @@ public class ItemPoweredMultiTool extends ItemJPT {
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer p_onItemUse_2_, World p_onItemUse_3_, BlockPos p_onItemUse_4_, EnumFacing p_onItemUse_5_, float p_onItemUse_6_, float p_onItemUse_7_, float p_onItemUse_8_) {
         if(!isDead(stack)) {
-            return Items.diamond_hoe.onItemUse(stack, p_onItemUse_2_, p_onItemUse_3_, p_onItemUse_4_, p_onItemUse_5_, p_onItemUse_6_, p_onItemUse_7_, p_onItemUse_8_);
+            boolean tr = Items.diamond_hoe.onItemUse(stack, p_onItemUse_2_, p_onItemUse_3_, p_onItemUse_4_, p_onItemUse_5_, p_onItemUse_6_, p_onItemUse_7_, p_onItemUse_8_);
+            if(tr) {
+                stack.damageItem(USE - 1, p_onItemUse_2_);
+                return true;
+            }
         }
         return false;
+    }
+
+    @Override
+    public Set<String> getToolClasses(ItemStack stack) {
+        NBTTagCompound materials = getMaterialsTag(stack);
+        if(materials != null) {
+            return materials.getKeySet();
+        }
+        else {
+            return ImmutableSet.of();
+        }
     }
 }

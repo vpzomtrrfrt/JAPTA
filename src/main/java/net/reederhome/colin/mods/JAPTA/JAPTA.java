@@ -159,7 +159,7 @@ public class JAPTA {
 
         RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
 
-        addRecipe(new ShapedOreRecipe(rfMeter, "n", "d", 'n', "nuggetGold", 'd', "dustRedstone"));
+        addRecipe(new ShapelessOreRecipe(rfMeter, "nuggetGold", "dustRedstone"));
         addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", coilReception));
         addRecipe(new ShapelessOreRecipe(diagnosticTool, rfMeter, "dyeBlue"));
 

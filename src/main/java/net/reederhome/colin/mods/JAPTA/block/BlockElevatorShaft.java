@@ -9,7 +9,6 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityElevatorTop;
 
 public class BlockElevatorShaft extends Block implements IDiagnosable {
     public BlockElevatorShaft() {

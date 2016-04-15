@@ -2,7 +2,6 @@ package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;

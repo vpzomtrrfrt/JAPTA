@@ -1,7 +1,6 @@
 package net.reederhome.colin.mods.JAPTA.block;
 
 import com.google.common.base.Predicate;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
