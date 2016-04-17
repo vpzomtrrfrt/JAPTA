@@ -1,21 +1,19 @@
 package net.reederhome.colin.mods.JAPTA.block;
 
 import com.google.common.base.Predicate;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityFluxHopper;
 
-public class BlockFluxHopper extends BlockContainer {
+public class BlockFluxHopper extends BlockModelContainer {
 
     public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class, new Predicate<EnumFacing>() {
         @Override
@@ -59,11 +57,6 @@ public class BlockFluxHopper extends BlockContainer {
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
-    }
-
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState p_getRenderType_1_) {
-        return EnumBlockRenderType.MODEL;
     }
 
     @Override

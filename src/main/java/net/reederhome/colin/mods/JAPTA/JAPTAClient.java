@@ -22,6 +22,8 @@ public class JAPTAClient {
         registerBlock(JAPTA.bonemealApplicator, "bonemealApplicator");
         registerBlock(JAPTA.powerCabinetBase, "powerCabinetBase");
         registerBlock(JAPTA.heatConverter, "heatConverter");
+        registerBlock(JAPTA.furnaceBooster, "furnaceBooster");
+        registerBlock(JAPTA.machineBase, "machineBase");
 
         ModelResourceLocation[] powerCabinetLocations = new ModelResourceLocation[16];
 
@@ -35,6 +37,9 @@ public class JAPTAClient {
         registerItem(JAPTA.rfMeter, "rfMeter");
         registerItem(JAPTA.batteryPotato, "batteryPotato");
         registerItem(JAPTA.diagnosticTool, "diagnosticTool");
+        registerItem(JAPTA.coilReception, "coilReception");
+        registerItem(JAPTA.coilTransmission, "coilTransmission");
+        registerItem(JAPTA.poweredMultiTool, "poweredMultiTool");
     }
 
     public static void registerItem(Item item, int meta, ModelResourceLocation loc) {

@@ -2,8 +2,10 @@ package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.block.BlockHopper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Enchantments;
@@ -47,13 +49,14 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
             FakePlayer player = new FakePlayer((WorldServer) worldObj, new GameProfile(UUID.randomUUID(), "fake_player_"));
             for (int i = 0; i < 2; i++) { // try twice to find a valid spot
                 BlockPos cp = me.add(new Random().nextInt(RANGE * 2) - RANGE, -1, new Random().nextInt(RANGE * 2) - RANGE);
-                IBlockState state = worldObj.getBlockState(cp);
-                while ((worldObj.isAirBlock(cp) || state.getBlock().getMaterial(state).isLiquid()) && cp.getY() >= 0) {
+                while ((worldObj.isAirBlock(cp) || worldObj.getBlockState(cp).getBlock().getMaterial().isLiquid()) && cp.getY() >= 0) {
                     cp = cp.down();
-                    state = worldObj.getBlockState(cp);
                 }
+                if(cp.getY() < 0) {
+                    continue;
+                }
+                IBlockState state = worldObj.getBlockState(cp);
                 int thl = 0;
-                boolean canUseItem = false;
                 if (item != null) {
                     if(!isBroken(item)) {
                         canUseItem = true;

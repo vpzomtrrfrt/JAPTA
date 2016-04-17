@@ -1,6 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.block;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -9,7 +8,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -19,7 +17,7 @@ import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 
-public abstract class BlockBlaster extends BlockContainer implements IDiagnosable {
+public abstract class BlockBlaster extends BlockModelContainer implements IDiagnosable {
 
     public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
     public static int RANGE = 8;
@@ -50,11 +48,6 @@ public abstract class BlockBlaster extends BlockContainer implements IDiagnosabl
     @Override
     public int getMetaFromState(IBlockState state) {
         return state.getValue(FACING).getIndex();
-    }
-
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState p_getRenderType_1_) {
-        return EnumBlockRenderType.MODEL;
     }
 
     @Override
