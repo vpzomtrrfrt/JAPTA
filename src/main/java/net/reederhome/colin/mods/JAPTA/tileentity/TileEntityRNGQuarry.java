@@ -49,14 +49,16 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
             FakePlayer player = new FakePlayer((WorldServer) worldObj, new GameProfile(UUID.randomUUID(), "fake_player_"));
             for (int i = 0; i < 2; i++) { // try twice to find a valid spot
                 BlockPos cp = me.add(new Random().nextInt(RANGE * 2) - RANGE, -1, new Random().nextInt(RANGE * 2) - RANGE);
-                while ((worldObj.isAirBlock(cp) || worldObj.getBlockState(cp).getBlock().getMaterial().isLiquid()) && cp.getY() >= 0) {
+                IBlockState state = worldObj.getBlockState(cp);
+                while ((worldObj.isAirBlock(cp) || state.getBlock().getMaterial(state).isLiquid()) && cp.getY() >= 0) {
                     cp = cp.down();
+                    state = worldObj.getBlockState(cp);
                 }
                 if(cp.getY() < 0) {
                     continue;
                 }
-                IBlockState state = worldObj.getBlockState(cp);
                 int thl = 0;
+                boolean canUseItem = false;
                 if (item != null) {
                     if(!isBroken(item)) {
                         canUseItem = true;
@@ -121,7 +123,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
      * @return whether it's a broken Tinkers' tool
      */
     private boolean isBroken(ItemStack item) {
-        if(item.hasTagCompound()) {
+        if(item != null && item.hasTagCompound()) {
             NBTTagCompound tag = item.getTagCompound();
             if(tag.hasKey("Stats")) {
                 NBTTagCompound stats = tag.getCompoundTag("Stats");

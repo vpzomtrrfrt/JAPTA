@@ -4,7 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class JAPTAClient {
 
@@ -40,6 +42,13 @@ public class JAPTAClient {
         registerItem(JAPTA.coilReception, "coilReception");
         registerItem(JAPTA.coilTransmission, "coilTransmission");
         registerItem(JAPTA.poweredMultiTool, "poweredMultiTool");
+
+        Minecraft.getMinecraft().getItemColors().func_186730_a(new IItemColor() {
+            @Override
+            public int func_186726_a(ItemStack stack, int i) {
+                return JAPTA.poweredMultiTool.getColorFromItemStack(stack, i);
+            }
+        }, JAPTA.poweredMultiTool);
     }
 
     public static void registerItem(Item item, int meta, ModelResourceLocation loc) {

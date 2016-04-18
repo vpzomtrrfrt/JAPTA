@@ -9,9 +9,12 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
@@ -54,7 +57,7 @@ public class ItemPoweredMultiTool extends ItemJPT {
     }
 
     @Override
-    public float getDigSpeed(ItemStack stack, IBlockState state) {
+    public float getStrVsBlock(ItemStack stack, IBlockState state) {
         if (!isDead(stack)) {
             ToolMaterial material = getMaterial(stack, state.getBlock().getHarvestTool(state));
             if (material.getHarvestLevel() >= state.getBlock().getHarvestLevel(state)) {
@@ -89,7 +92,6 @@ public class ItemPoweredMultiTool extends ItemJPT {
         }
     }
 
-    @Override
     public int getColorFromItemStack(ItemStack stack, int layer) {
         String[] layerTools = {"no", "sword", "pickaxe", "axe", "hoe", "shovel"};
         if (layerTools[layer].equals("no")) {
@@ -106,7 +108,7 @@ public class ItemPoweredMultiTool extends ItemJPT {
                         return 0xffffff;
                     case GOLD:
                         return 0xeaee57;
-                    case EMERALD:
+                    case DIAMOND:
                         return 0x33ebcb;
                 }
             }
@@ -115,7 +117,7 @@ public class ItemPoweredMultiTool extends ItemJPT {
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, BlockPos pos, EntityLivingBase player) {
+    public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase player) {
         if (!isDead(stack)) {
             stack.damageItem(USE, player);
         }
@@ -148,22 +150,22 @@ public class ItemPoweredMultiTool extends ItemJPT {
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack) {
-        Multimap<String, AttributeModifier> tr = super.getAttributeModifiers(stack);
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
+        Multimap<String, AttributeModifier> tr = super.getAttributeModifiers(slot, stack);
         tr.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", getMaterial(stack, "sword").getDamageVsEntity()+4, 0));
         return tr;
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer p_onItemUse_2_, World p_onItemUse_3_, BlockPos p_onItemUse_4_, EnumFacing p_onItemUse_5_, float p_onItemUse_6_, float p_onItemUse_7_, float p_onItemUse_8_) {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p_onItemUse_2_, World p_onItemUse_3_, BlockPos p_onItemUse_4_, EnumHand hand, EnumFacing p_onItemUse_5_, float p_onItemUse_6_, float p_onItemUse_7_, float p_onItemUse_8_) {
         if(!isDead(stack)) {
-            boolean tr = Items.diamond_hoe.onItemUse(stack, p_onItemUse_2_, p_onItemUse_3_, p_onItemUse_4_, p_onItemUse_5_, p_onItemUse_6_, p_onItemUse_7_, p_onItemUse_8_);
-            if(tr) {
+            EnumActionResult tr = Items.diamond_hoe.onItemUse(stack, p_onItemUse_2_, p_onItemUse_3_, p_onItemUse_4_, hand, p_onItemUse_5_, p_onItemUse_6_, p_onItemUse_7_, p_onItemUse_8_);
+            if(tr == EnumActionResult.SUCCESS) {
                 stack.damageItem(USE - 1, p_onItemUse_2_);
-                return true;
             }
+            return tr;
         }
-        return false;
+        return EnumActionResult.PASS;
     }
 
     @Override
