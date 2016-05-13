@@ -180,10 +180,8 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(furnaceBooster, " r ", "rfr", " r ", 'r', "dustRedstone", 'f', Blocks.furnace));
         addRecipe(new ShapedOreRecipe(machineBase, "gig", "iri", "gig", 'g', "nuggetGold", 'i', "ingotIron", 'r', "dustRedstone"));
         addRecipe(new ShapedOreRecipe(coilReception, "rg ", " i ", " gr", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
-        addRecipe(new ShapedOreRecipe(coilTransmission, " gr", " i ", "rg ", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
+        addRecipe(new ShapedOreRecipe(coilTransmission, "r  ", "gig", "  r", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
         addRecipe(new RecipePoweredMultiTool());
-
-        // rf meter
 
         BlockBlaster.RANGE = config.get("machines.blaster", "range", BlockBlaster.RANGE).getInt();
         TileEntityRNGQuarry.RANGE = config.get("machines.rngQuarry", "range", TileEntityRNGQuarry.RANGE).getInt();
