@@ -18,8 +18,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.FakePlayer;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
+import net.reederhome.colin.mods.JAPTA.MyFakePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
     public void update() {
         BlockPos me = getPos();
         if (stored >= USE && worldObj instanceof WorldServer) {
-            FakePlayer player = new FakePlayer((WorldServer) worldObj, new GameProfile(UUID.randomUUID(), "fake_player_"));
+            FakePlayer player = new MyFakePlayer((WorldServer) worldObj, new GameProfile(UUID.randomUUID(), "fake_player_"));
             for (int i = 0; i < 2; i++) { // try twice to find a valid spot
                 BlockPos cp = me.add(new Random().nextInt(RANGE * 2) - RANGE, -1, new Random().nextInt(RANGE * 2) - RANGE);
                 while ((worldObj.isAirBlock(cp) || worldObj.getBlockState(cp).getBlock().getMaterial().isLiquid()) && cp.getY() >= 0) {
@@ -53,6 +55,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
                 if(cp.getY() < 0) {
                     continue;
                 }
+                player.setPositionAndRotation(cp.getX()+0.5, cp.getY()+1, cp.getZ()+0.5, 0, 90);
                 IBlockState state = worldObj.getBlockState(cp);
                 int thl = 0;
                 boolean canUseItem = false;
@@ -64,41 +67,41 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
                 }
                 int bhl = state.getBlock().getHarvestLevel(state);
                 boolean usedItem = item != null && bhl > 0;
-                if (thl >= bhl && state.getBlock().getBlockHardness(worldObj, cp) != -1) {
-                    List<ItemStack> drops;
-                    int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, item);
-                    if(canUseItem && EnchantmentHelper.getEnchantmentLevel(Enchantment.silkTouch.effectId, item) > 0 && state.getBlock().canSilkHarvest(worldObj, cp, state, player)) {
-                        drops = new ArrayList<ItemStack>();
-                        drops.add(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
-                        usedItem = true;
-                    }
-                    else {
-                        drops = state.getBlock().getDrops(worldObj, cp, state, fortune);
-                    }
-                    worldObj.setBlockToAir(cp);
-                    for (ItemStack drop : drops) {
-                        for(EnumFacing side : EnumFacing.VALUES) {
-                            BlockPos cip = me.offset(side);
-                            TileEntity ite = worldObj.getTileEntity(cip);
-                            if(ite instanceof IInventory) {
-                                drop = TileEntityHopper.putStackInInventoryAllSlots((IInventory) ite, drop, side.getOpposite());
+                if (thl >= bhl && (item == null || item.canHarvestBlock(state.getBlock())) && state.getBlock().getBlockHardness(worldObj, cp) != -1) {
+                    if (item == null || !item.getItem().onBlockStartBreak(item, cp, player)) {
+                        List<ItemStack> drops;
+                        int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, item);
+                        if (canUseItem && EnchantmentHelper.getEnchantmentLevel(Enchantment.silkTouch.effectId, item) > 0 && state.getBlock().canSilkHarvest(worldObj, cp, state, player)) {
+                            drops = new ArrayList<ItemStack>();
+                            drops.add(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
+                            usedItem = true;
+                        } else {
+                            drops = state.getBlock().getDrops(worldObj, cp, state, fortune);
+                        }
+                        worldObj.setBlockToAir(cp);
+                        for (ItemStack drop : drops) {
+                            for (EnumFacing side : EnumFacing.VALUES) {
+                                BlockPos cip = me.offset(side);
+                                TileEntity ite = worldObj.getTileEntity(cip);
+                                if (ite instanceof IInventory) {
+                                    drop = TileEntityHopper.putStackInInventoryAllSlots((IInventory) ite, drop, side.getOpposite());
+                                }
+                                if (drop == null) {
+                                    break;
+                                }
                             }
-                            if(drop == null) {
-                                break;
+                            if (drop != null) {
+                                EntityItem ent = new EntityItem(worldObj, me.getX() + 0.5, me.getY() + 1, me.getZ() + 0.5);
+                                ent.setEntityItemStack(drop);
+                                worldObj.spawnEntityInWorld(ent);
                             }
                         }
-                        if(drop != null) {
-                            EntityItem ent = new EntityItem(worldObj, me.getX()+0.5, me.getY()+1, me.getZ()+0.5);
-                            ent.setEntityItemStack(drop);
-                            worldObj.spawnEntityInWorld(ent);
-                        }
-                    }
-                    stored -= USE;
-                    if(usedItem && Math.random() < 0.9) {
-                        item.onBlockDestroyed(worldObj, state.getBlock(), cp, player);
-                        if(item.stackSize < 1) {
-                            item = null;
-                        }
+                        stored -= USE;
+                        if (usedItem && Math.random() < 0.9) {
+                            item.onBlockDestroyed(worldObj, state.getBlock(), cp, player);
+                            if (item.stackSize < 1) {
+                                item = null;
+                            }
                         /*if(item.attemptDamageItem(1, new Random())) {
                             item = null;
                         }*/
@@ -106,9 +109,10 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
                         if(item.getItemDamage() >= item.getMaxDamage()) {
                             item = null;
                         }*/
+                        }
+                        lastMinedTick = worldObj.getTotalWorldTime();
+                        break;
                     }
-                    lastMinedTick = worldObj.getTotalWorldTime();
-                    break;
                 }
             }
         }
