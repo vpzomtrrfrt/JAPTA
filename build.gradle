@@ -18,9 +18,9 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.matthewprenger.cursegradle'
 
-version = "1.5.1"
+version = "1.5.2"
 group= "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "JAPTA-1.9"
+archivesBaseName = "JAPTA-1.9.4"
 
 minecraft {
     version = "1.9.4-12.17.0.1917-1.9.4"
