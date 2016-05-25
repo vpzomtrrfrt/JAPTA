@@ -12,7 +12,7 @@ import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 public class BlockElevatorShaft extends Block implements IDiagnosable {
     public BlockElevatorShaft() {
-        super(Material.glass);
+        super(Material.GLASS);
         setHardness(1);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("elevatorShaft");

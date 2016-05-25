@@ -18,7 +18,7 @@ public abstract class BlockConverter extends BlockModelContainer {
     public static final PropertyEnum<EnumConverterMode> MODE = PropertyEnum.create("mode", EnumConverterMode.class);
 
     public BlockConverter() {
-        super(Material.rock);
+        super(Material.ROCK);
         setUnlocalizedName("converter" + getConverterType());
         setDefaultState(blockState.getBaseState().withProperty(MODE, EnumConverterMode.ABSORB));
         setHardness(2);

@@ -36,7 +36,7 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
                             if (stored + BITE_VALUE < getMaxEnergyStored(null)) {
                                 BlockPos cp = getPos().add(x, y, z);
                                 IBlockState state = worldObj.getBlockState(cp);
-                                if (state.getBlock() == Blocks.cake) {
+                                if (state.getBlock() == Blocks.CAKE) {
                                     int bites = state.getValue(BlockCake.BITES);
                                     bites++;
                                     stored += BITE_VALUE;
@@ -61,7 +61,7 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
                             for (int z = -RANGE; z < RANGE; z++) {
                                 BlockPos cp = getPos().add(x, y, z);
                                 IBlockState state = worldObj.getBlockState(cp);
-                                if (state.getBlock() == Blocks.cake) {
+                                if (state.getBlock() == Blocks.CAKE) {
                                     int bites = state.getValue(BlockCake.BITES);
                                     if (bites > 0) {
                                         stored -= BITE_VALUE;
@@ -70,7 +70,7 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
                                     }
                                 } else if (state.getBlock().isReplaceable(worldObj, cp)) {
                                     stored -= BITE_VALUE;
-                                    worldObj.setBlockState(cp, Blocks.cake.getDefaultState().withProperty(BlockCake.BITES, 5));
+                                    worldObj.setBlockState(cp, Blocks.CAKE.getDefaultState().withProperty(BlockCake.BITES, 5));
                                     break dancing;
                                 }
                             }

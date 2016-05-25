@@ -120,8 +120,8 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
-        super.writeToNBT(tag);
+    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+        tag = super.writeToNBT(tag);
         NBTTagList l = new NBTTagList();
         for(int i = 0; i < getSizeInventory(); i++) {
             ItemStack sis = getStackInSlot(i);
@@ -133,6 +133,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
             }
         }
         tag.setTag("Items", l);
+        return tag;
     }
 
     @Override

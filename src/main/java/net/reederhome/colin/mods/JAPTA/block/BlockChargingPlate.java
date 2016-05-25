@@ -23,7 +23,7 @@ public class BlockChargingPlate extends BlockBasePressurePlate implements ITileE
     public static final PropertyBool POWERED = PropertyBool.create("powered");
 
     public BlockChargingPlate() {
-        super(Material.rock);
+        super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(POWERED, false));
         setHardness(1);
         setCreativeTab(JAPTA.tab);
@@ -36,17 +36,17 @@ public class BlockChargingPlate extends BlockBasePressurePlate implements ITileE
     }
 
     public List<EntityPlayer> getPlayers(World world, BlockPos pos) {
-        return world.getEntitiesWithinAABB(EntityPlayer.class, field_185511_c.func_186670_a(pos));
+        return world.getEntitiesWithinAABB(EntityPlayer.class, PRESSURE_AABB.offset(pos));
     }
 
     @Override
-    protected void func_185507_b(World world, BlockPos pos) {
-        world.func_184133_a(null, pos, SoundEvents.field_187847_fZ, SoundCategory.BLOCKS, .3f, .6f);
+    protected void playClickOnSound(World world, BlockPos pos) {
+        world.playSound(null, pos, SoundEvents.BLOCK_STONE_PRESSPLATE_CLICK_ON, SoundCategory.BLOCKS, .3f, .3f);
     }
 
     @Override
-    protected void func_185508_c(World world, BlockPos pos) {
-        world.func_184133_a(null, pos, SoundEvents.field_187847_fZ, SoundCategory.BLOCKS, .3f, .5f);
+    protected void playClickOffSound(World world, BlockPos pos) {
+        world.playSound(null, pos, SoundEvents.BLOCK_STONE_PRESSPLATE_CLICK_OFF, SoundCategory.BLOCKS, .3f, .3f);
     }
 
     @Override

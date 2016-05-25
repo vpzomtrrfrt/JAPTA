@@ -43,9 +43,9 @@ public class JAPTAClient {
         registerItem(JAPTA.coilTransmission, "coilTransmission");
         registerItem(JAPTA.poweredMultiTool, "poweredMultiTool");
 
-        Minecraft.getMinecraft().getItemColors().func_186730_a(new IItemColor() {
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
             @Override
-            public int func_186726_a(ItemStack stack, int i) {
+            public int getColorFromItemstack(ItemStack stack, int i) {
                 return JAPTA.poweredMultiTool.getColorFromItemStack(stack, i);
             }
         }, JAPTA.poweredMultiTool);

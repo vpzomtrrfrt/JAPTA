@@ -69,8 +69,8 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
                 boolean usedItem = item != null && bhl > 0;
                 if (thl >= bhl && state.getBlock().getBlockHardness(state, worldObj, cp) != -1) {
                     List<ItemStack> drops;
-                    int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.field_185308_t, item);
-                    if(canUseItem && EnchantmentHelper.getEnchantmentLevel(Enchantments.field_185306_r, item) > 0 && state.getBlock().canSilkHarvest(worldObj, cp, state, player)) {
+                    int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, item);
+                    if(canUseItem && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, item) > 0 && state.getBlock().canSilkHarvest(worldObj, cp, state, player)) {
                         drops = new ArrayList<ItemStack>();
                         drops.add(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
                         usedItem = true;
@@ -142,13 +142,14 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
-        super.writeToNBT(tag);
+    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+        tag = super.writeToNBT(tag);
         if(item != null) {
             NBTTagCompound nbt = new NBTTagCompound();
             item.writeToNBT(nbt);
             tag.setTag("Item", nbt);
         }
+        return tag;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class BlockRNGQuarry extends BlockModelContainer {
     }
 
     public BlockRNGQuarry() {
-        super(Material.iron);
+        super(Material.IRON);
         setHardness(5);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("rngQuarry");
@@ -42,7 +42,7 @@ public class BlockRNGQuarry extends BlockModelContainer {
         ItemStack held = p.inventory.getCurrentItem();
         if(held == null) {
             if(te.item != null) {
-                p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.hasTool", te.item.getChatComponent(), te.stored));
+                p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.hasTool", te.item.getTextComponent(), te.stored));
             }
             else {
                 p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.noTool", te.stored));
@@ -51,7 +51,7 @@ public class BlockRNGQuarry extends BlockModelContainer {
         else {
             ItemStack itm = te.item;
             te.item = p.inventory.removeStackFromSlot(p.inventory.currentItem);
-            p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.gotTool", te.item.getChatComponent()));
+            p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.gotTool", te.item.getTextComponent()));
             if(itm != null) {
                 p.inventory.setInventorySlotContents(p.inventory.currentItem, itm);
             }

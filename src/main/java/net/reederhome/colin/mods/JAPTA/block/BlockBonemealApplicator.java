@@ -13,7 +13,7 @@ public class BlockBonemealApplicator extends BlockModelContainer {
     }
 
     public BlockBonemealApplicator() {
-        super(Material.rock);
+        super(Material.ROCK);
         setUnlocalizedName("bonemealApplicator");
         setHardness(1);
         setCreativeTab(JAPTA.tab);

@@ -9,7 +9,7 @@ import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityElevatorTop;
 
 public class BlockElevatorTop extends BlockModelContainer {
     public BlockElevatorTop() {
-        super(Material.glass);
+        super(Material.GLASS);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("elevatorTop");
         setHardness(1);

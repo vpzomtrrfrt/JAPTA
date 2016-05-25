@@ -9,7 +9,7 @@ import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityFurnaceBooster;
 public class BlockFurnaceBooster extends BlockModelContainer {
 
     public BlockFurnaceBooster() {
-        super(Material.rock);
+        super(Material.ROCK);
         setHardness(1);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("furnaceBooster");

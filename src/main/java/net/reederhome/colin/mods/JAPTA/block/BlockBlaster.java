@@ -26,7 +26,7 @@ public abstract class BlockBlaster extends BlockModelContainer implements IDiagn
     public abstract TileEntity createNewTileEntity(World worldIn, int meta);
 
     public BlockBlaster() {
-        super(Material.rock);
+        super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         setUnlocalizedName(getBlasterType()+"Blaster");
         setHardness(1);
@@ -52,7 +52,7 @@ public abstract class BlockBlaster extends BlockModelContainer implements IDiagn
 
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        EnumFacing ts = BlockPistonBase.func_185647_a(pos, placer);
+        EnumFacing ts = BlockPistonBase.getFacingFromEntity(pos, placer);
         if(!placer.isSneaking()) {
             ts = ts.getOpposite();
         }

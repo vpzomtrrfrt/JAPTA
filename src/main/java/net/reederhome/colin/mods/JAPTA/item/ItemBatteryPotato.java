@@ -54,7 +54,7 @@ public class ItemBatteryPotato extends ItemJPT {
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer p, EnumHand hand) {
         if (p.canEat(false) && stack.getItemDamage() + USE <= stack.getMaxDamage()) {
-            p.func_184598_c(hand);
+            p.setActiveHand(hand);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         }
         else {

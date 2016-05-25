@@ -23,7 +23,7 @@ public class BlockMover extends BlockModelContainer {
     }
 
     public BlockMover() {
-        super(Material.rock);
+        super(Material.ROCK);
         setHardness(1);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("mover");
@@ -47,6 +47,6 @@ public class BlockMover extends BlockModelContainer {
 
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        return getDefaultState().withProperty(FACING, BlockPistonBase.func_185647_a(pos, placer));
+        return getDefaultState().withProperty(FACING, BlockPistonBase.getFacingFromEntity(pos, placer));
     }
 }

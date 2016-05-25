@@ -37,14 +37,14 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
                     IInventory inv = (IInventory) te;
                     for(int i = 0; i < inv.getSizeInventory(); i++) {
                         ItemStack stack = inv.getStackInSlot(i);
-                        if(stack != null && stack.getItem() == Items.dye && stack.getItemDamage() == 15 && stack.stackSize > 0) {
+                        if(stack != null && stack.getItem() == Items.DYE && stack.getItemDamage() == 15 && stack.stackSize > 0) {
                             for(int t = 0; t < 3; t++) { // try thrice for a valid spot
                                 BlockPos cp = getPos().add(new Random().nextInt(RANGE * 2) - RANGE, RANGE, new Random().nextInt(RANGE * 2) - RANGE);
                                 while (cp.getY() >= 0) {
                                     IBlockState state = worldObj.getBlockState(cp);
                                     if (state.getBlock() instanceof IGrowable) {
                                         IGrowable bl = (IGrowable) state.getBlock();
-                                        if (bl != Blocks.grass && bl.canGrow(worldObj, cp, state, false) && bl.canUseBonemeal(worldObj, new Random(), cp, state)) {
+                                        if (bl != Blocks.GRASS && bl.canGrow(worldObj, cp, state, false) && bl.canUseBonemeal(worldObj, new Random(), cp, state)) {
                                             bl.grow(worldObj, new Random(), cp, state);
                                             stack.stackSize--;
                                             stored -= USE;
@@ -74,7 +74,7 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
                 IInventory inv = (IInventory) te;
                 for (int i = 0; i < inv.getSizeInventory(); i++) {
                     ItemStack stack = inv.getStackInSlot(i);
-                    if (stack != null && stack.getItem() == Items.dye && stack.getItemDamage() == 15 && stack.stackSize > 0) {
+                    if (stack != null && stack.getItem() == Items.DYE && stack.getItemDamage() == 15 && stack.stackSize > 0) {
                         bonemeal = true;
                         break dancing;
                     }

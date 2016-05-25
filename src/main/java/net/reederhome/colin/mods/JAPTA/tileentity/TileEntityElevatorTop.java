@@ -40,7 +40,7 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
             while(true) {
                 BlockPos cp = me.down(d);
                 Block b = worldObj.getBlockState(cp).getBlock();
-                if(b == Blocks.air) {
+                if(b == Blocks.AIR) {
                     break;
                 }
                 else if(b != JAPTA.elevatorShaft) {
@@ -53,7 +53,7 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
             for(EntityLivingBase b : l) {
                 if(stored >= cost && b.isSneaking()) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() - d - 1, me.getZ() + 0.5);
-                    b.func_184185_a(SoundEvents.field_187665_Y, 1, 1);
+                    b.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1, 1);
                     stored -= cost;
                 }
             }
@@ -61,7 +61,7 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
             for(EntityLivingBase b : l2) {
                 if(stored >= cost && b.motionY > 0) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() + 1, me.getZ() + 0.5);
-                    b.func_184185_a(SoundEvents.field_187665_Y, 1, 1);
+                    b.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1, 1);
                     stored -= cost;
                 }
             }
@@ -78,7 +78,7 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
                 i++;
             }
             else {
-                air = state.getBlock() == Blocks.air;
+                air = state.getBlock() == Blocks.AIR;
                 break;
             }
         }

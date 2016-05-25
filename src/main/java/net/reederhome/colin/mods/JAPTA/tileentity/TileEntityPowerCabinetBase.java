@@ -122,9 +122,10 @@ public class TileEntityPowerCabinetBase extends TileEntity implements IEnergyRec
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        compound = super.writeToNBT(compound);
         compound.setInteger("Energy", stored);
+        return compound;
     }
 
     @Override

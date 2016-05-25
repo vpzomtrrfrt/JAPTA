@@ -13,7 +13,7 @@ public class BlockChestCharger extends BlockModelContainer {
     }
 
     public BlockChestCharger() {
-        super(Material.rock);
+        super(Material.ROCK);
         setHardness(2);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("chestCharger");

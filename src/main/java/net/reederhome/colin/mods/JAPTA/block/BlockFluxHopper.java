@@ -28,7 +28,7 @@ public class BlockFluxHopper extends BlockModelContainer {
     }
 
     public BlockFluxHopper() {
-        super(Material.iron);
+        super(Material.IRON);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.DOWN));
         setUnlocalizedName("fluxHopper");
         setHardness(3);

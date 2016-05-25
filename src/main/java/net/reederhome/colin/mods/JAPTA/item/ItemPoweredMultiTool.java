@@ -152,14 +152,14 @@ public class ItemPoweredMultiTool extends ItemJPT {
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
         Multimap<String, AttributeModifier> tr = super.getAttributeModifiers(slot, stack);
-        tr.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", getMaterial(stack, "sword").getDamageVsEntity()+4, 0));
+        tr.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getMaterial(stack, "sword").getDamageVsEntity()+4, 0));
         return tr;
     }
 
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p_onItemUse_2_, World p_onItemUse_3_, BlockPos p_onItemUse_4_, EnumHand hand, EnumFacing p_onItemUse_5_, float p_onItemUse_6_, float p_onItemUse_7_, float p_onItemUse_8_) {
         if(!isDead(stack)) {
-            EnumActionResult tr = Items.diamond_hoe.onItemUse(stack, p_onItemUse_2_, p_onItemUse_3_, p_onItemUse_4_, hand, p_onItemUse_5_, p_onItemUse_6_, p_onItemUse_7_, p_onItemUse_8_);
+            EnumActionResult tr = Items.DIAMOND_HOE.onItemUse(stack, p_onItemUse_2_, p_onItemUse_3_, p_onItemUse_4_, hand, p_onItemUse_5_, p_onItemUse_6_, p_onItemUse_7_, p_onItemUse_8_);
             if(tr == EnumActionResult.SUCCESS) {
                 stack.damageItem(USE - 1, p_onItemUse_2_);
             }

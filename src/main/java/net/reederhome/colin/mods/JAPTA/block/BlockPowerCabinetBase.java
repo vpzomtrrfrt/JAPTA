@@ -13,7 +13,7 @@ public class BlockPowerCabinetBase extends BlockModelContainer {
     }
 
     public BlockPowerCabinetBase() {
-        super(Material.iron);
+        super(Material.IRON);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("powerCabinetBase");
     }

@@ -23,7 +23,7 @@ public class BlockPowerCabinet extends Block implements IDiagnosable {
     public static final PropertyInteger VALUE = PropertyInteger.create("value", 0, 15);
 
     public BlockPowerCabinet() {
-        super(Material.rock);
+        super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(VALUE, 0));
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("powerCabinet");
