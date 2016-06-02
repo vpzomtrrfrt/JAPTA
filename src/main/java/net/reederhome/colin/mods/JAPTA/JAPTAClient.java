@@ -26,6 +26,7 @@ public class JAPTAClient {
         registerBlock(JAPTA.heatConverter, "heatConverter");
         registerBlock(JAPTA.furnaceBooster, "furnaceBooster");
         registerBlock(JAPTA.machineBase, "machineBase");
+        registerBlock(JAPTA.fluidHopper, "fluidHopper");
 
         ModelResourceLocation[] powerCabinetLocations = new ModelResourceLocation[16];
 

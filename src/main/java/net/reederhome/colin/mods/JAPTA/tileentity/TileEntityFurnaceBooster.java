@@ -23,9 +23,7 @@ public class TileEntityFurnaceBooster extends TileEntity implements ITickable {
                 }
                 TileEntity te2 = worldObj.getTileEntity(cp.up());
                 if (te2 instanceof TileEntityHeatConverter) {
-                    synchronized (te2) {
-                        ((TileEntityHeatConverter) te2).boosters++;
-                    }
+                    ((TileEntityHeatConverter) te2).boosters++;
                 }
             }
         }

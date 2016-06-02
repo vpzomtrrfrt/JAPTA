@@ -64,6 +64,7 @@ public class JAPTA {
     public static BlockHeatConverter heatConverter;
     public static BlockFurnaceBooster furnaceBooster;
     public static Block machineBase;
+    public static BlockFluidHopper fluidHopper;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -111,6 +112,7 @@ public class JAPTA {
         heatConverter = new BlockHeatConverter();
         furnaceBooster = new BlockFurnaceBooster();
         machineBase = new Block(Material.ROCK).setHardness(1).setUnlocalizedName("machineBase").setCreativeTab(tab);
+        fluidHopper = new BlockFluidHopper();
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
@@ -135,6 +137,7 @@ public class JAPTA {
         GameRegistry.registerBlock(heatConverter, "heatConverter");
         GameRegistry.registerBlock(furnaceBooster, "furnaceBooster");
         GameRegistry.registerBlock(machineBase, "machineBase");
+        GameRegistry.registerBlock(fluidHopper, "fluidHopper");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
@@ -156,6 +159,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityPowerCabinetBase.class, "PowerCabinetBase");
         GameRegistry.registerTileEntity(TileEntityHeatConverter.class, "HeatConverter");
         GameRegistry.registerTileEntity(TileEntityFurnaceBooster.class, "FurnaceBooster");
+        GameRegistry.registerTileEntity(TileEntityFluidHopper.class, "FluidHopper");
 
         RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
 

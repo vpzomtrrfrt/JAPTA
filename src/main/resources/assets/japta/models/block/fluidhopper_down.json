@@ -1,0 +1,9 @@
+{
+	"parent": "block/hopper_down",
+	"textures": {
+		"particle": "japta:blocks/fluidhopper_outside",
+		"top": "japta:blocks/fluidhopper_top",
+		"side": "japta:blocks/fluidhopper_outside",
+		"inside": "japta:blocks/fluidhopper_inside"
+	}
+}
