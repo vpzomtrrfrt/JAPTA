@@ -1,6 +1,7 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -55,7 +56,9 @@ public class TileEntityFluidHopper extends TileEntity implements IFluidHandler, 
 
     @Override
     public FluidStack drain(EnumFacing enumFacing, int i, boolean b) {
-        if (i < content.amount) {
+        if (content == null) {
+            return new FluidStack(FluidRegistry.WATER, 0);
+        } else if (i < content.amount) {
             if (b) {
                 content.amount -= i;
             }
@@ -106,14 +109,33 @@ public class TileEntityFluidHopper extends TileEntity implements IFluidHandler, 
         if (remaining > 0) {
             BlockPos src = getPos().up();
             TileEntity te = worldObj.getTileEntity(src);
-            if(te instanceof IFluidHandler) {
-                if(content != null) {
+            if (te instanceof IFluidHandler) {
+                if (content != null) {
                     content.amount += ((IFluidHandler) te).drain(EnumFacing.DOWN, new FluidStack(content.getFluid(), remaining), true).amount;
-                }
-                else {
-                    content = ((IFluidHandler) te).drain(EnumFacing.DOWN, remaining, true);
+                } else {
+                    FluidStack newStack = ((IFluidHandler) te).drain(EnumFacing.DOWN, remaining, true);
+                    if(newStack != null && newStack.amount > 0) {
+                        content = newStack;
+                    }
                 }
             }
+        }
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+        tag = super.writeToNBT(tag);
+        if(content != null) {
+            tag.setTag("Content", content.writeToNBT(new NBTTagCompound()));
+        }
+        return tag;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound tag) {
+        super.readFromNBT(tag);
+        if(tag.hasKey("Content")) {
+            content = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Content"));
         }
     }
 }

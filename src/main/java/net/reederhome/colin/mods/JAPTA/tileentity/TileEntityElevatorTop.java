@@ -23,46 +23,48 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
     public static int USE_BASE = 1000;
     public static int USE_EXTRA = 100;
 
+    public static int getEnergyCost(int d) {
+        return USE_BASE + (USE_EXTRA - 1) * d;
+    }
+
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
         return 26000;
     }
 
-    public static int getEnergyCost(int d) {
-        return USE_BASE+(USE_EXTRA-1)*d;
-    }
-
     @Override
     public void update() {
         BlockPos me = getPos();
-        if(stored >= USE_BASE) {
+        if (stored >= USE_BASE) {
             int d = 1;
-            while(true) {
+            while (true) {
                 BlockPos cp = me.down(d);
                 Block b = worldObj.getBlockState(cp).getBlock();
-                if(b == Blocks.AIR) {
+                if (b == Blocks.AIR) {
                     break;
-                }
-                else if(b != JAPTA.elevatorShaft) {
+                } else if (b != JAPTA.elevatorShaft) {
                     return;
                 }
                 d++;
             }
             int cost = getEnergyCost(d);
-            List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY()+1, me.getZ(), me.getX()+1, me.getY()+1.5, me.getZ()+1));
-            for(EntityLivingBase b : l) {
-                if(stored >= cost && b.isSneaking()) {
+            List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() + 1, me.getZ(), me.getX() + 1, me.getY() + 1.5, me.getZ() + 1));
+            for (EntityLivingBase b : l) {
+                if (stored >= cost && b.isSneaking() && b.getEntityData().getLong("LastTeleported") != worldObj.getTotalWorldTime()) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() - d - 1, me.getZ() + 0.5);
                     b.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1, 1);
                     stored -= cost;
+                    b.getEntityData().setLong("LastTeleported", worldObj.getTotalWorldTime());
                 }
             }
-            List<EntityLivingBase> l2 = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() - d - 1, me.getZ(), me.getX()+1, me.getY() - d, me.getZ()+1));
-            for(EntityLivingBase b : l2) {
-                if(stored >= cost && b.motionY > 0) {
+            List<EntityLivingBase> l2 = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() - d + 0.75
+                    , me.getZ(), me.getX() + 1, me.getY() - d + 1, me.getZ() + 1));
+            for (EntityLivingBase b : l2) {
+                if (stored >= cost && b.motionY > 0 && b.getEntityData().getLong("LastTeleported") != worldObj.getTotalWorldTime()) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() + 1, me.getZ() + 0.5);
                     b.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1, 1);
                     stored -= cost;
+                    b.getEntityData().setLong("LastTeleported", worldObj.getTotalWorldTime());
                 }
             }
         }
@@ -72,18 +74,17 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
         int i = 1;
         boolean air;
-        while(true) {
+        while (true) {
             IBlockState state = world.getBlockState(pos.down(i));
-            if(state.getBlock() == JAPTA.elevatorShaft) {
+            if (state.getBlock() == JAPTA.elevatorShaft) {
                 i++;
-            }
-            else {
+            } else {
                 air = state.getBlock() == Blocks.AIR;
                 break;
             }
         }
         sender.addChatMessage(new TextComponentTranslation("tile.elevatorTop.diagnostic", i, getEnergyCost(i)));
-        if(!air) {
+        if (!air) {
             sender.addChatMessage(new TextComponentTranslation("tile.elevatorTop.diagnostic.noAir"));
         }
         return true;
