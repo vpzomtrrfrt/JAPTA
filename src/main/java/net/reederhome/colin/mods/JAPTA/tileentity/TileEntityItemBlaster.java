@@ -139,7 +139,6 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        System.out.println(tag);
         NBTTagList l = (NBTTagList) tag.getTag("Items");
         for(int i = 0; i < l.tagCount(); i++) {
             NBTTagCompound nbt = l.getCompoundTagAt(i);

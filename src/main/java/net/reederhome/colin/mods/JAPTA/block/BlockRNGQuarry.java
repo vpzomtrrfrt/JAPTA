@@ -3,7 +3,9 @@ package net.reederhome.colin.mods.JAPTA.block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -70,5 +72,15 @@ public class BlockRNGQuarry extends BlockModelContainer {
                 }
             }
         }
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        TileEntityRNGQuarry te = (TileEntityRNGQuarry) world.getTileEntity(pos);
+        if(te.item != null) {
+            InventoryHelper.spawnItemStack(world, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, te.item);
+            te.item = null;
+        }
+        super.breakBlock(world, pos, state);
     }
 }
