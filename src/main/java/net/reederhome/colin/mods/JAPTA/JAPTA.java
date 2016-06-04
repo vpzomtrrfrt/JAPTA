@@ -188,6 +188,7 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(machineBase, "gig", "iri", "gig", 'g', "nuggetGold", 'i', "ingotIron", 'r', "dustRedstone"));
         addRecipe(new ShapedOreRecipe(coilReception, "rg ", " i ", " gr", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
         addRecipe(new ShapedOreRecipe(coilTransmission, "r  ", "gig", "  r", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
+        addRecipe(new ShapedOreRecipe(fluidHopper, "i i", "i i", " b ", 'i', "ingotIron", 'b', Items.BUCKET));
         addRecipe(new RecipePoweredMultiTool());
 
         GameRegistry.addSmelting(powerCabinet, new ItemStack(powerCabinet2), 0);
