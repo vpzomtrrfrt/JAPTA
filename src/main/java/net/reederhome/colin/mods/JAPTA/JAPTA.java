@@ -59,7 +59,8 @@ public class JAPTA {
     public static BlockChestCharger chestCharger;
     public static BlockMover mover;
     public static BlockBonemealApplicator bonemealApplicator;
-    public static BlockPowerCabinet powerCabinet;
+    public static Block powerCabinet;
+    public static Block powerCabinet2;
     public static BlockPowerCabinetBase powerCabinetBase;
     public static BlockHeatConverter heatConverter;
     public static BlockFurnaceBooster furnaceBooster;
@@ -107,7 +108,8 @@ public class JAPTA {
         chestCharger = new BlockChestCharger();
         mover = new BlockMover();
         bonemealApplicator = new BlockBonemealApplicator();
-        powerCabinet = new BlockPowerCabinet();
+        powerCabinet = new BlockPowerCabinet(config.get("machines.powerCabinet", "basicMetaValue", 1000, "RF per line on texture (1/15 of block) for power cabinet").getInt()).setUnlocalizedName("powerCabinet");
+        powerCabinet2 = new BlockPowerCabinet(config.get("machines.powerCabinet", "firedMetaValue", 2000, "RF per line on texture (1/15 of block) for scorched power cabinet").getInt()).setUnlocalizedName("powerCabinet2");
         powerCabinetBase = new BlockPowerCabinetBase();
         heatConverter = new BlockHeatConverter();
         furnaceBooster = new BlockFurnaceBooster();
@@ -138,6 +140,7 @@ public class JAPTA {
         GameRegistry.registerBlock(furnaceBooster, "furnaceBooster");
         GameRegistry.registerBlock(machineBase, "machineBase");
         GameRegistry.registerBlock(fluidHopper, "fluidHopper");
+        GameRegistry.registerBlock(powerCabinet2, ItemBlockPowerCabinet.class, "powerCabinet2");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
@@ -186,6 +189,8 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(coilReception, "rg ", " i ", " gr", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
         addRecipe(new ShapedOreRecipe(coilTransmission, "r  ", "gig", "  r", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
         addRecipe(new RecipePoweredMultiTool());
+
+        GameRegistry.addSmelting(powerCabinet, new ItemStack(powerCabinet2), 0);
 
         BlockBlaster.RANGE = config.get("machines.blaster", "range", BlockBlaster.RANGE).getInt();
         TileEntityRNGQuarry.RANGE = config.get("machines.rngQuarry", "range", TileEntityRNGQuarry.RANGE).getInt();

@@ -21,12 +21,18 @@ import java.util.List;
 
 public class BlockPowerCabinet extends Block implements IDiagnosable {
     public static final PropertyInteger VALUE = PropertyInteger.create("value", 0, 15);
+    public static int MAX_META_VALUE;
 
-    public BlockPowerCabinet() {
+    private int metaValue;
+
+    public BlockPowerCabinet(int metaValue) {
         super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(VALUE, 0));
         setCreativeTab(JAPTA.tab);
-        setUnlocalizedName("powerCabinet");
+        this.metaValue = metaValue;
+        if(metaValue > MAX_META_VALUE) {
+            MAX_META_VALUE = metaValue;
+        }
     }
 
     @Override
@@ -58,11 +64,11 @@ public class BlockPowerCabinet extends Block implements IDiagnosable {
     @Override
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
-        sender.addChatMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic", TileEntityPowerCabinetBase.META_VALUE*state.getValue(VALUE)));
+        sender.addChatMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic", getMetaValue()*state.getValue(VALUE)));
         BlockPos cp = pos.down();
         while(true) {
             IBlockState cs = world.getBlockState(cp);
-            if(cs.getBlock() != this) {
+            if(!(cs.getBlock() instanceof BlockPowerCabinet)) {
                 break;
             }
             else {
@@ -77,5 +83,9 @@ public class BlockPowerCabinet extends Block implements IDiagnosable {
             sender.addChatMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic3"));
         }
         return true;
+    }
+
+    public int getMetaValue() {
+        return metaValue;
     }
 }

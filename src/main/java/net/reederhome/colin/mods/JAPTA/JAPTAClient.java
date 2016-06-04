@@ -32,10 +32,12 @@ public class JAPTAClient {
 
         for(int i = 0; i < 16; i++) {
             registerBlock(JAPTA.powerCabinet, i, "powerCabinet"+i);
+            registerBlock(JAPTA.powerCabinet2, i, "powerCabinet"+i);
             powerCabinetLocations[i] = locationForName("powerCabinet"+i);
         }
 
         ModelBakery.registerItemVariants(Item.getItemFromBlock(JAPTA.powerCabinet), powerCabinetLocations);
+        ModelBakery.registerItemVariants(Item.getItemFromBlock(JAPTA.powerCabinet2), powerCabinetLocations);
 
         registerItem(JAPTA.rfMeter, "rfMeter");
         registerItem(JAPTA.batteryPotato, "batteryPotato");
