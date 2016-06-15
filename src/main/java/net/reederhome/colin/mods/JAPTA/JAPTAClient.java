@@ -18,6 +18,10 @@ public class JAPTAClient {
         registerBlock(JAPTA.elevatorTop, "elevatorTop");
         registerBlock(JAPTA.fluxBlaster, "fluxBlaster");
         registerBlock(JAPTA.itemBlaster, "itemBlaster");
+        registerBlock(JAPTA.fluidBlaster, "fluidBlaster");
+        registerBlock(JAPTA.fluxInhaler, "fluxInhaler");
+        registerBlock(JAPTA.itemInhaler, "itemInhaler");
+        registerBlock(JAPTA.fluidInhaler, "fluidInhaler");
         registerBlock(JAPTA.rngQuarry, "rngQuarry");
         registerBlock(JAPTA.chestCharger, "chestCharger");
         registerBlock(JAPTA.mover, "mover");

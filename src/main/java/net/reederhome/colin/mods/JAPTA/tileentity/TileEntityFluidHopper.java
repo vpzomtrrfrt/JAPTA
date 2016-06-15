@@ -110,13 +110,22 @@ public class TileEntityFluidHopper extends TileEntity implements IFluidHandler, 
             BlockPos src = getPos().up();
             TileEntity te = worldObj.getTileEntity(src);
             if (te instanceof IFluidHandler) {
-                if (content != null) {
-                    content.amount += ((IFluidHandler) te).drain(EnumFacing.DOWN, new FluidStack(content.getFluid(), remaining), true).amount;
-                } else {
-                    FluidStack newStack = ((IFluidHandler) te).drain(EnumFacing.DOWN, remaining, true);
-                    if(newStack != null && newStack.amount > 0) {
-                        content = newStack;
+                try {
+                    if (content != null) {
+                        if(((IFluidHandler) te).canDrain(EnumFacing.DOWN, content.getFluid())) {
+                            FluidStack stack = ((IFluidHandler) te).drain(EnumFacing.DOWN, new FluidStack(content.getFluid(), remaining), true);
+                            if (stack != null) {
+                                content.amount += stack.amount;
+                            }
+                        }
+                    } else {
+                        FluidStack newStack = ((IFluidHandler) te).drain(EnumFacing.DOWN, remaining, true);
+                        if (newStack != null && newStack.amount > 0) {
+                            content = newStack;
+                        }
                     }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -125,7 +134,7 @@ public class TileEntityFluidHopper extends TileEntity implements IFluidHandler, 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag = super.writeToNBT(tag);
-        if(content != null) {
+        if (content != null) {
             tag.setTag("Content", content.writeToNBT(new NBTTagCompound()));
         }
         return tag;
@@ -134,7 +143,7 @@ public class TileEntityFluidHopper extends TileEntity implements IFluidHandler, 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        if(tag.hasKey("Content")) {
+        if (tag.hasKey("Content")) {
             content = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag("Content"));
         }
     }
