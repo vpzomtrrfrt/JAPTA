@@ -104,7 +104,7 @@ public class TileEntityFluidBlaster extends TileEntity implements IFluidHandler,
                         content = ((IFluidHandler) te).drain(facing.getOpposite(), MAX_HELD, true);
                     } else {
                         int remaining = MAX_HELD - content.amount;
-                        if(remaining > 0) {
+                        if(remaining > 0 && ((IFluidHandler) te).canDrain(facing.getOpposite(), content.getFluid())) {
                             content = ((IFluidHandler) te).drain(facing.getOpposite(), new FluidStack(content.getFluid(), remaining), true);
                         }
                     }

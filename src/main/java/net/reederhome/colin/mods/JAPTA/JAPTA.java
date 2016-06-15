@@ -70,6 +70,7 @@ public class JAPTA {
     public static BlockFluxBlaster fluxInhaler;
     public static BlockFluidBlaster fluidInhaler;
     public static BlockItemBlaster itemInhaler;
+    public static BlockItemBlaster itemSplitter;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -107,7 +108,7 @@ public class JAPTA {
         elevatorShaft = new BlockElevatorShaft();
         elevatorTop = new BlockElevatorTop();
         fluxBlaster = new BlockFluxBlaster(false);
-        itemBlaster = new BlockItemBlaster(false);
+        itemBlaster = new BlockItemBlaster(false, false);
         rngQuarry = new BlockRNGQuarry();
         chestCharger = new BlockChestCharger();
         mover = new BlockMover();
@@ -122,7 +123,8 @@ public class JAPTA {
         fluidBlaster = new BlockFluidBlaster(false);
         fluxInhaler = new BlockFluxBlaster(true);
         fluidInhaler = new BlockFluidBlaster(true);
-        itemInhaler = new BlockItemBlaster(true);
+        itemInhaler = new BlockItemBlaster(true, false);
+        itemSplitter = new BlockItemBlaster(false, true);
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
@@ -153,6 +155,7 @@ public class JAPTA {
         GameRegistry.registerBlock(fluxInhaler, "fluxInhaler");
         GameRegistry.registerBlock(fluidInhaler, "fluidInhaler");
         GameRegistry.registerBlock(itemInhaler, "itemInhaler");
+        GameRegistry.registerBlock(itemSplitter, "itemSplitter");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
@@ -185,6 +188,7 @@ public class JAPTA {
         addRecipe(new ShapelessOreRecipe(fluxInhaler, fluxBlaster, Blocks.REDSTONE_TORCH));
         addRecipe(new ShapelessOreRecipe(fluidInhaler, fluidBlaster, Blocks.REDSTONE_TORCH));
         addRecipe(new ShapelessOreRecipe(itemInhaler, itemBlaster, Blocks.REDSTONE_TORCH));
+        addRecipe(new ShapelessOreRecipe(itemSplitter, itemBlaster, "plankWood"));
 
         addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "gmg", "ftf", 'f', Items.CAKE, 'r', coilReception, 'g', "nuggetGold", 'm', machineBase, 't', coilTransmission));
         addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));

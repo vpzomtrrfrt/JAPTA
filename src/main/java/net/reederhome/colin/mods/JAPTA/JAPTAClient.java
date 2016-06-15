@@ -22,6 +22,7 @@ public class JAPTAClient {
         registerBlock(JAPTA.fluxInhaler, "fluxInhaler");
         registerBlock(JAPTA.itemInhaler, "itemInhaler");
         registerBlock(JAPTA.fluidInhaler, "fluidInhaler");
+        registerBlock(JAPTA.itemSplitter, "itemSplitter");
         registerBlock(JAPTA.rngQuarry, "rngQuarry");
         registerBlock(JAPTA.chestCharger, "chestCharger");
         registerBlock(JAPTA.mover, "mover");

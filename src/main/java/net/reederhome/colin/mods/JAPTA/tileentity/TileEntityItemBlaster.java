@@ -16,10 +16,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
+import net.reederhome.colin.mods.JAPTA.block.BlockItemBlaster;
 
 public class TileEntityItemBlaster extends TileEntity implements IInventory, ITickable {
 
     private ItemStack[] inv;
+    private int pos = 1;
 
     public TileEntityItemBlaster() {
         super();
@@ -106,7 +108,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
 
     @Override
     public String getName() {
-        return "tile.itemBlaster.name";
+        return worldObj.getBlockState(getPos()).getBlock().getUnlocalizedName()+".name";
     }
 
     @Override
@@ -168,8 +170,18 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
         IBlockState state = worldObj.getBlockState(getPos());
         EnumFacing facing = JAPTA.safeGetValue(state, BlockBlaster.FACING);
         boolean placedItem = false;
-        for (int i = 1; i <= BlockBlaster.RANGE; i++) {
-            BlockPos cp = getPos().offset(facing, i);
+        if(!((BlockItemBlaster) state.getBlock()).isSplitting()) {
+            pos = 1;
+        }
+        else {
+            pos++;
+            if(pos > BlockBlaster.RANGE) pos = 1;
+        }
+        int initialPos = pos;
+        boolean once = false;
+        while(!once || pos != initialPos) {
+            once = true;
+            BlockPos cp = getPos().offset(facing, pos);
             while (worldObj.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
                 cp = cp.up();
             }
@@ -226,6 +238,10 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
                         }
                     }
                 }
+            }
+            pos++;
+            if(pos > BlockBlaster.RANGE) {
+                pos = 1;
             }
         }
     }

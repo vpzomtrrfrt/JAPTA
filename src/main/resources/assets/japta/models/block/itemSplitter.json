@@ -1,0 +1,6 @@
+{
+    "parent": "japta:block/blaster",
+    "textures": {
+        "front": "japta:blocks/itemBlaster_front_split"
+    }
+}

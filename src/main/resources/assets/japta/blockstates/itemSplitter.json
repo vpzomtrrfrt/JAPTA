@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "japta:itemSplitter", "x": 90 },
+        "facing=up":    { "model": "japta:itemSplitter", "x": 270 },
+        "facing=north": { "model": "japta:itemSplitter" },
+        "facing=south": { "model": "japta:itemSplitter", "y": 180 },
+        "facing=west":  { "model": "japta:itemSplitter", "y": 270 },
+        "facing=east":  { "model": "japta:itemSplitter", "y": 90 }
+    }
+}

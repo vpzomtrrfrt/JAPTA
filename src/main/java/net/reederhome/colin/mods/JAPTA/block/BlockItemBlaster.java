@@ -13,8 +13,14 @@ import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityItemBlaster;
 
 public class BlockItemBlaster extends BlockBlaster {
-    public BlockItemBlaster(boolean inhaler) {
+    private boolean splitting;
+
+    public BlockItemBlaster(boolean inhaler, boolean splitting) {
         super(inhaler);
+        this.splitting = splitting;
+        if(splitting) {
+            setUnlocalizedName("itemSplitter");
+        }
     }
 
     @Override
@@ -37,5 +43,9 @@ public class BlockItemBlaster extends BlockBlaster {
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         InventoryHelper.dropInventoryItems(world, pos, ((IInventory) world.getTileEntity(pos)));
         super.breakBlock(world, pos, state);
+    }
+
+    public boolean isSplitting() {
+        return splitting;
     }
 }
