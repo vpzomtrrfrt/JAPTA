@@ -1,0 +1,7 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "japta:blocks/inhaler_top",
+        "side": "japta:blocks/inhaler_side"
+    }
+}

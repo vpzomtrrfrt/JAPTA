@@ -1,6 +1,6 @@
 {
     "parent": "japta:block/blaster",
     "textures": {
-        "front": "japta:blocks/fluxBlaster_front"
+        "front": "japta:blocks/fluidBlaster_front"
     }
 }

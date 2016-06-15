@@ -1,0 +1,6 @@
+{
+    "parent": "japta:block/inhaler",
+    "textures": {
+        "front": "japta:blocks/fluxInhaler_front"
+    }
+}

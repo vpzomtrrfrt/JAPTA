@@ -66,6 +66,10 @@ public class JAPTA {
     public static BlockFurnaceBooster furnaceBooster;
     public static Block machineBase;
     public static BlockFluidHopper fluidHopper;
+    public static BlockFluidBlaster fluidBlaster;
+    public static BlockFluxBlaster fluxInhaler;
+    public static BlockFluidBlaster fluidInhaler;
+    public static BlockItemBlaster itemInhaler;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -102,8 +106,8 @@ public class JAPTA {
         chargingPlate = new BlockChargingPlate();
         elevatorShaft = new BlockElevatorShaft();
         elevatorTop = new BlockElevatorTop();
-        fluxBlaster = new BlockFluxBlaster();
-        itemBlaster = new BlockItemBlaster();
+        fluxBlaster = new BlockFluxBlaster(false);
+        itemBlaster = new BlockItemBlaster(false);
         rngQuarry = new BlockRNGQuarry();
         chestCharger = new BlockChestCharger();
         mover = new BlockMover();
@@ -115,6 +119,10 @@ public class JAPTA {
         furnaceBooster = new BlockFurnaceBooster();
         machineBase = new Block(Material.ROCK).setHardness(1).setUnlocalizedName("machineBase").setCreativeTab(tab);
         fluidHopper = new BlockFluidHopper();
+        fluidBlaster = new BlockFluidBlaster(false);
+        fluxInhaler = new BlockFluxBlaster(true);
+        fluidInhaler = new BlockFluidBlaster(true);
+        itemInhaler = new BlockItemBlaster(true);
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
@@ -141,6 +149,10 @@ public class JAPTA {
         GameRegistry.registerBlock(machineBase, "machineBase");
         GameRegistry.registerBlock(fluidHopper, "fluidHopper");
         GameRegistry.registerBlock(powerCabinet2, ItemBlockPowerCabinet.class, "powerCabinet2");
+        GameRegistry.registerBlock(fluidBlaster, "fluidBlaster");
+        GameRegistry.registerBlock(fluxInhaler, "fluxInhaler");
+        GameRegistry.registerBlock(fluidInhaler, "fluidInhaler");
+        GameRegistry.registerBlock(itemInhaler, "itemInhaler");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
@@ -163,12 +175,16 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityHeatConverter.class, "HeatConverter");
         GameRegistry.registerTileEntity(TileEntityFurnaceBooster.class, "FurnaceBooster");
         GameRegistry.registerTileEntity(TileEntityFluidHopper.class, "FluidHopper");
+        GameRegistry.registerTileEntity(TileEntityFluidBlaster.class, "FluidBlaster");
 
         RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
 
         addRecipe(new ShapelessOreRecipe(rfMeter, "nuggetGold", "dustRedstone"));
         addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", coilReception));
         addRecipe(new ShapelessOreRecipe(diagnosticTool, rfMeter, "dyeBlue"));
+        addRecipe(new ShapelessOreRecipe(fluxInhaler, fluxBlaster, Blocks.REDSTONE_TORCH));
+        addRecipe(new ShapelessOreRecipe(fluidInhaler, fluidBlaster, Blocks.REDSTONE_TORCH));
+        addRecipe(new ShapelessOreRecipe(itemInhaler, itemBlaster, Blocks.REDSTONE_TORCH));
 
         addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "gmg", "ftf", 'f', Items.CAKE, 'r', coilReception, 'g', "nuggetGold", 'm', machineBase, 't', coilTransmission));
         addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
@@ -177,6 +193,7 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(elevatorTop, "gcg", "geg", "rsr", 'g', "nuggetGold", 'c', coilReception, 'e', Items.ENDER_PEARL, 's', elevatorShaft, 'r', "dustRedstone"));
         addRecipe(new ShapedOreRecipe(fluxBlaster, "gdg", "rmt", "gdg", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'r', coilReception, 'm', machineBase, 't', coilTransmission));
         addRecipe(new ShapedOreRecipe(itemBlaster, "gdg", "cmc", "gdg", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'c', "chest", 'm', machineBase));
+        addRecipe(new ShapedOreRecipe(fluidBlaster, "gdg", "bmb", "gdg", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'b', Items.BUCKET, 'm', machineBase));
         addRecipe(new ShapedOreRecipe(rngQuarry, "srs", "imi", "PgS", 's', "stone", 'i', "ingotIron", 'm', machineBase, 'g', "nuggetGold", 'P', Items.WOODEN_PICKAXE, 'S', Items.WOODEN_SHOVEL, 'r', coilReception));
         addRecipe(new ShapedOreRecipe(chestCharger, "rhr", "cmt", "rhr", 'r', "dustRedstone", 'h', "chest", 'c', coilReception, 'm', machineBase, 't', coilTransmission));
         addRecipe(new ShapedOreRecipe(new ItemStack(mover, 4), "rpr", "gmg", "rcr", 'r', "dustRedstone", 'p', Blocks.PISTON, 'm', machineBase, 'g', "nuggetGold", 'c', coilReception));

@@ -1,8 +1,6 @@
 {
-    "parent": "block/orientable",
+    "parent": "japta:block/blaster",
     "textures": {
-        "top": "blocks/furnace_top",
-        "front": "japta:blocks/itemBlaster_front",
-        "side": "blocks/furnace_side"
+        "front": "japta:blocks/itemBlaster_front"
     }
 }

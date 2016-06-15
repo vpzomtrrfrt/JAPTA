@@ -1,7 +1,9 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -18,7 +20,11 @@ import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
 public class TileEntityItemBlaster extends TileEntity implements IInventory, ITickable {
 
     private ItemStack[] inv;
-    private int cooldown = 0;
+
+    public TileEntityItemBlaster() {
+        super();
+        clear();
+    }
 
     @Override
     public int getSizeInventory() {
@@ -33,11 +39,10 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     @Override
     public ItemStack decrStackSize(int index, int count) {
         ItemStack sis = inv[index];
-        if(sis.stackSize <= count) {
+        if (sis.stackSize <= count) {
             inv[index] = null;
             return sis;
-        }
-        else {
+        } else {
             return sis.splitStack(count);
         }
     }
@@ -114,21 +119,16 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
         return new TextComponentTranslation(getName());
     }
 
-    public TileEntityItemBlaster() {
-        super();
-        clear();
-    }
-
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag = super.writeToNBT(tag);
         NBTTagList l = new NBTTagList();
-        for(int i = 0; i < getSizeInventory(); i++) {
+        for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack sis = getStackInSlot(i);
-            if(sis != null) {
+            if (sis != null) {
                 NBTTagCompound nbt = new NBTTagCompound();
                 sis.writeToNBT(nbt);
-                nbt.setByte("Slot", (byte)i);
+                nbt.setByte("Slot", (byte) i);
                 l.appendTag(nbt);
             }
         }
@@ -140,53 +140,105 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
         NBTTagList l = (NBTTagList) tag.getTag("Items");
-        for(int i = 0; i < l.tagCount(); i++) {
+        for (int i = 0; i < l.tagCount(); i++) {
             NBTTagCompound nbt = l.getCompoundTagAt(i);
             inv[nbt.getByte("Slot")] = ItemStack.loadItemStackFromNBT(nbt);
         }
     }
 
+    private boolean attemptInhale(IInventory inv, int j) {
+        ItemStack stack = inv.getStackInSlot(j);
+        ItemStack copy = stack.copy();
+        ItemStack stack1 = stack.splitStack(1);
+        ItemStack remainder = TileEntityHopper.putStackInInventoryAllSlots(this, stack1, null);
+        if(remainder != null && remainder.stackSize > 0) {
+            inv.setInventorySlotContents(j, copy);
+        }
+        else {
+            if(stack.stackSize == 0) {
+                inv.setInventorySlotContents(j, null);
+            }
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void update() {
-        if(cooldown <= 0) {
-            EnumFacing facing = JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockBlaster.FACING);
-            for (int i = 1; i <= BlockBlaster.RANGE; i++) {
-                BlockPos cp = getPos().offset(facing, i);
-                while (worldObj.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
-                    cp = cp.up();
+        IBlockState state = worldObj.getBlockState(getPos());
+        EnumFacing facing = JAPTA.safeGetValue(state, BlockBlaster.FACING);
+        boolean placedItem = false;
+        for (int i = 1; i <= BlockBlaster.RANGE; i++) {
+            BlockPos cp = getPos().offset(facing, i);
+            while (worldObj.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
+                cp = cp.up();
+            }
+            TileEntity te = worldObj.getTileEntity(cp);
+            if (te instanceof IInventory) {
+                IInventory ci = (IInventory) te;
+                if(((BlockBlaster) state.getBlock()).isInhaler()) {
+                    if(!placedItem) {
+                        for (EnumFacing side : EnumFacing.values()) {
+                            if (side != facing) {
+                                ItemStack fs = getFirstStack(false);
+                                if (fs != null) {
+                                    TileEntity cte = worldObj.getTileEntity(getPos().offset(side));
+                                    if (cte instanceof IInventory) {
+                                        ItemStack ret = TileEntityHopper.putStackInInventoryAllSlots(((IInventory) cte), fs.splitStack(1), side.getOpposite());
+                                        if (ret != null) {
+                                            fs.stackSize++;
+                                        } else {
+                                            getFirstStack(false);
+                                            placedItem = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if(ci instanceof ISidedInventory) {
+                        int[] slots = ((ISidedInventory) ci).getSlotsForFace(facing.getOpposite());
+                        for(int slot : slots) {
+                            ItemStack stack = ci.getStackInSlot(slot);
+                            if(stack != null && ((ISidedInventory) ci).canExtractItem(slot, stack, facing.getOpposite()) && attemptInhale(ci, slot)) {
+                                break;
+                            }
+                        }
+                    }
+                    else {
+                        for (int j = 0; j < ci.getSizeInventory(); j++) {
+                            if(attemptInhale(ci, j)) {
+                                break;
+                            }
+                        }
+                    }
                 }
-                TileEntity te = worldObj.getTileEntity(cp);
-                if (te instanceof IInventory) {
-                    IInventory ci = (IInventory) te;
+                else {
                     ItemStack fs = getFirstStack(false);
-                    if(fs != null) {
+                    if (fs != null) {
                         ItemStack ret = TileEntityHopper.putStackInInventoryAllSlots(ci, fs.splitStack(1), facing);
                         if (ret != null) {
                             fs.stackSize++;
-                        }
-                        else {
+                        } else {
                             getFirstStack(false); // clear out the zero if it's there
-                            cooldown = 8;
                             return;
                         }
                     }
                 }
             }
         }
-        else {
-            cooldown--;
-        }
     }
 
     private ItemStack getFirstStack(boolean remove) {
-        for(int i = 0; i < getSizeInventory(); i++) {
+        for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack sis = getStackInSlot(i);
-            if(sis != null) {
-                if(sis.stackSize < 1) {
+            if (sis != null) {
+                if (sis.stackSize < 1) {
                     removeStackFromSlot(i);
                     continue;
                 }
-                if(remove) {
+                if (remove) {
                     removeStackFromSlot(i);
                 }
                 return sis;

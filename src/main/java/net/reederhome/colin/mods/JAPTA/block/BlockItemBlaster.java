@@ -13,6 +13,10 @@ import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityItemBlaster;
 
 public class BlockItemBlaster extends BlockBlaster {
+    public BlockItemBlaster(boolean inhaler) {
+        super(inhaler);
+    }
+
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileEntityItemBlaster();

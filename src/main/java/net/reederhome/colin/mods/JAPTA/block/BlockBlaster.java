@@ -22,15 +22,18 @@ public abstract class BlockBlaster extends BlockModelContainer implements IDiagn
     public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
     public static int RANGE = 8;
 
+    private boolean inhaler;
+
     @Override
     public abstract TileEntity createNewTileEntity(World worldIn, int meta);
 
-    public BlockBlaster() {
+    public BlockBlaster(boolean inhaler) {
         super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-        setUnlocalizedName(getBlasterType()+"Blaster");
+        setUnlocalizedName(getBlasterType()+(inhaler?"Inhaler":"Blaster"));
         setHardness(1);
         setCreativeTab(JAPTA.tab);
+        this.inhaler = inhaler;
     }
 
     protected abstract String getBlasterType();
@@ -70,5 +73,9 @@ public abstract class BlockBlaster extends BlockModelContainer implements IDiagn
             sender.addChatMessage(new TextComponentString(cs.getBlock().getUnlocalizedName()));
         }
         return true;
+    }
+
+    public boolean isInhaler() {
+        return inhaler;
     }
 }

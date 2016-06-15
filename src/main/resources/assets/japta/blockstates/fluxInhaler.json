@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "japta:fluxInhaler", "x": 90 },
+        "facing=up":    { "model": "japta:fluxInhaler", "x": 270 },
+        "facing=north": { "model": "japta:fluxInhaler" },
+        "facing=south": { "model": "japta:fluxInhaler", "y": 180 },
+        "facing=west":  { "model": "japta:fluxInhaler", "y": 270 },
+        "facing=east":  { "model": "japta:fluxInhaler", "y": 90 }
+    }
+}
