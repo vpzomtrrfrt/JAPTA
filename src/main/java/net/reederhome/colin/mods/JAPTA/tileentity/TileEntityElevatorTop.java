@@ -7,6 +7,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -52,7 +53,7 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
             for (EntityLivingBase b : l) {
                 if (stored >= cost && b.isSneaking() && b.getEntityData().getLong("LastTeleported") != worldObj.getTotalWorldTime()) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() - d - 1, me.getZ() + 0.5);
-                    b.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1, 1);
+                    worldObj.playSound(null, b.posX, b.posY, b.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.PLAYERS, 1, 1);
                     stored -= cost;
                     b.getEntityData().setLong("LastTeleported", worldObj.getTotalWorldTime());
                 }
@@ -62,7 +63,7 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
             for (EntityLivingBase b : l2) {
                 if (stored >= cost && b.motionY > 0 && b.getEntityData().getLong("LastTeleported") != worldObj.getTotalWorldTime()) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() + 1, me.getZ() + 0.5);
-                    b.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1, 1);
+                    worldObj.playSound(null, b.posX, b.posY, b.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.PLAYERS, 1, 1);
                     stored -= cost;
                     b.getEntityData().setLong("LastTeleported", worldObj.getTotalWorldTime());
                 }

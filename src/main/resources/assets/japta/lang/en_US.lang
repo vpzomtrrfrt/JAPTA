@@ -87,3 +87,5 @@ text.japta.guide.category1=Blocks & Items
 text.japta.guide.title=The JAPTA Book
 text.japta.fluidHopper.status=Contains %2$d mB of %1$s
 text.japta.fluidHopper.empty=Empty
+text.japta.eater.hasItem=Contains %1$s, %2$d complete
+text.japta.eater.noItem=FEED ME!

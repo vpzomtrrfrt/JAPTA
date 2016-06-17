@@ -71,6 +71,7 @@ public class JAPTA {
     public static BlockFluidBlaster fluidInhaler;
     public static BlockItemBlaster itemInhaler;
     public static BlockItemBlaster itemSplitter;
+    public static BlockEater eater;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -125,6 +126,7 @@ public class JAPTA {
         fluidInhaler = new BlockFluidBlaster(true);
         itemInhaler = new BlockItemBlaster(true, false);
         itemSplitter = new BlockItemBlaster(false, true);
+        eater = new BlockEater();
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
@@ -156,6 +158,7 @@ public class JAPTA {
         GameRegistry.registerBlock(fluidInhaler, "fluidInhaler");
         GameRegistry.registerBlock(itemInhaler, "itemInhaler");
         GameRegistry.registerBlock(itemSplitter, "itemSplitter");
+        GameRegistry.registerBlock(eater, "eater");
 
         GameRegistry.registerItem(rfMeter, "rfMeter");
         GameRegistry.registerItem(batteryPotato, "batteryPotato");
@@ -179,6 +182,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityFurnaceBooster.class, "FurnaceBooster");
         GameRegistry.registerTileEntity(TileEntityFluidHopper.class, "FluidHopper");
         GameRegistry.registerTileEntity(TileEntityFluidBlaster.class, "FluidBlaster");
+        GameRegistry.registerTileEntity(TileEntityEater.class, "Eater");
 
         RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
 
