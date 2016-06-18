@@ -12,11 +12,20 @@ buildscript {
 }
 
 plugins {
-   id "com.matthewprenger.cursegradle" version "1.0.7" 
+    id "com.matthewprenger.cursegradle" version "1.0.7" 
 }
 
+apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.matthewprenger.cursegradle'
+
+dependencies {
+    deobfCompile "info.amerifrance.guideapi:Guide-API:1.9.4-2.0.0-37"
+}
+
+repositories {
+    maven { url 'http://tehnut.info/maven' }
+}
 
 version = "1.7.0"
 group= "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html

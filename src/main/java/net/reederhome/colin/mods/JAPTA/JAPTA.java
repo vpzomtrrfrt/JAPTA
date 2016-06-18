@@ -1,5 +1,7 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import amerifrance.guideapi.api.GuideAPI;
+import amerifrance.guideapi.api.impl.Book;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -37,7 +39,10 @@ import net.reederhome.colin.mods.JAPTA.item.ItemPoweredMultiTool;
 import net.reederhome.colin.mods.JAPTA.item.ItemRFMeter;
 import net.reederhome.colin.mods.JAPTA.tileentity.*;
 
-@Mod(name = "JAPTA", modid = JAPTA.MODID)
+import java.util.HashMap;
+import java.util.Map;
+
+@Mod(name = "JAPTA", modid = JAPTA.MODID, dependencies = "after:guideapi")
 public class JAPTA {
     public static final String MODID = "japta";
 
@@ -59,8 +64,8 @@ public class JAPTA {
     public static BlockChestCharger chestCharger;
     public static BlockMover mover;
     public static BlockBonemealApplicator bonemealApplicator;
-    public static Block powerCabinet;
-    public static Block powerCabinet2;
+    public static BlockPowerCabinet powerCabinet;
+    public static BlockPowerCabinet powerCabinet2;
     public static BlockPowerCabinetBase powerCabinetBase;
     public static BlockHeatConverter heatConverter;
     public static BlockFurnaceBooster furnaceBooster;
@@ -81,6 +86,7 @@ public class JAPTA {
     public static ItemPoweredMultiTool poweredMultiTool;
 
     private Configuration config;
+    private static Map<Item,IRecipe> recipeMap = new HashMap<Item, IRecipe>();
 
     public static boolean canSmelt(TileEntityFurnace te) {
         // took this from decompiled forge
@@ -114,8 +120,8 @@ public class JAPTA {
         chestCharger = new BlockChestCharger();
         mover = new BlockMover();
         bonemealApplicator = new BlockBonemealApplicator();
-        powerCabinet = new BlockPowerCabinet(config.get("machines.powerCabinet", "basicMetaValue", 1000, "RF per line on texture (1/15 of block) for power cabinet").getInt()).setUnlocalizedName("powerCabinet");
-        powerCabinet2 = new BlockPowerCabinet(config.get("machines.powerCabinet", "firedMetaValue", 2000, "RF per line on texture (1/15 of block) for scorched power cabinet").getInt()).setUnlocalizedName("powerCabinet2");
+        powerCabinet = (BlockPowerCabinet) new BlockPowerCabinet(config.get("machines.powerCabinet", "basicMetaValue", 1000, "RF per line on texture (1/15 of block) for power cabinet").getInt()).setUnlocalizedName("powerCabinet");
+        powerCabinet2 = (BlockPowerCabinet) new BlockPowerCabinet(config.get("machines.powerCabinet", "firedMetaValue", 2000, "RF per line on texture (1/15 of block) for scorched power cabinet").getInt()).setUnlocalizedName("powerCabinet2");
         powerCabinetBase = new BlockPowerCabinetBase();
         heatConverter = new BlockHeatConverter();
         furnaceBooster = new BlockFurnaceBooster();
@@ -218,6 +224,13 @@ public class JAPTA {
 
         GameRegistry.addSmelting(powerCabinet, new ItemStack(powerCabinet2), 0);
 
+        if(Loader.isModLoaded("guideapi")) {
+            System.out.println("Guide-API detected, adding book");
+            Book book = GuideJAPTA.get().getBook();
+            GameRegistry.register(book);
+            addRecipe(new ShapelessOreRecipe(GuideAPI.getStackFromBook(book), machineBase, "paper"));
+        }
+
         BlockBlaster.RANGE = config.get("machines.blaster", "range", BlockBlaster.RANGE).getInt();
         TileEntityRNGQuarry.RANGE = config.get("machines.rngQuarry", "range", TileEntityRNGQuarry.RANGE).getInt();
         TileEntityBonemealApplicator.RANGE = config.get("machines.bonemealApplicator", "range", TileEntityBonemealApplicator.RANGE).getInt();
@@ -229,12 +242,16 @@ public class JAPTA {
         TileEntityMover.USE = config.get("machines.mover", "cost", TileEntityMover.USE).getInt();
 
         MinecraftForge.EVENT_BUS.register(this);
+
+        if(ev.getSide() == Side.CLIENT) {
+            JAPTAClient.preInit();
+        }
     }
 
     @Mod.EventHandler
     @SideOnly(Side.CLIENT)
     public void clientInit(FMLInitializationEvent ev) {
-        JAPTAClient.registerClientThings();
+        JAPTAClient.init();
 
         if(config.get("misc", "Enable Version Checker", true, "").getBoolean()) {
             new Thread(new UpdateCheckThread(Loader.instance().activeModContainer().getVersion())).start();
@@ -270,17 +287,31 @@ public class JAPTA {
     }
 
     public void addRecipe(IRecipe recipe, ItemStack stack) {
-        addRecipe(recipe, stack.getDisplayName());
+        addRecipe(recipe, stack.getItem(), stack.getDisplayName());
     }
 
-    public void addRecipe(IRecipe recipe, String name) {
-        addRecipe(recipe, name, true);
+    public void addRecipe(IRecipe recipe, Item item, String name) {
+        addRecipe(recipe, item, name, true);
     }
 
-    public void addRecipe(IRecipe recipe, String name, boolean defaultEnabled) {
+    public void addRecipe(IRecipe recipe, Item item, String name, boolean defaultEnabled) {
+        recipeMap.put(item, recipe);
         if(config.get("recipes", name, defaultEnabled, "").getBoolean()) {
             GameRegistry.addRecipe(recipe);
         }
+    }
+
+    /**
+     * Get the recipe for a JAPTA item
+     * @param item the item
+     * @return the recipe for that item
+     */
+    public static IRecipe getRecipe(Item item) {
+        return recipeMap.get(item);
+    }
+
+    public static IRecipe getRecipe(Block block) {
+        return getRecipe(Item.getItemFromBlock(block));
     }
 
     public static<T extends Comparable<T>> T safeGetValue(IBlockState state, IProperty<T> prop) {

@@ -1,5 +1,6 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import amerifrance.guideapi.api.GuideAPI;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -7,10 +8,12 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 
 public class JAPTAClient {
 
-    public static void registerClientThings() {
+    public static void init() {
         registerBlock(JAPTA.cakeConverter, "cakeConverter");
         registerBlock(JAPTA.fluxHopper, "fluxHopper");
         registerBlock(JAPTA.chargingPlate, "chargingPlate");
@@ -36,10 +39,10 @@ public class JAPTAClient {
 
         ModelResourceLocation[] powerCabinetLocations = new ModelResourceLocation[16];
 
-        for(int i = 0; i < 16; i++) {
-            registerBlock(JAPTA.powerCabinet, i, "powerCabinet"+i);
-            registerBlock(JAPTA.powerCabinet2, i, "powerCabinet"+i);
-            powerCabinetLocations[i] = locationForName("powerCabinet"+i);
+        for (int i = 0; i < 16; i++) {
+            registerBlock(JAPTA.powerCabinet, i, "powerCabinet" + i);
+            registerBlock(JAPTA.powerCabinet2, i, "powerCabinet" + i);
+            powerCabinetLocations[i] = locationForName("powerCabinet" + i);
         }
 
         ModelBakery.registerItemVariants(Item.getItemFromBlock(JAPTA.powerCabinet), powerCabinetLocations);
@@ -58,6 +61,13 @@ public class JAPTAClient {
                 return JAPTA.poweredMultiTool.getColorFromItemStack(stack, i);
             }
         }, JAPTA.poweredMultiTool);
+    }
+
+    public static void preInit() {
+        if (Loader.isModLoaded("guideapi")) {
+            System.out.println("Setting guideBook model");
+            GuideAPI.setModel(GuideJAPTA.get().getBook(), new ResourceLocation(JAPTA.MODID + ":guideBook"), "inventory");
+        }
     }
 
     public static void registerItem(Item item, int meta, ModelResourceLocation loc) {
