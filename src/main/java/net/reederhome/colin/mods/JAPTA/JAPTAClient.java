@@ -32,6 +32,7 @@ public class JAPTAClient {
         registerBlock(JAPTA.furnaceBooster, "furnaceBooster");
         registerBlock(JAPTA.machineBase, "machineBase");
         registerBlock(JAPTA.fluidHopper, "fluidHopper");
+        registerBlock(JAPTA.eater, "eater");
 
         ModelResourceLocation[] powerCabinetLocations = new ModelResourceLocation[16];
 

@@ -27,7 +27,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
 
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
-        return 20000;
+        return MULTIPLIER*20;
     }
 
     @Override

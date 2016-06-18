@@ -67,6 +67,7 @@ tile.powerCabinet.diagnostic3=Place it above a Power Cabinet Base to use it.
 tile.machineBase.name=Machine Base
 tile.furnaceBooster.name=Furnace Booster
 tile.fluidHopper.name=Fluid Hopper
+tile.eater.name=Eater
 item.batteryPotato.name=Battery Potato
 item.rfMeter.name=RF Meter
 item.diagnosticTool.name=Diagnostic Tool

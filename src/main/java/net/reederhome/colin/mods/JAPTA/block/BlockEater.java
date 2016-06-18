@@ -21,6 +21,7 @@ public class BlockEater extends BlockModelContainer {
         super(Material.ROCK);
         setCreativeTab(JAPTA.tab);
         setHardness(1);
+        setUnlocalizedName("eater");
     }
 
     @Override
