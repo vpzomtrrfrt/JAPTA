@@ -229,7 +229,7 @@ public class JAPTA {
             System.out.println("Guide-API detected, adding book");
             Book book = GuideJAPTA.get().getBook();
             GameRegistry.register(book);
-            addRecipe(new ShapelessOreRecipe(GuideAPI.getStackFromBook(book), "paper", "ingotIron", "dustRedstone"));
+            addRecipe(new ShapelessOreRecipe(GuideAPI.getStackFromBook(book), "paper", "ingotIron", "dustRedstone", "dustRedstone"));
         }
 
         BlockBlaster.RANGE = config.get("machines.blaster", "range", BlockBlaster.RANGE).getInt();
