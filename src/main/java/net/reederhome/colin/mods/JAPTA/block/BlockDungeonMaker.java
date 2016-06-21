@@ -4,20 +4,20 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityFurnaceBooster;
+import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityDungeonMaker;
 
-public class BlockFurnaceBooster extends BlockModelContainer {
+public class BlockDungeonMaker extends BlockModelContainer {
 
-    public BlockFurnaceBooster() {
+    public BlockDungeonMaker() {
         super(Material.ROCK);
         setHardness(1);
+        setUnlocalizedName("dungeonMaker");
+        setRegistryName("dungeonMaker");
         setCreativeTab(JAPTA.tab);
-        setUnlocalizedName("furnaceBooster");
-        setRegistryName("furnaceBooster");
     }
 
     @Override
     public TileEntity createNewTileEntity(World world, int i) {
-        return new TileEntityFurnaceBooster();
+        return new TileEntityDungeonMaker();
     }
 }

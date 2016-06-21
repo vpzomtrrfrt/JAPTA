@@ -17,5 +17,6 @@ public class BlockChestCharger extends BlockModelContainer {
         setHardness(2);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("chestCharger");
+        setRegistryName("chestCharger");
     }
 }

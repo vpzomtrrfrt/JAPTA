@@ -6,15 +6,15 @@ import net.minecraft.block.BlockFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.reederhome.colin.mods.JAPTA.EnumConverterMode;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockConverter;
 
 public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyReceiver, IEnergyProvider, ITickable {
-    public static final int USE = 20;
+    public static int USE = 20;
     public int boosters = 0;
 
     @Override

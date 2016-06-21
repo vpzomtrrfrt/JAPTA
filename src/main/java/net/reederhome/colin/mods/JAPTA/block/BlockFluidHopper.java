@@ -7,7 +7,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -15,8 +14,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityFluidHopper;
@@ -40,6 +37,7 @@ public class BlockFluidHopper extends BlockModelContainer {
     public BlockFluidHopper() {
         super(Material.IRON);
         setUnlocalizedName("fluidHopper");
+        setRegistryName("fluidHopper");
         setHardness(3);
         setCreativeTab(JAPTA.tab);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.DOWN));

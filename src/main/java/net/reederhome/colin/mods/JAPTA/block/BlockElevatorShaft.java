@@ -16,6 +16,7 @@ public class BlockElevatorShaft extends Block implements IDiagnosable {
         setHardness(1);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("elevatorShaft");
+        setRegistryName("elevatorShaft");
     }
 
     @Override

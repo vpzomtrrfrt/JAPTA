@@ -22,6 +22,7 @@ public class BlockEater extends BlockModelContainer {
         setCreativeTab(JAPTA.tab);
         setHardness(1);
         setUnlocalizedName("eater");
+        setRegistryName("eater");
     }
 
     @Override

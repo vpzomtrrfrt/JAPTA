@@ -27,13 +27,29 @@ public abstract class BlockBlaster extends BlockModelContainer implements IDiagn
     @Override
     public abstract TileEntity createNewTileEntity(World worldIn, int meta);
 
-    public BlockBlaster(boolean inhaler) {
+    public BlockBlaster(boolean inhaler, boolean setNames) {
         super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-        setUnlocalizedName(getBlasterType()+(inhaler?"Inhaler":"Blaster"));
+        this.inhaler = inhaler;
+        if(setNames) {
+            setNames();
+        }
         setHardness(1);
         setCreativeTab(JAPTA.tab);
-        this.inhaler = inhaler;
+    }
+
+    public BlockBlaster(boolean inhaler) {
+        this(inhaler, true);
+    }
+
+    public void setNames() {
+        String name = getName();
+        setUnlocalizedName(name);
+        setRegistryName(name);
+    }
+
+    public String getName() {
+        return getBlasterType()+(inhaler?"Inhaler":"Blaster");
     }
 
     protected abstract String getBlasterType();

@@ -12,6 +12,7 @@ public class BlockElevatorTop extends BlockModelContainer {
         super(Material.GLASS);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("elevatorTop");
+        setRegistryName("elevatorTop");
         setHardness(1);
     }
 

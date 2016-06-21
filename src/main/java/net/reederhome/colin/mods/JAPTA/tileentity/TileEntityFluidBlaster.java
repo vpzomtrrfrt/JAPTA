@@ -9,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.*;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
-import net.reederhome.colin.mods.JAPTA.block.BlockFluidHopper;
 
 public class TileEntityFluidBlaster extends TileEntity implements IFluidHandler, ITickable {
     public static int MAX_HELD = 9000;

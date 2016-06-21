@@ -16,11 +16,14 @@ public class BlockItemBlaster extends BlockBlaster {
     private boolean splitting;
 
     public BlockItemBlaster(boolean inhaler, boolean splitting) {
-        super(inhaler);
+        super(inhaler, false);
         this.splitting = splitting;
-        if(splitting) {
-            setUnlocalizedName("itemSplitter");
-        }
+        setNames();
+    }
+
+    @Override
+    public String getName() {
+        return splitting?"itemSplitter":super.getName();
     }
 
     @Override

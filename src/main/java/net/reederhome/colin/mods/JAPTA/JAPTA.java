@@ -12,10 +12,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -77,6 +79,7 @@ public class JAPTA {
     public static BlockItemBlaster itemInhaler;
     public static BlockItemBlaster itemSplitter;
     public static BlockEater eater;
+    public static BlockDungeonMaker dungeonMaker;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -84,6 +87,8 @@ public class JAPTA {
     public static Item coilReception;
     public static Item coilTransmission;
     public static ItemPoweredMultiTool poweredMultiTool;
+    public static ItemBlockPowerCabinet itemPowerCabinet;
+    public static ItemBlockPowerCabinet itemPowerCabinet2;
 
     private Configuration config;
     private static Map<Item,IRecipe> recipeMap = new HashMap<Item, IRecipe>();
@@ -120,12 +125,12 @@ public class JAPTA {
         chestCharger = new BlockChestCharger();
         mover = new BlockMover();
         bonemealApplicator = new BlockBonemealApplicator();
-        powerCabinet = (BlockPowerCabinet) new BlockPowerCabinet(config.get("machines.powerCabinet", "basicMetaValue", 1000, "RF per line on texture (1/15 of block) for power cabinet").getInt()).setUnlocalizedName("powerCabinet");
-        powerCabinet2 = (BlockPowerCabinet) new BlockPowerCabinet(config.get("machines.powerCabinet", "firedMetaValue", 2000, "RF per line on texture (1/15 of block) for scorched power cabinet").getInt()).setUnlocalizedName("powerCabinet2");
+        powerCabinet = (BlockPowerCabinet) new BlockPowerCabinet(config.get("machines.powerCabinet", "basicMetaValue", 1000, "RF per line on texture (1/15 of block) for power cabinet").getInt()).setUnlocalizedName("powerCabinet").setRegistryName("powerCabinet");
+        powerCabinet2 = (BlockPowerCabinet) new BlockPowerCabinet(config.get("machines.powerCabinet", "firedMetaValue", 2000, "RF per line on texture (1/15 of block) for scorched power cabinet").getInt()).setUnlocalizedName("powerCabinet2").setRegistryName("powerCabinet2");
         powerCabinetBase = new BlockPowerCabinetBase();
         heatConverter = new BlockHeatConverter();
         furnaceBooster = new BlockFurnaceBooster();
-        machineBase = new Block(Material.ROCK).setHardness(1).setUnlocalizedName("machineBase").setCreativeTab(tab);
+        machineBase = new Block(Material.ROCK).setHardness(1).setUnlocalizedName("machineBase").setRegistryName("machineBase").setCreativeTab(tab);
         fluidHopper = new BlockFluidHopper();
         fluidBlaster = new BlockFluidBlaster(false);
         fluxInhaler = new BlockFluxBlaster(true);
@@ -133,45 +138,51 @@ public class JAPTA {
         itemInhaler = new BlockItemBlaster(true, false);
         itemSplitter = new BlockItemBlaster(false, true);
         eater = new BlockEater();
+        dungeonMaker = new BlockDungeonMaker();
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
         diagnosticTool = new ItemRFMeter(true);
-        coilReception = new Item().setUnlocalizedName("coilReception").setCreativeTab(tab);
-        coilTransmission = new Item().setUnlocalizedName("coilTransmission").setCreativeTab(tab);
+        coilReception = new Item().setUnlocalizedName("coilReception").setRegistryName("coilReception").setCreativeTab(tab);
+        coilTransmission = new Item().setUnlocalizedName("coilTransmission").setRegistryName("coilTransmission").setCreativeTab(tab);
         poweredMultiTool = new ItemPoweredMultiTool();
+        itemPowerCabinet = ((ItemBlockPowerCabinet) new ItemBlockPowerCabinet(powerCabinet).setRegistryName("powerCabinet"));
+        itemPowerCabinet2 = ((ItemBlockPowerCabinet) new ItemBlockPowerCabinet(powerCabinet2).setRegistryName("powerCabinet2"));
 
-        GameRegistry.registerBlock(cakeConverter, "cakeConverter");
-        GameRegistry.registerBlock(fluxHopper, "fluxHopper");
-        GameRegistry.registerBlock(chargingPlate, "chargingPlate");
-        GameRegistry.registerBlock(elevatorShaft, "elevatorShaft");
-        GameRegistry.registerBlock(elevatorTop, "elevatorTop");
-        GameRegistry.registerBlock(fluxBlaster, "fluxBlaster");
-        GameRegistry.registerBlock(itemBlaster, "itemBlaster");
-        GameRegistry.registerBlock(rngQuarry, "rngQuarry");
-        GameRegistry.registerBlock(chestCharger, "chestCharger");
-        GameRegistry.registerBlock(mover, "mover");
-        GameRegistry.registerBlock(bonemealApplicator, "bonemealApplicator");
-        GameRegistry.registerBlock(powerCabinetBase, "powerCabinetBase");
-        GameRegistry.registerBlock(powerCabinet, ItemBlockPowerCabinet.class, "powerCabinet");
-        GameRegistry.registerBlock(heatConverter, "heatConverter");
-        GameRegistry.registerBlock(furnaceBooster, "furnaceBooster");
-        GameRegistry.registerBlock(machineBase, "machineBase");
-        GameRegistry.registerBlock(fluidHopper, "fluidHopper");
-        GameRegistry.registerBlock(powerCabinet2, ItemBlockPowerCabinet.class, "powerCabinet2");
-        GameRegistry.registerBlock(fluidBlaster, "fluidBlaster");
-        GameRegistry.registerBlock(fluxInhaler, "fluxInhaler");
-        GameRegistry.registerBlock(fluidInhaler, "fluidInhaler");
-        GameRegistry.registerBlock(itemInhaler, "itemInhaler");
-        GameRegistry.registerBlock(itemSplitter, "itemSplitter");
-        GameRegistry.registerBlock(eater, "eater");
+        registerBlock(cakeConverter);
+        registerBlock(fluxHopper);
+        registerBlock(chargingPlate);
+        registerBlock(elevatorShaft);
+        registerBlock(elevatorTop);
+        registerBlock(fluxBlaster);
+        registerBlock(itemBlaster);
+        registerBlock(rngQuarry);
+        registerBlock(chestCharger);
+        registerBlock(mover);
+        registerBlock(bonemealApplicator);
+        GameRegistry.register(powerCabinet);
+        GameRegistry.register(powerCabinet2);
+        registerBlock(powerCabinetBase);
+        registerBlock(heatConverter);
+        registerBlock(furnaceBooster);
+        registerBlock(machineBase);
+        registerBlock(fluidHopper);
+        registerBlock(fluidBlaster);
+        registerBlock(fluxInhaler);
+        registerBlock(fluidInhaler);
+        registerBlock(itemInhaler);
+        registerBlock(itemSplitter);
+        registerBlock(eater);
+        registerBlock(dungeonMaker);
 
-        GameRegistry.registerItem(rfMeter, "rfMeter");
-        GameRegistry.registerItem(batteryPotato, "batteryPotato");
-        GameRegistry.registerItem(diagnosticTool, "diagnosticTool");
-        GameRegistry.registerItem(coilReception, "coilReception");
-        GameRegistry.registerItem(coilTransmission, "coilTransmission");
-        GameRegistry.registerItem(poweredMultiTool, "poweredMultiTool");
+        GameRegistry.register(rfMeter);
+        GameRegistry.register(batteryPotato);
+        GameRegistry.register(diagnosticTool);
+        GameRegistry.register(coilReception);
+        GameRegistry.register(coilTransmission);
+        GameRegistry.register(poweredMultiTool);
+        GameRegistry.register(itemPowerCabinet);
+        GameRegistry.register(itemPowerCabinet2);
 
         GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
         GameRegistry.registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
@@ -189,6 +200,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityFluidHopper.class, "FluidHopper");
         GameRegistry.registerTileEntity(TileEntityFluidBlaster.class, "FluidBlaster");
         GameRegistry.registerTileEntity(TileEntityEater.class, "Eater");
+        GameRegistry.registerTileEntity(TileEntityDungeonMaker.class, "DungeonMaker");
 
         RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
 
@@ -221,6 +233,7 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(coilTransmission, "r  ", "gig", "  r", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
         addRecipe(new ShapedOreRecipe(fluidHopper, "i i", "i i", " b ", 'i', "ingotIron", 'b', Items.BUCKET));
         addRecipe(new ShapedOreRecipe(eater, "iii", "imi", "rcr", 'i', "ingotIron", 'm', machineBase, 'r', "dustRedstone", 'c', coilTransmission));
+        addRecipe(new ShapedOreRecipe(dungeonMaker, "imi", "mbm", "imi", 'i', "ingotIron", 'b', machineBase, 'm', Blocks.MOSSY_COBBLESTONE));
         addRecipe(new RecipePoweredMultiTool());
 
         GameRegistry.addSmelting(powerCabinet, new ItemStack(powerCabinet2), 0);
@@ -241,12 +254,21 @@ public class JAPTA {
         TileEntityElevatorTop.USE_BASE = config.get("machines.elevator", "baseCost", TileEntityElevatorTop.USE_BASE).getInt();
         TileEntityElevatorTop.USE_EXTRA = config.get("machines.elevator", "costPerBlock", TileEntityElevatorTop.USE_EXTRA).getInt();
         TileEntityMover.USE = config.get("machines.mover", "cost", TileEntityMover.USE).getInt();
+        TileEntityHeatConverter.USE = config.get("machines.heatConverter", "cost", TileEntityHeatConverter.USE, "RF/t generated and used by Heat Converters").getInt();
+        TileEntityEater.MULTIPLIER = config.get("machines.eater", "multiplier", TileEntityEater.MULTIPLIER).getInt();
+        TileEntityEater.TIME = config.get("machines.eater", "time", TileEntityEater.TIME, "Ticks taken to eat food").getInt();
+        TileEntityDungeonMaker.USE = config.get("machines.dungeonifier", "cost", TileEntityDungeonMaker.USE).getInt();
 
         MinecraftForge.EVENT_BUS.register(this);
 
         if(ev.getSide() == Side.CLIENT) {
             JAPTAClient.preInit();
         }
+    }
+
+    private void registerBlock(Block block) {
+        GameRegistry.register(block);
+        GameRegistry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
     }
 
     @Mod.EventHandler

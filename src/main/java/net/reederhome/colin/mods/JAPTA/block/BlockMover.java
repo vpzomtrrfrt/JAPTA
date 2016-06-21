@@ -27,6 +27,7 @@ public class BlockMover extends BlockModelContainer {
         setHardness(1);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("mover");
+        setRegistryName("mover");
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
 

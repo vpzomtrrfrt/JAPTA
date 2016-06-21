@@ -23,6 +23,7 @@ public class ItemBatteryPotato extends ItemJPT {
         setMaxDamage(16000);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("batteryPotato");
+        setRegistryName("batteryPotato");
         setHasSubtypes(true);
     }
 

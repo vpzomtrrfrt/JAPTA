@@ -5,9 +5,8 @@ import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.reederhome.colin.mods.JAPTA.JAPTA;
+import net.minecraft.util.math.BlockPos;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
 
 public class TileEntityPowerCabinetBase extends TileEntity implements IEnergyReceiver, IEnergyProvider {

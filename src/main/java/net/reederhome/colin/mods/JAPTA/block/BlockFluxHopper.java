@@ -31,6 +31,7 @@ public class BlockFluxHopper extends BlockModelContainer {
         super(Material.IRON);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.DOWN));
         setUnlocalizedName("fluxHopper");
+        setRegistryName("fluxHopper");
         setHardness(3);
         setCreativeTab(JAPTA.tab);
     }

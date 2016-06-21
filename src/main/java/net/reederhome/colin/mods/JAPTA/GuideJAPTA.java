@@ -17,15 +17,13 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
-import net.reederhome.colin.mods.JAPTA.item.ItemBatteryPotato;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityBonemealApplicator;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityCakeConverter;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityHeatConverter;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityRNGQuarry;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.*;
-import java.util.List;
 
 public class GuideJAPTA {
     private static GuideJAPTA instance;
@@ -60,6 +58,10 @@ public class GuideJAPTA {
                 new PageItemStack("The Chest Charger can charge items with RF in adjacent block inventories.", JAPTA.chestCharger),
                 maybeRecipe(JAPTA.chestCharger)
         ), "tile.chestCharger.name", new ItemStack(JAPTA.chestCharger)));
+        blockMap.put(new ResourceLocation("blocks", "dungeonMaker"), new EntryItemStack(Arrays.asList(
+                new PageItemStack("The Dungeonifier is a block that can use RF to make adjacent empty Chests into dungeon chests.", JAPTA.dungeonMaker),
+                maybeRecipe(JAPTA.dungeonMaker)
+        ), "tile.dungeonMaker.name", new ItemStack(JAPTA.dungeonMaker)));
         blockMap.put(new ResourceLocation("blocks", "eater"), new EntryItemStack(Arrays.asList(
                 new PageItemStack("The Eater can eat food items and generate RF.", JAPTA.eater),
                 maybeRecipe(JAPTA.eater)

@@ -3,7 +3,6 @@ package net.reederhome.colin.mods.JAPTA.block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -27,6 +26,7 @@ public class BlockRNGQuarry extends BlockModelContainer {
         setHardness(5);
         setCreativeTab(JAPTA.tab);
         setUnlocalizedName("rngQuarry");
+        setRegistryName("rngQuarry");
     }
 
     @Override
