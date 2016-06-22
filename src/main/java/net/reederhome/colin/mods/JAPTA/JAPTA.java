@@ -80,6 +80,7 @@ public class JAPTA {
     public static BlockItemBlaster itemSplitter;
     public static BlockEater eater;
     public static SimpleTEBlock dungeonMaker;
+    public static SimpleTEBlock fisher;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -139,6 +140,7 @@ public class JAPTA {
         itemSplitter = new BlockItemBlaster(false, true);
         eater = new BlockEater();
         dungeonMaker = new SimpleTEBlock(Material.ROCK, TileEntityDungeonMaker.class, "dungeonMaker");
+        fisher = new SimpleTEBlock(Material.ROCK, TileEntityFisher.class, "fisher");
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
@@ -174,6 +176,7 @@ public class JAPTA {
         registerBlock(itemSplitter);
         registerBlock(eater);
         registerBlock(dungeonMaker);
+        registerBlock(fisher);
 
         GameRegistry.register(rfMeter);
         GameRegistry.register(batteryPotato);

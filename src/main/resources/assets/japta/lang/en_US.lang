@@ -71,6 +71,7 @@ tile.eater.name=Eater
 tile.dungeonMaker.name=Dungeonifier
 tile.dungeonMaker.diagnostic.noChest=No empty chests present.
 tile.dungeonMaker.diagnostic.yesChest=Ready to make loot.  Just add RF!
+tile.fisher.name=Fisher
 item.batteryPotato.name=Battery Potato
 item.rfMeter.name=RF Meter
 item.diagnosticTool.name=Diagnostic Tool

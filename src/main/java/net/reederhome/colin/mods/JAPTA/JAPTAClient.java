@@ -37,6 +37,7 @@ public class JAPTAClient {
         registerBlock(JAPTA.fluidHopper, "fluidHopper");
         registerBlock(JAPTA.eater, "eater");
         registerBlock(JAPTA.dungeonMaker, "dungeonMaker");
+        registerBlock(JAPTA.fisher, "fisher");
 
         ModelResourceLocation[] powerCabinetLocations = new ModelResourceLocation[16];
 
