@@ -63,14 +63,14 @@ public class JAPTA {
     public static BlockFluxBlaster fluxBlaster;
     public static BlockItemBlaster itemBlaster;
     public static BlockRNGQuarry rngQuarry;
-    public static BlockChestCharger chestCharger;
+    public static SimpleTEBlock chestCharger;
     public static BlockMover mover;
-    public static BlockBonemealApplicator bonemealApplicator;
+    public static SimpleTEBlock bonemealApplicator;
     public static BlockPowerCabinet powerCabinet;
     public static BlockPowerCabinet powerCabinet2;
-    public static BlockPowerCabinetBase powerCabinetBase;
+    public static SimpleTEBlock powerCabinetBase;
     public static BlockHeatConverter heatConverter;
-    public static BlockFurnaceBooster furnaceBooster;
+    public static SimpleTEBlock furnaceBooster;
     public static Block machineBase;
     public static BlockFluidHopper fluidHopper;
     public static BlockFluidBlaster fluidBlaster;
@@ -79,7 +79,7 @@ public class JAPTA {
     public static BlockItemBlaster itemInhaler;
     public static BlockItemBlaster itemSplitter;
     public static BlockEater eater;
-    public static BlockDungeonMaker dungeonMaker;
+    public static SimpleTEBlock dungeonMaker;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -122,14 +122,14 @@ public class JAPTA {
         fluxBlaster = new BlockFluxBlaster(false);
         itemBlaster = new BlockItemBlaster(false, false);
         rngQuarry = new BlockRNGQuarry();
-        chestCharger = new BlockChestCharger();
+        chestCharger = new SimpleTEBlock(Material.ROCK, TileEntityChestCharger.class, "chestCharger");
         mover = new BlockMover();
-        bonemealApplicator = new BlockBonemealApplicator();
+        bonemealApplicator = new SimpleTEBlock(Material.ROCK, TileEntityBonemealApplicator.class, "bonemealApplicator");
         powerCabinet = (BlockPowerCabinet) new BlockPowerCabinet(config.get("machines.powerCabinet", "basicMetaValue", 1000, "RF per line on texture (1/15 of block) for power cabinet").getInt()).setUnlocalizedName("powerCabinet").setRegistryName("powerCabinet");
         powerCabinet2 = (BlockPowerCabinet) new BlockPowerCabinet(config.get("machines.powerCabinet", "firedMetaValue", 2000, "RF per line on texture (1/15 of block) for scorched power cabinet").getInt()).setUnlocalizedName("powerCabinet2").setRegistryName("powerCabinet2");
-        powerCabinetBase = new BlockPowerCabinetBase();
+        powerCabinetBase = new SimpleTEBlock(Material.ROCK, TileEntityPowerCabinetBase.class, "powerCabinetBase");
         heatConverter = new BlockHeatConverter();
-        furnaceBooster = new BlockFurnaceBooster();
+        furnaceBooster = new SimpleTEBlock(Material.ROCK, TileEntityFurnaceBooster.class, "furnaceBooster");
         machineBase = new Block(Material.ROCK).setHardness(1).setUnlocalizedName("machineBase").setRegistryName("machineBase").setCreativeTab(tab);
         fluidHopper = new BlockFluidHopper();
         fluidBlaster = new BlockFluidBlaster(false);
@@ -138,7 +138,7 @@ public class JAPTA {
         itemInhaler = new BlockItemBlaster(true, false);
         itemSplitter = new BlockItemBlaster(false, true);
         eater = new BlockEater();
-        dungeonMaker = new BlockDungeonMaker();
+        dungeonMaker = new SimpleTEBlock(Material.ROCK, TileEntityDungeonMaker.class, "dungeonMaker");
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
