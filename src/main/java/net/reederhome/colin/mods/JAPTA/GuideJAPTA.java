@@ -73,6 +73,11 @@ public class GuideJAPTA {
                 maybeRecipe(JAPTA.elevatorShaft),
                 maybeRecipe(JAPTA.elevatorTop)
         ), "guide.title.elevator", new ItemStack(JAPTA.elevatorShaft)));
+        blockMap.put(new ResourceLocation("blocks", "fisher"), new EntryItemStack(Arrays.asList(
+                new PageItemStack("The Fisher is a block that is able to turn RF into fishing loot." +
+                        "  Items gained will be placed in adjacent chests, or spewed if there is no available slot.", JAPTA.fisher),
+                maybeRecipe(JAPTA.fisher)
+        ), "tile.fisher.name", new ItemStack(JAPTA.fisher)));
         blockMap.put(new ResourceLocation("blocks", "fluidHopper"), new EntryItemStack(Arrays.asList(
                 new PageItemStack("The Fluid Hopper is a block that can transfer liquids.  It will drain liquids from the top, and give them to the front." +
                         "  It faces toward the block you placed it on.  It can only hold one liquid at a time.", JAPTA.fluidHopper),

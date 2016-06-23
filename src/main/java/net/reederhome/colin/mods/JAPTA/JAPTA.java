@@ -236,7 +236,8 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(coilTransmission, "r  ", "gig", "  r", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
         addRecipe(new ShapedOreRecipe(fluidHopper, "i i", "i i", " b ", 'i', "ingotIron", 'b', Items.BUCKET));
         addRecipe(new ShapedOreRecipe(eater, "iii", "imi", "rcr", 'i', "ingotIron", 'm', machineBase, 'r', "dustRedstone", 'c', coilTransmission));
-        addRecipe(new ShapedOreRecipe(dungeonMaker, "imi", "mbm", "imi", 'i', "ingotIron", 'b', machineBase, 'm', Blocks.MOSSY_COBBLESTONE));
+        addRecipe(new ShapedOreRecipe(dungeonMaker, "imi", "mbm", "ici", 'i', "ingotIron", 'b', machineBase, 'm', Blocks.MOSSY_COBBLESTONE, 'c', coilReception));
+        addRecipe(new ShapedOreRecipe(fisher, "ifi", "rmr", "ici", 'i', "ingotIron", 'f', Items.FISHING_ROD, 'r', "dustRedstone", 'c', coilReception, 'm', machineBase));
         addRecipe(new RecipePoweredMultiTool());
 
         GameRegistry.addSmelting(powerCabinet, new ItemStack(powerCabinet2), 0);
