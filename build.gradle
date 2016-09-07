@@ -27,7 +27,7 @@ repositories {
     maven { url 'http://tehnut.info/maven' }
 }
 
-version = "1.9.0"
+version = "1.9.1"
 group= "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "JAPTA-1.9.4"
 
@@ -79,5 +79,6 @@ curseforge {
     project {
         id = '241891'
         releaseType = 'alpha'
+        addGameVersion '1.10.2'
     }
 }
