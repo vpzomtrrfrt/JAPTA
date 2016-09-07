@@ -204,6 +204,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityFluidBlaster.class, "FluidBlaster");
         GameRegistry.registerTileEntity(TileEntityEater.class, "Eater");
         GameRegistry.registerTileEntity(TileEntityDungeonMaker.class, "DungeonMaker");
+        GameRegistry.registerTileEntity(TileEntityFisher.class, "Fisher");
 
         RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
 
