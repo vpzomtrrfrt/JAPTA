@@ -1,12 +1,25 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
+import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.ITeslaHolder;
+import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
-public abstract class TileEntityJPT extends TileEntity {
+public abstract class TileEntityJPT extends TileEntity implements ICapabilityProvider {
     public int stored = 0;
+
+    @CapabilityInject(ITeslaHolder.class)
+    private static Capability<ITeslaHolder> CAPABILITY_TESLA_HOLDER;
+    @CapabilityInject(ITeslaProducer.class)
+    private static Capability<ITeslaProducer> CAPABILITY_TESLA_PRODUCER;
+    @CapabilityInject(ITeslaConsumer.class)
+    private static Capability<ITeslaConsumer> CAPABILITY_TESLA_CONSUMER;
 
     public int getEnergyStored(EnumFacing from) {
         return stored;
@@ -63,6 +76,9 @@ public abstract class TileEntityJPT extends TileEntity {
         if (te instanceof IEnergyReceiver) {
             stored -= ((IEnergyReceiver) te).receiveEnergy(side.getOpposite(), stored, false);
         }
+        else if(te.hasCapability(CAPABILITY_TESLA_CONSUMER, side)) {
+            stored -= te.getCapability(CAPABILITY_TESLA_CONSUMER, side).givePower(stored, false);
+        }
     }
 
     public void transmit(int side) {
@@ -75,6 +91,51 @@ public abstract class TileEntityJPT extends TileEntity {
                 break;
             }
             transmit(i);
+        }
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+        if(capability == CAPABILITY_TESLA_HOLDER || capability == CAPABILITY_TESLA_CONSUMER || capability == CAPABILITY_TESLA_PRODUCER) {
+            return true;
+        }
+        return super.hasCapability(capability, facing);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+        if(capability == CAPABILITY_TESLA_HOLDER || capability == CAPABILITY_TESLA_CONSUMER || capability == CAPABILITY_TESLA_PRODUCER) {
+            return (T) new JPTTeslaAdapter(facing);
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    private class JPTTeslaAdapter implements ITeslaHolder, ITeslaConsumer, ITeslaProducer {
+        private EnumFacing facing;
+
+        public JPTTeslaAdapter(EnumFacing facing) {
+            this.facing = facing;
+        }
+
+        @Override
+        public long givePower(long power, boolean simulated) {
+            return receiveEnergy(facing, (int) power, simulated);
+        }
+
+        @Override
+        public long getStoredPower() {
+            return getEnergyStored(facing);
+        }
+
+        @Override
+        public long getCapacity() {
+            return getMaxEnergyStored(facing);
+        }
+
+        @Override
+        public long takePower(long power, boolean simulated) {
+            return extractEnergy(facing, (int) power, simulated);
         }
     }
 }
