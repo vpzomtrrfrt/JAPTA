@@ -27,18 +27,22 @@ public class TileEntityFluxBlaster extends TileEntityJPT implements IEnergyRecei
                 cp = cp.up();
             }
             TileEntity te = worldObj.getTileEntity(cp);
-            if(inhaler) {
-                int remaining = getMaxEnergyStored(null)-stored;
-                if(te instanceof IEnergyProvider && remaining > 0) {
+            if (inhaler) {
+                int remaining = getMaxEnergyStored(null) - stored;
+                if (te instanceof IEnergyProvider && remaining > 0) {
                     stored += ((IEnergyProvider) te).extractEnergy(facing.getOpposite(), remaining, false);
                 }
-            }
-            else if (te instanceof IEnergyReceiver && stored > 0) {
+            } else if (te instanceof IEnergyReceiver && stored > 0) {
                 stored -= ((IEnergyReceiver) te).receiveEnergy(facing.getOpposite(), stored, false);
             }
         }
-        if(stored > 0 && inhaler) {
+        if (stored > 0 && inhaler) {
             transmit();
         }
+    }
+
+    @Override
+    public boolean canTransmitEnergy(EnumFacing from) {
+        return from != JAPTA.safeGetValue(this, BlockBlaster.FACING);
     }
 }

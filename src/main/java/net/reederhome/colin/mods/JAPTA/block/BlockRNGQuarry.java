@@ -31,7 +31,7 @@ public class BlockRNGQuarry extends BlockModelContainer {
 
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        if(!worldIn.isRemote) {
+        if (!worldIn.isRemote) {
             placer.addChatMessage(new TextComponentTranslation("text.japta.rngQuarry.noTool", 0));
         }
         return getDefaultState();
@@ -39,22 +39,20 @@ public class BlockRNGQuarry extends BlockModelContainer {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer p, EnumHand hand, ItemStack stack, EnumFacing p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_, float p_onBlockActivated_10_) {
-        if(world.isRemote) return true;
+        if (world.isRemote) return true;
         TileEntityRNGQuarry te = (TileEntityRNGQuarry) world.getTileEntity(pos);
         ItemStack held = p.inventory.getCurrentItem();
-        if(held == null) {
-            if(te.item != null) {
+        if (held == null) {
+            if (te.item != null) {
                 p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.hasTool", te.item.getTextComponent(), te.stored));
-            }
-            else {
+            } else {
                 p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.noTool", te.stored));
             }
-        }
-        else {
+        } else {
             ItemStack itm = te.item;
             te.item = p.inventory.removeStackFromSlot(p.inventory.currentItem);
             p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.gotTool", te.item.getTextComponent()));
-            if(itm != null) {
+            if (itm != null) {
                 p.inventory.setInventorySlotContents(p.inventory.currentItem, itm);
             }
         }
@@ -64,10 +62,10 @@ public class BlockRNGQuarry extends BlockModelContainer {
     @Override
     public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
         super.onBlockClicked(world, pos, player);
-        if(player.isSneaking()) {
+        if (player.isSneaking()) {
             TileEntityRNGQuarry te = (TileEntityRNGQuarry) world.getTileEntity(pos);
-            if(te.item != null) {
-                if(player.inventory.addItemStackToInventory(te.item)) {
+            if (te.item != null) {
+                if (player.inventory.addItemStackToInventory(te.item)) {
                     te.item = null;
                 }
             }
@@ -77,8 +75,8 @@ public class BlockRNGQuarry extends BlockModelContainer {
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         TileEntityRNGQuarry te = (TileEntityRNGQuarry) world.getTileEntity(pos);
-        if(te.item != null) {
-            InventoryHelper.spawnItemStack(world, pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5, te.item);
+        if (te.item != null) {
+            InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, te.item);
             te.item = null;
         }
         super.breakBlock(world, pos, state);

@@ -1,26 +1,21 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
+import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 public abstract class TileEntityJPT extends TileEntity implements ICapabilityProvider {
     public int stored = 0;
-
-    @CapabilityInject(ITeslaHolder.class)
-    private static Capability<ITeslaHolder> CAPABILITY_TESLA_HOLDER;
-    @CapabilityInject(ITeslaProducer.class)
-    private static Capability<ITeslaProducer> CAPABILITY_TESLA_PRODUCER;
-    @CapabilityInject(ITeslaConsumer.class)
-    private static Capability<ITeslaConsumer> CAPABILITY_TESLA_CONSUMER;
 
     public int getEnergyStored(EnumFacing from) {
         return stored;
@@ -46,7 +41,7 @@ public abstract class TileEntityJPT extends TileEntity implements ICapabilityPro
     }
 
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
-        if(!canReceiveEnergy(from)) {
+        if (!canReceiveEnergy(from)) {
             return 0;
         }
         int avail = getMaxEnergyStored(from) - getEnergyStored(from);
@@ -84,15 +79,14 @@ public abstract class TileEntityJPT extends TileEntity implements ICapabilityPro
     }
 
     public void transmit(EnumFacing side) {
-        if(!canTransmitEnergy(side)) {
+        if (!canTransmitEnergy(side)) {
             return;
         }
         TileEntity te = worldObj.getTileEntity(getPos().offset(side));
         if (te instanceof IEnergyReceiver) {
             stored -= ((IEnergyReceiver) te).receiveEnergy(side.getOpposite(), stored, false);
-        }
-        else if(te != null && te.hasCapability(CAPABILITY_TESLA_CONSUMER, side)) {
-            stored -= te.getCapability(CAPABILITY_TESLA_CONSUMER, side).givePower(stored, false);
+        } else if (te != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, side)) {
+            stored -= te.getCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, side).givePower(stored, false);
         }
     }
 
@@ -111,7 +105,7 @@ public abstract class TileEntityJPT extends TileEntity implements ICapabilityPro
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        if(capability == CAPABILITY_TESLA_HOLDER || capability == CAPABILITY_TESLA_CONSUMER || capability == CAPABILITY_TESLA_PRODUCER) {
+        if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER) {
             return true;
         }
         return super.hasCapability(capability, facing);
@@ -120,37 +114,50 @@ public abstract class TileEntityJPT extends TileEntity implements ICapabilityPro
     @Override
     @SuppressWarnings("unchecked")
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        if(capability == CAPABILITY_TESLA_HOLDER || capability == CAPABILITY_TESLA_CONSUMER || capability == CAPABILITY_TESLA_PRODUCER) {
-            return (T) new JPTTeslaAdapter(facing);
+        if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER) {
+            return (T) new JPTTeslaAdapter(facing, this);
         }
         return super.getCapability(capability, facing);
     }
 
-    private class JPTTeslaAdapter implements ITeslaHolder, ITeslaConsumer, ITeslaProducer {
-        private EnumFacing facing;
+    public void chargeItem(ItemStack stack) {
+        if (stored > 0 && stack != null) {
+            if (stack.getItem() instanceof IEnergyContainerItem) {
+                stored -= ((IEnergyContainerItem) stack.getItem()).receiveEnergy(stack, stored, false);
+            }
+            if (stack.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null)) {
+                stored -= stack.getCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null).givePower(stored, false);
+            }
+        }
+    }
 
-        public JPTTeslaAdapter(EnumFacing facing) {
+    public static class JPTTeslaAdapter implements ITeslaHolder, ITeslaConsumer, ITeslaProducer {
+        private EnumFacing facing;
+        private TileEntity te;
+
+        public JPTTeslaAdapter(EnumFacing facing, TileEntity te) {
             this.facing = facing;
+            this.te = te;
         }
 
         @Override
         public long givePower(long power, boolean simulated) {
-            return receiveEnergy(facing, (int) power, simulated);
+            return ((IEnergyReceiver) te).receiveEnergy(facing, (int) power, simulated);
         }
 
         @Override
         public long getStoredPower() {
-            return getEnergyStored(facing);
+            return ((IEnergyReceiver) te).getEnergyStored(facing);
         }
 
         @Override
         public long getCapacity() {
-            return getMaxEnergyStored(facing);
+            return ((IEnergyReceiver) te).getMaxEnergyStored(facing);
         }
 
         @Override
         public long takePower(long power, boolean simulated) {
-            return extractEnergy(facing, (int) power, simulated);
+            return ((IEnergyProvider) te).extractEnergy(facing, (int) power, simulated);
         }
     }
 }

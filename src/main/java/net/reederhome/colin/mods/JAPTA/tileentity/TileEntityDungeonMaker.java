@@ -18,6 +18,7 @@ import java.util.Random;
 public class TileEntityDungeonMaker extends TileEntityJPT implements IEnergyReceiver, ITickable, IDiagnosable {
 
     public static int USE = 1000000;
+
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
         return USE;
@@ -25,10 +26,10 @@ public class TileEntityDungeonMaker extends TileEntityJPT implements IEnergyRece
 
     @Override
     public void update() {
-        if(worldObj.isRemote) return;
-        if(stored >= USE) {
+        if (worldObj.isRemote) return;
+        if (stored >= USE) {
             TileEntityChest chest = findEmptyChest();
-            if(chest != null) {
+            if (chest != null) {
                 chest.setLootTable(LootTableList.CHESTS_SIMPLE_DUNGEON, new Random().nextLong());
                 stored -= USE;
             }
@@ -36,27 +37,27 @@ public class TileEntityDungeonMaker extends TileEntityJPT implements IEnergyRece
     }
 
     private TileEntityChest findEmptyChest() {
-        for(EnumFacing side : EnumFacing.values()) {
+        for (EnumFacing side : EnumFacing.values()) {
             BlockPos tr = getPos().offset(side);
             TileEntity te = worldObj.getTileEntity(tr);
-            if(te instanceof TileEntityChest) {
+            if (te instanceof TileEntityChest) {
                 TileEntityChest chest = ((TileEntityChest) te);
-                if(isEmpty(chest)) return chest;
+                if (isEmpty(chest)) return chest;
             }
         }
         return null;
     }
 
     private boolean isEmpty(IInventory inv) {
-        for(int i = 0; i < inv.getSizeInventory(); i++) {
-            if(inv.getStackInSlot(i) != null) return false;
+        for (int i = 0; i < inv.getSizeInventory(); i++) {
+            if (inv.getStackInSlot(i) != null) return false;
         }
         return true;
     }
 
     @Override
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
-        sender.addChatMessage(new TextComponentTranslation("tile.dungeonMaker.diagnostic."+(findEmptyChest()==null?"noChest":"yesChest")));
+        sender.addChatMessage(new TextComponentTranslation("tile.dungeonMaker.diagnostic." + (findEmptyChest() == null ? "noChest" : "yesChest")));
         return true;
     }
 }

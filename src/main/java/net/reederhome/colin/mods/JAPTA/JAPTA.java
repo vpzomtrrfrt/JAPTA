@@ -2,6 +2,9 @@ package net.reederhome.colin.mods.JAPTA;
 
 import amerifrance.guideapi.api.GuideAPI;
 import amerifrance.guideapi.api.impl.Book;
+import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.ITeslaHolder;
+import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -16,10 +19,12 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -91,8 +96,15 @@ public class JAPTA {
     public static ItemBlockPowerCabinet itemPowerCabinet;
     public static ItemBlockPowerCabinet itemPowerCabinet2;
 
+    @CapabilityInject(ITeslaHolder.class)
+    public static Capability<ITeslaHolder> CAPABILITY_TESLA_HOLDER;
+    @CapabilityInject(ITeslaProducer.class)
+    public static Capability<ITeslaProducer> CAPABILITY_TESLA_PRODUCER;
+    @CapabilityInject(ITeslaConsumer.class)
+    public static Capability<ITeslaConsumer> CAPABILITY_TESLA_CONSUMER;
+
     private Configuration config;
-    private static Map<Item,IRecipe> recipeMap = new HashMap<Item, IRecipe>();
+    private static Map<Item, IRecipe> recipeMap = new HashMap<Item, IRecipe>();
 
     public static boolean canSmelt(TileEntityFurnace te) {
         // took this from decompiled forge
@@ -243,7 +255,7 @@ public class JAPTA {
 
         GameRegistry.addSmelting(powerCabinet, new ItemStack(powerCabinet2), 0);
 
-        if(Loader.isModLoaded("guideapi")) {
+        if (Loader.isModLoaded("guideapi")) {
             System.out.println("Guide-API detected, adding book");
             Book book = GuideJAPTA.get().getBook();
             GameRegistry.register(book);
@@ -266,7 +278,7 @@ public class JAPTA {
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        if(ev.getSide() == Side.CLIENT) {
+        if (ev.getSide() == Side.CLIENT) {
             JAPTAClient.preInit();
         }
     }
@@ -281,7 +293,7 @@ public class JAPTA {
     public void clientInit(FMLInitializationEvent ev) {
         JAPTAClient.init();
 
-        if(config.get("misc", "Enable Version Checker", true, "").getBoolean()) {
+        if (config.get("misc", "Enable Version Checker", true, "").getBoolean()) {
             new Thread(new UpdateCheckThread(Loader.instance().activeModContainer().getVersion())).start();
         }
     }
@@ -296,15 +308,14 @@ public class JAPTA {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onTick(TickEvent ev) {
-        if(!notified && UpdateCheckThread.ret != null) {
-            if(UpdateCheckThread.ret.equals("update")) {
+        if (!notified && UpdateCheckThread.ret != null) {
+            if (UpdateCheckThread.ret.equals("update")) {
                 EntityPlayer p = Minecraft.getMinecraft().thePlayer;
-                if(p != null) {
+                if (p != null) {
                     p.addChatComponentMessage(new TextComponentTranslation("text.japta.newversion"));
                     notified = true;
                 }
-            }
-            else {
+            } else {
                 notified = true;
             }
         }
@@ -324,13 +335,14 @@ public class JAPTA {
 
     public void addRecipe(IRecipe recipe, Item item, String name, boolean defaultEnabled) {
         recipeMap.put(item, recipe);
-        if(config.get("recipes", name, defaultEnabled, "").getBoolean()) {
+        if (config.get("recipes", name, defaultEnabled, "").getBoolean()) {
             GameRegistry.addRecipe(recipe);
         }
     }
 
     /**
      * Get the recipe for a JAPTA item
+     *
      * @param item the item
      * @return the recipe for that item
      */
@@ -342,19 +354,22 @@ public class JAPTA {
         return getRecipe(Item.getItemFromBlock(block));
     }
 
-    public static<T extends Comparable<T>> T safeGetValue(IBlockState state, IProperty<T> prop) {
+    public static <T extends Comparable<T>> T safeGetValue(IBlockState state, IProperty<T> prop) {
         T tr = null;
         try {
             tr = state.getValue(prop);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if(tr == null) {
+        if (tr == null) {
             // hopefully this won't happen, but it seems it does
             return prop.getAllowedValues().iterator().next();
-        }
-        else {
+        } else {
             return tr;
         }
+    }
+
+    public static <T extends Comparable<T>> T safeGetValue(TileEntity te, IProperty<T> prop) {
+        return safeGetValue(te.getWorld().getBlockState(te.getPos()), prop);
     }
 }

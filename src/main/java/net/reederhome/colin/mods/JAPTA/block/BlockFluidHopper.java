@@ -64,13 +64,12 @@ public class BlockFluidHopper extends BlockModelContainer {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack stack, EnumFacing p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_, float p_onBlockActivated_10_) {
-        if(world.isRemote) return true;
+        if (world.isRemote) return true;
         TileEntityFluidHopper te = (TileEntityFluidHopper) world.getTileEntity(pos);
         FluidTankInfo info = te.getTankInfo(null)[0];
-        if(info.fluid != null) {
+        if (info.fluid != null) {
             player.addChatComponentMessage(new TextComponentTranslation("text.japta.fluidHopper.status", info.fluid.getFluid().getLocalizedName(info.fluid), info.fluid.amount));
-        }
-        else {
+        } else {
             player.addChatComponentMessage(new TextComponentTranslation("text.japta.fluidHopper.empty"));
         }
         return true;

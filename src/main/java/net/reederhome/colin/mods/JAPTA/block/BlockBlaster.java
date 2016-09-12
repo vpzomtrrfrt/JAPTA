@@ -31,7 +31,7 @@ public abstract class BlockBlaster extends BlockModelContainer implements IDiagn
         super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         this.inhaler = inhaler;
-        if(setNames) {
+        if (setNames) {
             setNames();
         }
         setHardness(1);
@@ -49,7 +49,7 @@ public abstract class BlockBlaster extends BlockModelContainer implements IDiagn
     }
 
     public String getName() {
-        return getBlasterType()+(inhaler?"Inhaler":"Blaster");
+        return getBlasterType() + (inhaler ? "Inhaler" : "Blaster");
     }
 
     protected abstract String getBlasterType();
@@ -72,7 +72,7 @@ public abstract class BlockBlaster extends BlockModelContainer implements IDiagn
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         EnumFacing ts = BlockPistonBase.getFacingFromEntity(pos, placer);
-        if(!placer.isSneaking()) {
+        if (!placer.isSneaking()) {
             ts = ts.getOpposite();
         }
         return getDefaultState().withProperty(FACING, ts);
@@ -83,7 +83,7 @@ public abstract class BlockBlaster extends BlockModelContainer implements IDiagn
         IBlockState state = world.getBlockState(pos);
         EnumFacing side = state.getValue(FACING);
         sender.addChatMessage(new TextComponentTranslation("tile.blaster.diagnostic.top", side.getName()));
-        for(int i = 1; i <= RANGE; i++) {
+        for (int i = 1; i <= RANGE; i++) {
             BlockPos cp = pos.offset(side, i);
             IBlockState cs = world.getBlockState(cp);
             sender.addChatMessage(new TextComponentString(cs.getBlock().getUnlocalizedName()));

@@ -29,15 +29,15 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
 
     @Override
     public void update() {
-        if(stored >= USE && !worldObj.isRemote && worldObj.isBlockIndirectlyGettingPowered(getPos()) == 0) {
-            for(EnumFacing side : EnumFacing.VALUES) {
+        if (stored >= USE && !worldObj.isRemote && worldObj.isBlockIndirectlyGettingPowered(getPos()) == 0) {
+            for (EnumFacing side : EnumFacing.VALUES) {
                 TileEntity te = worldObj.getTileEntity(getPos().offset(side));
-                if(te instanceof IInventory) {
+                if (te instanceof IInventory) {
                     IInventory inv = (IInventory) te;
-                    for(int i = 0; i < inv.getSizeInventory(); i++) {
+                    for (int i = 0; i < inv.getSizeInventory(); i++) {
                         ItemStack stack = inv.getStackInSlot(i);
-                        if(stack != null && stack.getItem() == Items.DYE && stack.getItemDamage() == 15 && stack.stackSize > 0) {
-                            for(int t = 0; t < 3; t++) { // try thrice for a valid spot
+                        if (stack != null && stack.getItem() == Items.DYE && stack.getItemDamage() == 15 && stack.stackSize > 0) {
+                            for (int t = 0; t < 3; t++) { // try thrice for a valid spot
                                 BlockPos cp = getPos().add(new Random().nextInt(RANGE * 2) - RANGE, RANGE, new Random().nextInt(RANGE * 2) - RANGE);
                                 while (cp.getY() >= 0) {
                                     IBlockState state = worldObj.getBlockState(cp);
@@ -67,7 +67,7 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
         boolean bonemeal = false;
         dancing:
-        for(EnumFacing side : EnumFacing.VALUES) {
+        for (EnumFacing side : EnumFacing.VALUES) {
             TileEntity te = worldObj.getTileEntity(getPos().offset(side));
             if (te instanceof IInventory) {
                 IInventory inv = (IInventory) te;
@@ -81,12 +81,11 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
             }
         }
         int redstone = worldObj.isBlockIndirectlyGettingPowered(pos);
-        if(!bonemeal) {
+        if (!bonemeal) {
             sender.addChatMessage(new TextComponentTranslation("tile.bonemealApplicator.diagnostic.noBonemeal"));
             return true;
-        }
-        else {
-            if(redstone > 0) {
+        } else {
+            if (redstone > 0) {
                 sender.addChatMessage(new TextComponentTranslation("tile.bonemealApplicator.diagnostic.redstone"));
                 return true;
             }

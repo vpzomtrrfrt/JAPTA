@@ -23,7 +23,7 @@ public class BlockItemBlaster extends BlockBlaster {
 
     @Override
     public String getName() {
-        return splitting?"itemSplitter":super.getName();
+        return splitting ? "itemSplitter" : super.getName();
     }
 
     @Override

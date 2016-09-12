@@ -7,6 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
+import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
 
 public class TileEntityPowerCabinetBase extends TileEntity implements IEnergyReceiver, IEnergyProvider {
@@ -57,26 +59,24 @@ public class TileEntityPowerCabinetBase extends TileEntity implements IEnergyRec
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
         int leftToAdd = maxReceive + stored;
         BlockPos cp = getPos().up();
-        while(leftToAdd >= BlockPowerCabinet.MAX_META_VALUE) {
+        while (leftToAdd >= BlockPowerCabinet.MAX_META_VALUE) {
             IBlockState state = worldObj.getBlockState(cp);
-            if(state.getBlock() instanceof BlockPowerCabinet) {
+            if (state.getBlock() instanceof BlockPowerCabinet) {
                 int v = state.getValue(BlockPowerCabinet.VALUE);
-                while(v < 15 && leftToAdd >= BlockPowerCabinet.MAX_META_VALUE) {
+                while (v < 15 && leftToAdd >= BlockPowerCabinet.MAX_META_VALUE) {
                     v++;
                     leftToAdd -= ((BlockPowerCabinet) state.getBlock()).getMetaValue();
                 }
                 worldObj.setBlockState(cp, state.withProperty(BlockPowerCabinet.VALUE, v));
-            }
-            else {
+            } else {
                 break;
             }
             cp = cp.up();
         }
-        if(leftToAdd >= BlockPowerCabinet.MAX_META_VALUE) {
+        if (leftToAdd >= BlockPowerCabinet.MAX_META_VALUE) {
             stored = getMaxInternalStorage();
             return maxReceive + getMaxInternalStorage() - leftToAdd;
-        }
-        else {
+        } else {
             stored = leftToAdd;
             return maxReceive;
         }
@@ -106,7 +106,7 @@ public class TileEntityPowerCabinetBase extends TileEntity implements IEnergyRec
             cp = cp.up();
             IBlockState state = worldObj.getBlockState(cp);
             if (state.getBlock() instanceof BlockPowerCabinet) {
-                tr += ((BlockPowerCabinet) state.getBlock()).getMetaValue()*15;
+                tr += ((BlockPowerCabinet) state.getBlock()).getMetaValue() * 15;
             } else {
                 break;
             }
@@ -134,5 +134,22 @@ public class TileEntityPowerCabinetBase extends TileEntity implements IEnergyRec
 
     public int getMaxInternalStorage() {
         return BlockPowerCabinet.MAX_META_VALUE - 1;
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+        if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER) {
+            return true;
+        }
+        return super.hasCapability(capability, facing);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+        if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER) {
+            return (T) new TileEntityJPT.JPTTeslaAdapter(facing, this);
+        }
+        return super.getCapability(capability, facing);
     }
 }

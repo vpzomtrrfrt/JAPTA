@@ -22,8 +22,9 @@ import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityCakeConverter;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityHeatConverter;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityRNGQuarry;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class GuideJAPTA {
     private static GuideJAPTA instance;

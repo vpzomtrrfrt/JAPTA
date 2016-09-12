@@ -46,8 +46,8 @@ public class ItemBatteryPotato extends ItemJPT {
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase ent) {
         stack.damageItem(USE, ent);
-        if(ent instanceof EntityPlayer) {
-            ((EntityPlayer)ent).getFoodStats().addStats(3, 1);
+        if (ent instanceof EntityPlayer) {
+            ((EntityPlayer) ent).getFoodStats().addStats(3, 1);
         }
         return stack;
     }
@@ -57,8 +57,7 @@ public class ItemBatteryPotato extends ItemJPT {
         if (p.canEat(false) && stack.getItemDamage() + USE <= stack.getMaxDamage()) {
             p.setActiveHand(hand);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
-        }
-        else {
+        } else {
             return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
         }
     }

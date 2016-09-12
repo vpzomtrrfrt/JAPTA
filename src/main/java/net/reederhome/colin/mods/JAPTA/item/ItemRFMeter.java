@@ -2,6 +2,7 @@ package net.reederhome.colin.mods.JAPTA.item;
 
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
+import net.darkhax.tesla.api.ITeslaHolder;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -18,11 +19,12 @@ import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 public class ItemRFMeter extends Item {
     private boolean advanced;
+
     public ItemRFMeter(boolean advanced) {
         super();
         this.advanced = advanced;
         setMaxStackSize(1);
-        String name = advanced?"diagnosticTool":"rfMeter";
+        String name = advanced ? "diagnosticTool" : "rfMeter";
         setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(JAPTA.tab);
@@ -35,32 +37,38 @@ public class ItemRFMeter extends Item {
             TileEntity te = world.getTileEntity(pos);
             int value = -2;
             int max = -1;
+            String powerType = "RF";
             if (te instanceof IEnergyReceiver) {
                 value = ((IEnergyReceiver) te).getEnergyStored(side);
                 max = ((IEnergyReceiver) te).getMaxEnergyStored(side);
             } else if (te instanceof IEnergyProvider) {
                 value = ((IEnergyProvider) te).getEnergyStored(side);
                 max = ((IEnergyProvider) te).getMaxEnergyStored(side);
+            } else if (te != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_HOLDER, side)) {
+                ITeslaHolder holder = te.getCapability(JAPTA.CAPABILITY_TESLA_HOLDER, side);
+                value = (int) holder.getStoredPower();
+                max = (int) holder.getCapacity();
+                powerType = "T";
             }
             boolean someinfo = false;
             if (value != -2) {
-                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter.rf", value, max));
+                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter.power", value, max, powerType));
                 someinfo = true;
             }
-            if(advanced) {
-                if(state.getBlock() instanceof IDiagnosable) {
-                    if(((IDiagnosable) state.getBlock()).addInformation(player, world, pos)) {
+            if (advanced) {
+                if (state.getBlock() instanceof IDiagnosable) {
+                    if (((IDiagnosable) state.getBlock()).addInformation(player, world, pos)) {
                         someinfo = true;
                     }
                 }
-                if(te instanceof IDiagnosable) {
-                    if(((IDiagnosable) te).addInformation(player, world, pos)) {
+                if (te instanceof IDiagnosable) {
+                    if (((IDiagnosable) te).addInformation(player, world, pos)) {
                         someinfo = true;
                     }
                 }
             }
-            if(!someinfo) {
-                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter."+(advanced?"advancedNo":"no")));
+            if (!someinfo) {
+                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter." + (advanced ? "advancedNo" : "no")));
             }
         }
         return EnumActionResult.SUCCESS;

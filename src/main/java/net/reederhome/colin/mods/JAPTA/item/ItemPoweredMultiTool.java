@@ -58,7 +58,7 @@ public class ItemPoweredMultiTool extends ItemJPT {
     }
 
     private boolean isDead(ItemStack stack) {
-        return stack.getItemDamage()+USE > stack.getMaxDamage();
+        return stack.getItemDamage() + USE > stack.getMaxDamage();
     }
 
     @Override
@@ -79,12 +79,12 @@ public class ItemPoweredMultiTool extends ItemJPT {
     public int getMaxDamage(ItemStack stack) {
         NBTTagCompound materials = getMaterialsTag(stack);
         int tr = 0;
-        if(materials != null) {
+        if (materials != null) {
             for (String type : materials.getKeySet()) {
                 tr += getMaterial(stack, type).getMaxUses();
             }
         }
-        return tr*USE;
+        return tr * USE;
     }
 
     @Override
@@ -157,15 +157,15 @@ public class ItemPoweredMultiTool extends ItemJPT {
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
         Multimap<String, AttributeModifier> tr = super.getAttributeModifiers(slot, stack);
-        tr.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getMaterial(stack, "sword").getDamageVsEntity()+4, 0));
+        tr.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getMaterial(stack, "sword").getDamageVsEntity() + 4, 0));
         return tr;
     }
 
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p_onItemUse_2_, World p_onItemUse_3_, BlockPos p_onItemUse_4_, EnumHand hand, EnumFacing p_onItemUse_5_, float p_onItemUse_6_, float p_onItemUse_7_, float p_onItemUse_8_) {
-        if(!isDead(stack)) {
+        if (!isDead(stack)) {
             EnumActionResult tr = Items.DIAMOND_HOE.onItemUse(stack, p_onItemUse_2_, p_onItemUse_3_, p_onItemUse_4_, hand, p_onItemUse_5_, p_onItemUse_6_, p_onItemUse_7_, p_onItemUse_8_);
-            if(tr == EnumActionResult.SUCCESS) {
+            if (tr == EnumActionResult.SUCCESS) {
                 stack.damageItem(USE - 1, p_onItemUse_2_);
             }
             return tr;
@@ -176,10 +176,9 @@ public class ItemPoweredMultiTool extends ItemJPT {
     @Override
     public Set<String> getToolClasses(ItemStack stack) {
         NBTTagCompound materials = getMaterialsTag(stack);
-        if(materials != null) {
+        if (materials != null) {
             return materials.getKeySet();
-        }
-        else {
+        } else {
             return ImmutableSet.of();
         }
     }

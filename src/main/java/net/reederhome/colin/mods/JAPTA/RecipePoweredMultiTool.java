@@ -20,34 +20,28 @@ public class RecipePoweredMultiTool implements IRecipe {
         Item.ToolMaterial axe = null;
         Item.ToolMaterial shovel = null;
         String hoe = null;
-        for(int i = 0; i < inv.getSizeInventory(); i++) {
+        for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
-            if(stack == null) {
+            if (stack == null) {
                 continue;
             }
-            if(stack.getItem() == JAPTA.coilReception) {
+            if (stack.getItem() == JAPTA.coilReception) {
                 numCoils++;
-            }
-            else if(stack.getItem() instanceof ItemPickaxe) {
+            } else if (stack.getItem() instanceof ItemPickaxe) {
                 pickaxe = ((ItemPickaxe) stack.getItem()).getToolMaterial();
-            }
-            else if(stack.getItem() instanceof ItemSword) {
+            } else if (stack.getItem() instanceof ItemSword) {
                 sword = ((ItemSword) stack.getItem()).getToolMaterialName();
-            }
-            else if(stack.getItem() instanceof ItemAxe) {
+            } else if (stack.getItem() instanceof ItemAxe) {
                 axe = ((ItemAxe) stack.getItem()).getToolMaterial();
-            }
-            else if(stack.getItem() instanceof ItemSpade) {
+            } else if (stack.getItem() instanceof ItemSpade) {
                 shovel = ((ItemSpade) stack.getItem()).getToolMaterial();
-            }
-            else if(stack.getItem() instanceof ItemHoe) {
+            } else if (stack.getItem() instanceof ItemHoe) {
                 hoe = ((ItemHoe) stack.getItem()).getMaterialName();
-            }
-            else {
+            } else {
                 return null;
             }
         }
-        if(numCoils == 1 && pickaxe != null && sword != null && axe != null && shovel != null && hoe != null) {
+        if (numCoils == 1 && pickaxe != null && sword != null && axe != null && shovel != null && hoe != null) {
             NBTTagCompound tag = new NBTTagCompound();
             NBTTagCompound materials = new NBTTagCompound();
             materials.setString("pickaxe", pickaxe.name());

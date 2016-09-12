@@ -7,6 +7,7 @@ import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 public class SimpleTEBlock extends BlockModelContainer {
     private Class<? extends TileEntity> teClass;
+
     public SimpleTEBlock(Material material, Class<? extends TileEntity> teClass, String name) {
         super(material);
         this.teClass = teClass;

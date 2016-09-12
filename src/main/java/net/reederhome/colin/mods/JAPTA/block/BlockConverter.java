@@ -21,7 +21,7 @@ public abstract class BlockConverter extends BlockModelContainer {
         super(Material.ROCK);
         String type = getConverterType();
         setUnlocalizedName("converter" + type);
-        setRegistryName(type.substring(0, 1).toLowerCase()+type.substring(1)+"Converter");
+        setRegistryName(type.substring(0, 1).toLowerCase() + type.substring(1) + "Converter");
         setDefaultState(blockState.getBaseState().withProperty(MODE, EnumConverterMode.ABSORB));
         setHardness(2);
         setCreativeTab(JAPTA.tab);

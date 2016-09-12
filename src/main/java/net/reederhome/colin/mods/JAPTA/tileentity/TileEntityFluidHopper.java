@@ -112,7 +112,7 @@ public class TileEntityFluidHopper extends TileEntity implements IFluidHandler, 
             if (te instanceof IFluidHandler) {
                 try {
                     if (content != null) {
-                        if(((IFluidHandler) te).canDrain(EnumFacing.DOWN, content.getFluid())) {
+                        if (((IFluidHandler) te).canDrain(EnumFacing.DOWN, content.getFluid())) {
                             FluidStack stack = ((IFluidHandler) te).drain(EnumFacing.DOWN, new FluidStack(content.getFluid(), remaining), true);
                             if (stack != null) {
                                 content.amount += stack.amount;

@@ -1,6 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -17,17 +16,15 @@ public class TileEntityChestCharger extends TileEntityJPT implements IEnergyRece
 
     @Override
     public void update() {
-        for(EnumFacing side : EnumFacing.VALUES) {
-            if(stored > 0) {
+        for (EnumFacing side : EnumFacing.VALUES) {
+            if (stored > 0) {
                 BlockPos cp = getPos().offset(side);
                 TileEntity te = worldObj.getTileEntity(cp);
-                if(te instanceof IInventory) {
+                if (te instanceof IInventory) {
                     IInventory inv = (IInventory) te;
-                    for(int i = 0; i < inv.getSizeInventory(); i++) {
+                    for (int i = 0; i < inv.getSizeInventory(); i++) {
                         ItemStack stack = inv.getStackInSlot(i);
-                        if(stack != null && stack.getItem() instanceof IEnergyContainerItem && stored > 0) {
-                            stored -= ((IEnergyContainerItem) stack.getItem()).receiveEnergy(stack, stored, false);
-                        }
+                        chargeItem(stack);
                     }
                 }
             }

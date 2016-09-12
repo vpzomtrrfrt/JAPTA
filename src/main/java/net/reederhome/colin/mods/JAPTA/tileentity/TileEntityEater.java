@@ -27,41 +27,41 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
 
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
-        return MULTIPLIER*20;
+        return MULTIPLIER * 20;
     }
 
     @Override
     public void update() {
-        if(worldObj.isRemote) return;
-        if(progress >= TIME) {
+        if (worldObj.isRemote) return;
+        if (progress >= TIME) {
             int value = getPowerValue();
             stored += value;
-            if(item != null) {
+            if (item != null) {
                 item.stackSize--;
-                if(item.stackSize < 1) {
+                if (item.stackSize < 1) {
                     item = null;
                 }
             }
             progress = 0;
         }
-        if(progress == 0) {
+        if (progress == 0) {
             int value = getPowerValue();
-            if(value > 0) {
+            if (value > 0) {
                 progress++;
             }
-        }
-        else if(progress > 0) {
+        } else if (progress > 0) {
             progress++;
             BlockPos pos = getPos();
-            if(worldObj.getTotalWorldTime()%2==0) worldObj.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS, 0.5f+0.5f*new Random().nextInt(2), (float)((Math.random()-Math.random())*0.2+1));
+            if (worldObj.getTotalWorldTime() % 2 == 0)
+                worldObj.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS, 0.5f + 0.5f * new Random().nextInt(2), (float) ((Math.random() - Math.random()) * 0.2 + 1));
         }
-        if(stored > 0) {
+        if (stored > 0) {
             transmit();
         }
     }
 
     private int getPowerValue() {
-        if(item != null) {
+        if (item != null) {
             Item type = item.getItem();
             if (type instanceof ItemFood) {
                 ItemFood food = ((ItemFood) type);
@@ -162,7 +162,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag = super.writeToNBT(tag);
-        if(item != null) {
+        if (item != null) {
             NBTTagCompound nbt = new NBTTagCompound();
             item.writeToNBT(nbt);
             tag.setTag("Item", nbt);
@@ -174,7 +174,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        if(tag.hasKey("Item")) {
+        if (tag.hasKey("Item")) {
             item = ItemStack.loadItemStackFromNBT(((NBTTagCompound) tag.getTag("Item")));
         }
         progress = tag.getByte("Progress");

@@ -52,13 +52,13 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
                     cp = cp.down();
                     state = worldObj.getBlockState(cp);
                 }
-                if(cp.getY() < 0) {
+                if (cp.getY() < 0) {
                     continue;
                 }
                 int thl = 0;
                 boolean canUseItem = false;
                 if (item != null) {
-                    if(!isBroken(item)) {
+                    if (!isBroken(item)) {
                         canUseItem = true;
                         thl = Math.max(thl, item.getItem().getHarvestLevel(item, state.getBlock().getHarvestTool(state)));
                     }
@@ -68,36 +68,35 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
                 if (thl >= bhl && state.getBlock().getBlockHardness(state, worldObj, cp) != -1) {
                     List<ItemStack> drops;
                     int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, item);
-                    if(canUseItem && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, item) > 0 && state.getBlock().canSilkHarvest(worldObj, cp, state, player)) {
+                    if (canUseItem && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, item) > 0 && state.getBlock().canSilkHarvest(worldObj, cp, state, player)) {
                         drops = new ArrayList<ItemStack>();
                         drops.add(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
                         usedItem = true;
-                    }
-                    else {
+                    } else {
                         drops = state.getBlock().getDrops(worldObj, cp, state, fortune);
                     }
                     worldObj.setBlockToAir(cp);
                     for (ItemStack drop : drops) {
-                        for(EnumFacing side : EnumFacing.VALUES) {
+                        for (EnumFacing side : EnumFacing.VALUES) {
                             BlockPos cip = me.offset(side);
                             TileEntity ite = worldObj.getTileEntity(cip);
-                            if(ite instanceof IInventory) {
+                            if (ite instanceof IInventory) {
                                 drop = TileEntityHopper.putStackInInventoryAllSlots((IInventory) ite, drop, side.getOpposite());
                             }
-                            if(drop == null) {
+                            if (drop == null) {
                                 break;
                             }
                         }
-                        if(drop != null) {
-                            EntityItem ent = new EntityItem(worldObj, me.getX()+0.5, me.getY()+1, me.getZ()+0.5);
+                        if (drop != null) {
+                            EntityItem ent = new EntityItem(worldObj, me.getX() + 0.5, me.getY() + 1, me.getZ() + 0.5);
                             ent.setEntityItemStack(drop);
                             worldObj.spawnEntityInWorld(ent);
                         }
                     }
                     stored -= USE;
-                    if(usedItem && Math.random() < 0.9) {
+                    if (usedItem && Math.random() < 0.9) {
                         item.onBlockDestroyed(worldObj, state, cp, player);
-                        if(item.stackSize < 1) {
+                        if (item.stackSize < 1) {
                             item = null;
                         }
                         /*if(item.attemptDamageItem(1, new Random())) {
@@ -117,13 +116,14 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
 
     /**
      * Tinkers' Construct is annoying
+     *
      * @param item the item to check
      * @return whether it's a broken Tinkers' tool
      */
     private boolean isBroken(ItemStack item) {
-        if(item != null && item.hasTagCompound()) {
+        if (item != null && item.hasTagCompound()) {
             NBTTagCompound tag = item.getTagCompound();
-            if(tag.hasKey("Stats")) {
+            if (tag.hasKey("Stats")) {
                 NBTTagCompound stats = tag.getCompoundTag("Stats");
                 return stats.getBoolean("Broken");
             }
@@ -134,7 +134,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
-        if(tag.hasKey("Item")) {
+        if (tag.hasKey("Item")) {
             item = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("Item"));
         }
     }
@@ -142,7 +142,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag = super.writeToNBT(tag);
-        if(item != null) {
+        if (item != null) {
             NBTTagCompound nbt = new NBTTagCompound();
             item.writeToNBT(nbt);
             tag.setTag("Item", nbt);
@@ -152,11 +152,10 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
 
     @Override
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
-        if(isBroken(item)) {
+        if (isBroken(item)) {
             sender.addChatMessage(new TextComponentTranslation("tile.rngQuarry.diagnostic.brokenTool"));
             return true;
-        }
-        else if(lastMinedTick+10 < worldObj.getTotalWorldTime() && stored >= USE) {
+        } else if (lastMinedTick + 10 < worldObj.getTotalWorldTime() && stored >= USE) {
             sender.addChatMessage(new TextComponentTranslation("tile.rngQuarry.diagnostic.notMining"));
             return true;
         }

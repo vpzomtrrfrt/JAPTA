@@ -18,10 +18,9 @@ public class BlockHeatConverter extends BlockConverter {
 
     @Override
     public String getModeName(EnumConverterMode mode) {
-        if(mode == EnumConverterMode.DEPLOY) {
+        if (mode == EnumConverterMode.DEPLOY) {
             return "Heat";
-        }
-        else {
+        } else {
             return super.getModeName(mode);
         }
     }

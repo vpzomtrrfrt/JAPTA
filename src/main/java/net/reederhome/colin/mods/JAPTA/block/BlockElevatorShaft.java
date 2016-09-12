@@ -27,13 +27,12 @@ public class BlockElevatorShaft extends Block implements IDiagnosable {
     @Override
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
         BlockPos cp = pos.up();
-        while(true) {
+        while (true) {
             IBlockState state = world.getBlockState(cp);
-            if(state.getBlock() != this) {
-                if(state.getBlock() == JAPTA.elevatorTop) {
-                    ((IDiagnosable)world.getTileEntity(cp)).addInformation(sender, world, cp);
-                }
-                else {
+            if (state.getBlock() != this) {
+                if (state.getBlock() == JAPTA.elevatorTop) {
+                    ((IDiagnosable) world.getTileEntity(cp)).addInformation(sender, world, cp);
+                } else {
                     sender.addChatMessage(new TextComponentTranslation("tile.elevatorShaft.diagnostic.noTop"));
                 }
                 return true;
