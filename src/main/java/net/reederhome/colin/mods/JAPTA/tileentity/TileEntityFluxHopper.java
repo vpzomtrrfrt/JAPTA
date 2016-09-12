@@ -24,11 +24,12 @@ public class TileEntityFluxHopper extends TileEntityJPT implements IEnergyReceiv
             }
         }
         if (stored > 0) {
-            EnumFacing facing = JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockFluxHopper.FACING);
-            TileEntity target = worldObj.getTileEntity(getPos().offset(facing));
-            if (target instanceof IEnergyReceiver) {
-                stored -= ((IEnergyReceiver) target).receiveEnergy(facing.getOpposite(), stored, false);
-            }
+            transmit(JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockFluxHopper.FACING));
         }
+    }
+
+    @Override
+    public boolean canReceiveEnergy(EnumFacing from) {
+        return super.canReceiveEnergy(from) && from != JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockFluxHopper.FACING);
     }
 }

@@ -69,4 +69,8 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
         }
     }
 
+    @Override
+    public boolean canReceiveEnergy(EnumFacing from) {
+        return JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockConverter.MODE) != EnumConverterMode.ABSORB;
+    }
 }

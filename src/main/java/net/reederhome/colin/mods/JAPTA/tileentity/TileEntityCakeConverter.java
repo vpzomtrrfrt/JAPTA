@@ -84,6 +84,11 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
     }
 
     @Override
+    public boolean canReceiveEnergy(EnumFacing from) {
+        return JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockConverter.MODE) != EnumConverterMode.ABSORB;
+    }
+
+    @Override
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
         return oldState.getBlock() != newSate.getBlock();
     }

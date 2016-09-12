@@ -1,5 +1,6 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
+import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
@@ -45,6 +46,9 @@ public abstract class TileEntityJPT extends TileEntity implements ICapabilityPro
     }
 
     public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
+        if(!canReceiveEnergy(from)) {
+            return 0;
+        }
         int avail = getMaxEnergyStored(from) - getEnergyStored(from);
         int tr;
         if (maxReceive < avail) {
@@ -56,6 +60,14 @@ public abstract class TileEntityJPT extends TileEntity implements ICapabilityPro
             stored += tr;
         }
         return tr;
+    }
+
+    public boolean canReceiveEnergy(EnumFacing from) {
+        return this instanceof IEnergyReceiver;
+    }
+
+    public boolean canTransmitEnergy(EnumFacing from) {
+        return true;
     }
 
     @Override
@@ -72,11 +84,14 @@ public abstract class TileEntityJPT extends TileEntity implements ICapabilityPro
     }
 
     public void transmit(EnumFacing side) {
+        if(!canTransmitEnergy(side)) {
+            return;
+        }
         TileEntity te = worldObj.getTileEntity(getPos().offset(side));
         if (te instanceof IEnergyReceiver) {
             stored -= ((IEnergyReceiver) te).receiveEnergy(side.getOpposite(), stored, false);
         }
-        else if(te.hasCapability(CAPABILITY_TESLA_CONSUMER, side)) {
+        else if(te != null && te.hasCapability(CAPABILITY_TESLA_CONSUMER, side)) {
             stored -= te.getCapability(CAPABILITY_TESLA_CONSUMER, side).givePower(stored, false);
         }
     }
