@@ -26,6 +26,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -102,6 +103,8 @@ public class JAPTA {
     public static Capability<ITeslaProducer> CAPABILITY_TESLA_PRODUCER;
     @CapabilityInject(ITeslaConsumer.class)
     public static Capability<ITeslaConsumer> CAPABILITY_TESLA_CONSUMER;
+    @CapabilityInject(IEnergyStorage.class)
+    public static Capability<IEnergyStorage> CAPABILITY_FORGE_ENERGY_STORAGE;
 
     private Configuration config;
     private static Map<Item, IRecipe> recipeMap = new HashMap<Item, IRecipe>();

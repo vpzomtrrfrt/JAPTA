@@ -12,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 public abstract class TileEntityJPT extends TileEntity implements ICapabilityProvider {
@@ -105,7 +106,7 @@ public abstract class TileEntityJPT extends TileEntity implements ICapabilityPro
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER) {
+        if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER || capability == JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE) {
             return true;
         }
         return super.hasCapability(capability, facing);
@@ -117,6 +118,9 @@ public abstract class TileEntityJPT extends TileEntity implements ICapabilityPro
         if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER) {
             return (T) new JPTTeslaAdapter(facing, this);
         }
+        else if(capability == JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE) {
+            return (T) new JPTForgeEnergyAdapter(facing, this);
+        }
         return super.getCapability(capability, facing);
     }
 
@@ -127,6 +131,9 @@ public abstract class TileEntityJPT extends TileEntity implements ICapabilityPro
             }
             if (stack.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null)) {
                 stored -= stack.getCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null).givePower(stored, false);
+            }
+            if(stack.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, null)) {
+                stored -= stack.getCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, null).receiveEnergy(stored, false);
             }
         }
     }
@@ -158,6 +165,46 @@ public abstract class TileEntityJPT extends TileEntity implements ICapabilityPro
         @Override
         public long takePower(long power, boolean simulated) {
             return ((IEnergyProvider) te).extractEnergy(facing, (int) power, simulated);
+        }
+    }
+
+    public static class JPTForgeEnergyAdapter implements IEnergyStorage {
+        private EnumFacing facing;
+        private TileEntity te;
+
+        public JPTForgeEnergyAdapter(EnumFacing facing, TileEntity te) {
+            this.facing = facing;
+            this.te = te;
+        }
+
+        @Override
+        public int receiveEnergy(int i, boolean b) {
+            return ((IEnergyReceiver) te).receiveEnergy(facing, i, b);
+        }
+
+        @Override
+        public int extractEnergy(int i, boolean b) {
+            return ((IEnergyProvider) te).extractEnergy(facing, i, b);
+        }
+
+        @Override
+        public int getEnergyStored() {
+            return ((IEnergyReceiver) te).getEnergyStored(facing);
+        }
+
+        @Override
+        public int getMaxEnergyStored() {
+            return ((IEnergyReceiver) te).getMaxEnergyStored(facing);
+        }
+
+        @Override
+        public boolean canExtract() {
+            return true;
+        }
+
+        @Override
+        public boolean canReceive() {
+            return te instanceof TileEntityJPT && ((TileEntityJPT) te).canReceiveEnergy(facing);
         }
     }
 }

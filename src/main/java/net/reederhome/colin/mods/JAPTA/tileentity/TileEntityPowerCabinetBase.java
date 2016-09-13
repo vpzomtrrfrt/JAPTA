@@ -138,7 +138,7 @@ public class TileEntityPowerCabinetBase extends TileEntity implements IEnergyRec
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER) {
+        if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER || capability == JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE) {
             return true;
         }
         return super.hasCapability(capability, facing);
@@ -149,6 +149,9 @@ public class TileEntityPowerCabinetBase extends TileEntity implements IEnergyRec
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER) {
             return (T) new TileEntityJPT.JPTTeslaAdapter(facing, this);
+        }
+        else if(capability == JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE) {
+            return (T) new TileEntityJPT.JPTForgeEnergyAdapter(facing, this);
         }
         return super.getCapability(capability, facing);
     }

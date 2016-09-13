@@ -14,6 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 
@@ -49,6 +50,12 @@ public class ItemRFMeter extends Item {
                 value = (int) holder.getStoredPower();
                 max = (int) holder.getCapacity();
                 powerType = "T";
+            }
+            else if(te != null && te.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side)) {
+                IEnergyStorage storage = te.getCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side);
+                value = storage.getEnergyStored();
+                max = storage.getMaxEnergyStored();
+                powerType = "CE";
             }
             boolean someinfo = false;
             if (value != -2) {
