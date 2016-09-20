@@ -11,7 +11,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
 
-public class TileEntityPowerCabinetBase extends TileEntity implements IEnergyReceiver, IEnergyProvider {
+public class TileEntityPowerCabinetBase extends TileEntityJPTBase implements IEnergyReceiver, IEnergyProvider {
     private int stored = 0;
 
     @Override
@@ -134,25 +134,5 @@ public class TileEntityPowerCabinetBase extends TileEntity implements IEnergyRec
 
     public int getMaxInternalStorage() {
         return BlockPowerCabinet.MAX_META_VALUE - 1;
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER || capability == JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE) {
-            return true;
-        }
-        return super.hasCapability(capability, facing);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        if (capability == JAPTA.CAPABILITY_TESLA_HOLDER || capability == JAPTA.CAPABILITY_TESLA_CONSUMER || capability == JAPTA.CAPABILITY_TESLA_PRODUCER) {
-            return (T) new TileEntityJPT.JPTTeslaAdapter(facing, this);
-        }
-        else if(capability == JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE) {
-            return (T) new TileEntityJPT.JPTForgeEnergyAdapter(facing, this);
-        }
-        return super.getCapability(capability, facing);
     }
 }
