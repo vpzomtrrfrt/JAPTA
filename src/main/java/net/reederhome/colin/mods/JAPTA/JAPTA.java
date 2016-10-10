@@ -27,6 +27,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -41,13 +42,12 @@ import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.reederhome.colin.mods.JAPTA.block.*;
-import net.reederhome.colin.mods.JAPTA.item.ItemBatteryPotato;
-import net.reederhome.colin.mods.JAPTA.item.ItemBlockPowerCabinet;
-import net.reederhome.colin.mods.JAPTA.item.ItemPoweredMultiTool;
-import net.reederhome.colin.mods.JAPTA.item.ItemRFMeter;
+import net.reederhome.colin.mods.JAPTA.item.*;
 import net.reederhome.colin.mods.JAPTA.tileentity.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Mod(name = "JAPTA", modid = JAPTA.MODID, dependencies = "after:guideapi")
@@ -96,6 +96,7 @@ public class JAPTA {
     public static ItemPoweredMultiTool poweredMultiTool;
     public static ItemBlockPowerCabinet itemPowerCabinet;
     public static ItemBlockPowerCabinet itemPowerCabinet2;
+    public static ItemCapacitor capacitor;
 
     @CapabilityInject(ITeslaHolder.class)
     public static Capability<ITeslaHolder> CAPABILITY_TESLA_HOLDER;
@@ -165,6 +166,7 @@ public class JAPTA {
         poweredMultiTool = new ItemPoweredMultiTool();
         itemPowerCabinet = ((ItemBlockPowerCabinet) new ItemBlockPowerCabinet(powerCabinet).setRegistryName("powerCabinet"));
         itemPowerCabinet2 = ((ItemBlockPowerCabinet) new ItemBlockPowerCabinet(powerCabinet2).setRegistryName("powerCabinet2"));
+        capacitor = new ItemCapacitor();
 
         registerBlock(cakeConverter);
         registerBlock(fluxHopper);
@@ -201,6 +203,7 @@ public class JAPTA {
         GameRegistry.register(poweredMultiTool);
         GameRegistry.register(itemPowerCabinet);
         GameRegistry.register(itemPowerCabinet2);
+        GameRegistry.register(capacitor);
 
         GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
         GameRegistry.registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
@@ -222,6 +225,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityFisher.class, "Fisher");
 
         RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
+        RecipeSorter.register("capacitor", RecipeCapacitorUpgrade.class, RecipeSorter.Category.SHAPELESS, "");
 
         addRecipe(new ShapelessOreRecipe(rfMeter, "nuggetGold", "dustRedstone"));
         addRecipe(new ShapelessOreRecipe(new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", coilReception));
@@ -230,6 +234,7 @@ public class JAPTA {
         addRecipe(new ShapelessOreRecipe(fluidInhaler, fluidBlaster, Blocks.REDSTONE_TORCH));
         addRecipe(new ShapelessOreRecipe(itemInhaler, itemBlaster, Blocks.REDSTONE_TORCH));
         addRecipe(new ShapelessOreRecipe(itemSplitter, itemBlaster, "plankWood"));
+        addRecipe(new ShapelessOreRecipe(new ItemStack(capacitor, 1, capacitor.getMaxDamage(null)), powerCabinetBase, Items.BOW));
 
         addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "gmg", "ftf", 'f', Items.CAKE, 'r', coilReception, 'g', "nuggetGold", 'm', machineBase, 't', coilTransmission));
         addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
@@ -255,6 +260,8 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(dungeonMaker, "imi", "mbm", "ici", 'i', "ingotIron", 'b', machineBase, 'm', Blocks.MOSSY_COBBLESTONE, 'c', coilReception));
         addRecipe(new ShapedOreRecipe(fisher, "ifi", "rmr", "ici", 'i', "ingotIron", 'f', Items.FISHING_ROD, 'r', "dustRedstone", 'c', coilReception, 'm', machineBase));
         addRecipe(new RecipePoweredMultiTool());
+
+        GameRegistry.addRecipe(new RecipeCapacitorUpgrade());
 
         GameRegistry.addSmelting(powerCabinet, new ItemStack(powerCabinet2), 0);
 
@@ -320,6 +327,33 @@ public class JAPTA {
                 }
             } else {
                 notified = true;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
+        if(event.getEntity() instanceof EntityPlayer) {
+            EntityPlayer player = ((EntityPlayer) event.getEntity());
+            List<ItemStack> capacitors = new ArrayList<ItemStack>();
+            for(int i = 0; i < player.inventory.getSizeInventory(); i++) {
+                ItemStack stack = player.inventory.getStackInSlot(i);
+                if(stack != null && stack.getItem() == capacitor) {
+                    capacitors.add(stack);
+                }
+            }
+            if(capacitors.size() > 0) {
+                for(int i = 0; i < player.inventory.getSizeInventory(); i++) {
+                    ItemStack stack = player.inventory.getStackInSlot(i);
+                    if(stack != null && stack.getItem() != capacitor) {
+                        for(ItemStack curCap : capacitors) {
+                            int startValue = capacitor.getEnergyStored(curCap);
+                            if(startValue > 0) {
+                                capacitor.setEnergyStored(curCap, startValue-TileEntityJPT.chargeItem(stack, startValue));
+                            }
+                        }
+                    }
+                }
             }
         }
     }

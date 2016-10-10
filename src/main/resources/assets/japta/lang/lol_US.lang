@@ -73,6 +73,7 @@ item.rfMeter.name=RF Meter
 item.diagnosticTool.name=Halp 2l
 item.coilReception.name=Flux Gettn Koil
 item.coilTransmission.name=Flux Givvn Koil
+item.capacitor.name=Kuddly Powir Cabinet
 itemGroup.japta=JAPTA
 text.japta.rngQuarry.noTool=Quarry: Clic wif a tul to quip it. %1$d RF
 text.japta.rngQuarry.hasTool=Quarry: %1$s quipd, %2$d RF

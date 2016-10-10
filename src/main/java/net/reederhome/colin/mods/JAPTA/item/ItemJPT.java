@@ -108,6 +108,10 @@ public class ItemJPT extends Item implements IEnergyContainerItem, IManaItem {
         return true;
     }
 
+    public void setEnergyStored(ItemStack stack, int amount) {
+        stack.setItemDamage(stack.getMaxDamage() - amount);
+    }
+
     private class CapabilityProvider implements ICapabilityProvider
 
     {

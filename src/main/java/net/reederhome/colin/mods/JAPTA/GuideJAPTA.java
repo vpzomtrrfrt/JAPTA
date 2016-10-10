@@ -139,6 +139,10 @@ public class GuideJAPTA {
                 new PageItemStack("The Battery Potato allows you to eat RF in the form of a delicious potato.  It can be charged with anything that can charge items with RF, like the Charging Plate or the Chest Charger.", JAPTA.batteryPotato),
                 maybeRecipe(JAPTA.batteryPotato)
         ), "item.batteryPotato.name", new ItemStack(JAPTA.batteryPotato)));
+        itemMap.put(new ResourceLocation("items", "capacitor"), new EntryItemStack(Arrays.asList(
+                new PageItemStack("The Handheld Power Cabinet is an item that can store RF and charge the other items in your inventory.  Craft it with Power Cabinet Shafts to increase capacity.", JAPTA.capacitor),
+                maybeRecipe(JAPTA.capacitor)
+        ), "item.capacitor.name", new ItemStack(JAPTA.capacitor)));
         itemMap.put(new ResourceLocation("items", "rfMeter"), new EntryItemStack(Arrays.asList(
                 new PageItemStack("The RF Meter is an item that can be used on blocks to read their RF content.", JAPTA.rfMeter),
                 maybeRecipe(JAPTA.rfMeter)

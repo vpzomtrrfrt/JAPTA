@@ -105,6 +105,11 @@ public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabi
     }
 
     public void chargeItem(ItemStack stack) {
+        stored -= chargeItem(stack, stored);
+    }
+
+    public static int chargeItem(ItemStack stack, int maxAmount) {
+        int stored = maxAmount;
         if (stored > 0 && stack != null) {
             if (stack.getItem() instanceof IEnergyContainerItem) {
                 stored -= ((IEnergyContainerItem) stack.getItem()).receiveEnergy(stack, stored, false);
@@ -116,5 +121,6 @@ public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabi
                 stored -= stack.getCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, null).receiveEnergy(stored, false);
             }
         }
+        return maxAmount-stored;
     }
 }

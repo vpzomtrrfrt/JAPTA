@@ -77,6 +77,7 @@ item.rfMeter.name=RF Meter
 item.diagnosticTool.name=Diagnostic Tool
 item.coilReception.name=Flux Reception Coil
 item.coilTransmission.name=Flux Transmission Coil
+item.capacitor.name=Handheld Power Cabinet
 itemGroup.japta=JAPTA
 text.japta.rngQuarry.noTool=Quarry: Click with a tool to equip it. %1$d RF
 text.japta.rngQuarry.hasTool=Quarry: %1$s equipped, %2$d RF

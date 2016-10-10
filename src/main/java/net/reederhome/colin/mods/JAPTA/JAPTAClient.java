@@ -56,6 +56,7 @@ public class JAPTAClient {
         registerItem(JAPTA.coilReception, "coilReception");
         registerItem(JAPTA.coilTransmission, "coilTransmission");
         registerItem(JAPTA.poweredMultiTool, "poweredMultiTool");
+        registerItem(JAPTA.capacitor, "capacitor");
 
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
             @Override
