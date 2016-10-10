@@ -4,10 +4,14 @@ import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -17,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
+import net.reederhome.colin.mods.JAPTA.tileentity.TileEntitySheepAdapter;
 
 public class ItemRFMeter extends Item {
     private boolean advanced;
@@ -79,5 +84,22 @@ public class ItemRFMeter extends Item {
             }
         }
         return EnumActionResult.SUCCESS;
+    }
+
+    public void onEntityInteract(Entity target, ICommandSender player) {
+        boolean someinfo = false;
+        if(target instanceof EntitySheep) {
+            int held = target.getEntityData().getInteger("Energy");
+            player.addChatMessage(new TextComponentTranslation("text.japta.rfmeter.powerEntity", held, TileEntitySheepAdapter.MAX_SHEEP_AMOUNT, "RF"));
+            someinfo = true;
+        }
+        if(advanced && target instanceof IDiagnosable) {
+            if(((IDiagnosable) target).addInformation(player, player.getEntityWorld(), null)) {
+                someinfo = true;
+            }
+        }
+        if(!someinfo) {
+            player.addChatMessage(new TextComponentTranslation("text.japta.rfmeter."+(advanced?"advancedNoEntity":"no")));
+        }
     }
 }

@@ -11,6 +11,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -28,6 +29,7 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -87,6 +89,7 @@ public class JAPTA {
     public static BlockEater eater;
     public static SimpleTEBlock dungeonMaker;
     public static SimpleTEBlock fisher;
+    public static SimpleTEBlock sheepAdapter;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -157,6 +160,7 @@ public class JAPTA {
         eater = new BlockEater();
         dungeonMaker = new SimpleTEBlock(Material.ROCK, TileEntityDungeonMaker.class, "dungeonMaker");
         fisher = new SimpleTEBlock(Material.ROCK, TileEntityFisher.class, "fisher");
+        sheepAdapter = new SimpleTEBlock(Material.ROCK, TileEntitySheepAdapter.class, "sheepAdapter");
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
@@ -194,6 +198,7 @@ public class JAPTA {
         registerBlock(eater);
         registerBlock(dungeonMaker);
         registerBlock(fisher);
+        registerBlock(sheepAdapter);
 
         GameRegistry.register(rfMeter);
         GameRegistry.register(batteryPotato);
@@ -223,6 +228,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityEater.class, "Eater");
         GameRegistry.registerTileEntity(TileEntityDungeonMaker.class, "DungeonMaker");
         GameRegistry.registerTileEntity(TileEntityFisher.class, "Fisher");
+        GameRegistry.registerTileEntity(TileEntitySheepAdapter.class, "SheepAdapter");
 
         RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
         RecipeSorter.register("capacitor", RecipeCapacitorUpgrade.class, RecipeSorter.Category.SHAPELESS, "");
@@ -259,6 +265,7 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(eater, "iii", "imi", "rcr", 'i', "ingotIron", 'm', machineBase, 'r', "dustRedstone", 'c', coilTransmission));
         addRecipe(new ShapedOreRecipe(dungeonMaker, "imi", "mbm", "ici", 'i', "ingotIron", 'b', machineBase, 'm', Blocks.MOSSY_COBBLESTONE, 'c', coilReception));
         addRecipe(new ShapedOreRecipe(fisher, "ifi", "rmr", "ici", 'i', "ingotIron", 'f', Items.FISHING_ROD, 'r', "dustRedstone", 'c', coilReception, 'm', machineBase));
+        addRecipe(new ShapedOreRecipe(sheepAdapter, "iti", "wmw", "iri", 'i', "ingotIron", 't', coilTransmission, 'w', Blocks.WOOL, 'm', machineBase, 'r', coilReception));
         addRecipe(new RecipePoweredMultiTool());
 
         GameRegistry.addRecipe(new RecipeCapacitorUpgrade());
@@ -285,6 +292,8 @@ public class JAPTA {
         TileEntityEater.MULTIPLIER = config.get("machines.eater", "multiplier", TileEntityEater.MULTIPLIER).getInt();
         TileEntityEater.TIME = config.get("machines.eater", "time", TileEntityEater.TIME, "Ticks taken to eat food").getInt();
         TileEntityDungeonMaker.USE = config.get("machines.dungeonifier", "cost", TileEntityDungeonMaker.USE).getInt();
+        TileEntitySheepAdapter.RANGE = config.get("machines.sheepAdapter", "range", TileEntitySheepAdapter.RANGE).getInt();
+        TileEntitySheepAdapter.MAX_SHEEP_AMOUNT = config.get("machines.sheepAdapter", "held", TileEntitySheepAdapter.MAX_SHEEP_AMOUNT).getInt();
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -355,6 +364,17 @@ public class JAPTA {
                     }
                 }
             }
+        }
+        else if(event.getEntity() instanceof EntitySheep) {
+            TileEntitySheepAdapter.equalize(((EntitySheep) event.getEntity()));
+        }
+    }
+
+    @SubscribeEvent
+    public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        ItemStack stack = event.getItemStack();
+        if(stack != null && stack.getItem() instanceof ItemRFMeter) {
+            ((ItemRFMeter) stack.getItem()).onEntityInteract(event.getTarget(), event.getEntityPlayer());
         }
     }
 

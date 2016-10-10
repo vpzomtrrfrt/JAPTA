@@ -17,10 +17,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityBonemealApplicator;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityCakeConverter;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityHeatConverter;
-import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityRNGQuarry;
+import net.reederhome.colin.mods.JAPTA.tileentity.*;
 
 import java.awt.*;
 import java.util.*;
@@ -128,6 +125,10 @@ public class GuideJAPTA {
                 maybeRecipe(JAPTA.powerCabinetBase),
                 new PageFurnaceRecipe(JAPTA.powerCabinet)
         ), "guide.title.powerCabinet", new ItemStack(JAPTA.powerCabinet)));
+        blockMap.put(new ResourceLocation("blocks", "sheepAdapter"), new EntryItemStack(Arrays.asList(
+                new PageItemStack("It has been discovered that sheep can hold RF.  The SheepFlux Adapter is able to harness this possibility and send and receive RF from sheep up to "+ TileEntitySheepAdapter.RANGE+" blocks away.", JAPTA.sheepAdapter),
+                maybeRecipe(JAPTA.sheepAdapter)
+        ), "tile.sheepAdapter.name", new ItemStack(JAPTA.sheepAdapter)));
         blockMap.put(new ResourceLocation("blocks", "rngQuarry"), new EntryItemStack(Arrays.asList(
                 new PageItemStack("The RNG Quarry can mine out a square area of radius " + TileEntityRNGQuarry.RANGE + ".  It can mine anything that needs a wooden tool, or higher if given a tool.", JAPTA.rngQuarry),
                 new PageText("Tools last slightly longer than normal in an RNG Quarry.  Items obtained will be placed in adjacent inventory blocks, or spewed if no space is available."),
