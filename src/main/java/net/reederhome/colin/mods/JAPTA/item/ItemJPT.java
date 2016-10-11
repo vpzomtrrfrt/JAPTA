@@ -18,7 +18,7 @@ import vazkii.botania.api.mana.IManaItem;
 
 import static net.reederhome.colin.mods.JAPTA.tileentity.TileEntityJPTBase.MANA_CONVERSION_RATE;
 
-@Optional.Interface(iface="vazkii.botania.api.mana.IManaItem", modid="botania")
+@Optional.Interface(iface="vazkii.botania.api.mana.IManaItem", modid="Botania")
 public class ItemJPT extends Item implements IEnergyContainerItem, IManaItem {
     @Override
     public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
