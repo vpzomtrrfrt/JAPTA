@@ -10,9 +10,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.Optional;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import vazkii.botania.api.mana.IManaReceiver;
 
+@Optional.Interface(iface="vazkii.botania.api.mana.IManaReceiver", modid="botania")
 public class TileEntityJPTBase extends TileEntity implements ICapabilityProvider, IManaReceiver {
     public static final int MANA_CONVERSION_RATE = 10;
 

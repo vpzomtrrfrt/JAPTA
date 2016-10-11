@@ -12,11 +12,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.Optional;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import vazkii.botania.api.mana.IManaItem;
 
 import static net.reederhome.colin.mods.JAPTA.tileentity.TileEntityJPTBase.MANA_CONVERSION_RATE;
 
+@Optional.Interface(iface="vazkii.botania.api.mana.IManaItem", modid="botania")
 public class ItemJPT extends Item implements IEnergyContainerItem, IManaItem {
     @Override
     public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {

@@ -3,6 +3,8 @@ package net.reederhome.colin.mods.JAPTA.item;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
 
@@ -33,6 +35,7 @@ public class ItemCapacitor extends ItemJPT {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer p_addInformation_2_, List<String> list, boolean p_addInformation_4_) {
         super.addInformation(stack, p_addInformation_2_, list, p_addInformation_4_);
         list.add(this.getEnergyStored(stack)+" / "+this.getMaxEnergyStored(stack)+" RF");
