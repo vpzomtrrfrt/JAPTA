@@ -114,11 +114,15 @@ public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabi
             if (stack.getItem() instanceof IEnergyContainerItem) {
                 stored -= ((IEnergyContainerItem) stack.getItem()).receiveEnergy(stack, stored, false);
             }
-            if (stack.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null)) {
-                stored -= stack.getCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null).givePower(stored, false);
-            }
-            if(stack.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, null)) {
-                stored -= stack.getCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, null).receiveEnergy(stored, false);
+            try {
+                if (stack.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null)) {
+                    stored -= stack.getCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null).givePower(stored, false);
+                }
+                if (stack.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, null)) {
+                    stored -= stack.getCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, null).receiveEnergy(stored, false);
+                }
+            } catch(NoClassDefFoundError ex) {
+                // class not present, can't charge, and that's probably okay
             }
         }
         return maxAmount-stored;
