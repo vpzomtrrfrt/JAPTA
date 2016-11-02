@@ -142,6 +142,11 @@ public class ItemJPT extends Item implements IEnergyContainerItem, IManaItem {
             return null;
         }
 
+        @Optional.InterfaceList({
+                @Optional.Interface(iface="net.darkhax.tesla.api.ITeslaConsumer", modid="tesla"),
+                @Optional.Interface(iface="net.darkhax.tesla.api.ITeslaHolder", modid="tesla"),
+                @Optional.Interface(iface="net.darkhax.tesla.api.ITeslaProducer", modid="tesla")
+        })
         private class TeslaAdapter implements ITeslaConsumer, ITeslaHolder, ITeslaProducer {
 
             @Override
