@@ -91,7 +91,7 @@ public class GuideJAPTA {
                 maybeRecipe(JAPTA.furnaceBooster)
         ), "tile.furnaceBooster.name", new ItemStack(JAPTA.furnaceBooster)));
         blockMap.put(new ResourceLocation("blocks", "heatConverter"), new EntryItemStack(Arrays.asList(
-                new PageItemStack("The Heat Converter converts between Furnace heat and RF if placed on top of a Furnace." +
+                new PageItemStack("The Heat Converter converts between Furnace heat and RF if placed next to a Furnace." +
                         "  In Absorb mode, it will generate " + TileEntityHeatConverter.USE + " RF/t while the Furnace is burning.", JAPTA.heatConverter),
                 new PageText("It will also make the Furnace use fuel even when there's nothing to smelt." +
                         "  In Heat mode, it will use " + TileEntityHeatConverter.USE + " RF/t to smelt items in the Furnace."),
