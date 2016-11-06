@@ -247,9 +247,9 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(chargingPlate, "   ", "gpg", "oto", 'g', "dustGlowstone", 'p', Blocks.STONE_PRESSURE_PLATE, 'o', Blocks.OBSIDIAN, 't', coilTransmission));
         addRecipe(new ShapedOreRecipe(new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
         addRecipe(new ShapedOreRecipe(elevatorTop, "gcg", "geg", "rsr", 'g', "nuggetGold", 'c', coilReception, 'e', Items.ENDER_PEARL, 's', elevatorShaft, 'r', "dustRedstone"));
-        addRecipe(new ShapedOreRecipe(fluxBlaster, "gdg", "rmt", "gdg", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'r', coilReception, 'm', machineBase, 't', coilTransmission));
-        addRecipe(new ShapedOreRecipe(itemBlaster, "gdg", "cmc", "gdg", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'c', "chest", 'm', machineBase));
-        addRecipe(new ShapedOreRecipe(fluidBlaster, "gdg", "bmb", "gdg", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'b', Items.BUCKET, 'm', machineBase));
+        addRecipe(new ShapedOreRecipe(fluxBlaster, "gdg", "rmt", "gug", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'r', coilReception, 'm', machineBase, 't', coilTransmission, 'u', "dustRedstone"));
+        addRecipe(new ShapedOreRecipe(itemBlaster, "gdg", "cmc", "gug", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'c', "chest", 'm', machineBase, 'u', "dustRedstone"));
+        addRecipe(new ShapedOreRecipe(fluidBlaster, "gdg", "bmb", "gug", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'b', Items.BUCKET, 'm', machineBase, 'u', "dustRedstone"));
         addRecipe(new ShapedOreRecipe(rngQuarry, "srs", "imi", "PgS", 's', "stone", 'i', "ingotIron", 'm', machineBase, 'g', "nuggetGold", 'P', Items.WOODEN_PICKAXE, 'S', Items.WOODEN_SHOVEL, 'r', coilReception));
         addRecipe(new ShapedOreRecipe(chestCharger, "rhr", "cmt", "rhr", 'r', "dustRedstone", 'h', "chest", 'c', coilReception, 'm', machineBase, 't', coilTransmission));
         addRecipe(new ShapedOreRecipe(new ItemStack(mover, 4), "rpr", "gmg", "rcr", 'r', "dustRedstone", 'p', Blocks.PISTON, 'm', machineBase, 'g', "nuggetGold", 'c', coilReception));
@@ -258,7 +258,7 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(powerCabinetBase, "lrl", "gcg", 'l', "dyeBlue", 'r', coilReception, 'g', "nuggetGold", 'c', powerCabinet));
         addRecipe(new ShapedOreRecipe(heatConverter, "frf", "gmg", "ftf", 'f', Blocks.FURNACE, 'r', coilReception, 'g', "nuggetGold", 't', coilTransmission, 'm', machineBase));
         addRecipe(new ShapedOreRecipe(furnaceBooster, " r ", "rfr", " r ", 'r', "dustRedstone", 'f', Blocks.FURNACE));
-        addRecipe(new ShapedOreRecipe(machineBase, "gig", "iri", "gig", 'g', "nuggetGold", 'i', "ingotIron", 'r', "dustRedstone"));
+        addRecipe(new ShapedOreRecipe(new ItemStack(machineBase, 2), "gig", "iri", "gig", 'g', "nuggetGold", 'i', "ingotIron", 'r', "dustRedstone"));
         addRecipe(new ShapedOreRecipe(coilReception, "rg ", " i ", " gr", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
         addRecipe(new ShapedOreRecipe(coilTransmission, "r  ", "gig", "  r", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
         addRecipe(new ShapedOreRecipe(fluidHopper, "i i", "i i", " b ", 'i', "ingotIron", 'b', Items.BUCKET));
