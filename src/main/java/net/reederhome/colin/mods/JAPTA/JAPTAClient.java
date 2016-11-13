@@ -39,6 +39,7 @@ public class JAPTAClient {
         registerBlock(JAPTA.dungeonMaker, "dungeonMaker");
         registerBlock(JAPTA.fisher, "fisher");
         registerBlock(JAPTA.sheepAdapter, "sheepAdapter");
+        registerBlock(JAPTA.voidStack, "voidStack");
 
         ModelResourceLocation[] powerCabinetLocations = new ModelResourceLocation[16];
 

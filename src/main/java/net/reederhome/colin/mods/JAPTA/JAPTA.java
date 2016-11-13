@@ -90,6 +90,7 @@ public class JAPTA {
     public static SimpleTEBlock dungeonMaker;
     public static SimpleTEBlock fisher;
     public static SimpleTEBlock sheepAdapter;
+    public static BlockVoidStack voidStack;
 
     public static ItemRFMeter rfMeter;
     public static ItemBatteryPotato batteryPotato;
@@ -161,6 +162,7 @@ public class JAPTA {
         dungeonMaker = new SimpleTEBlock(Material.ROCK, TileEntityDungeonMaker.class, "dungeonMaker");
         fisher = new SimpleTEBlock(Material.ROCK, TileEntityFisher.class, "fisher");
         sheepAdapter = new SimpleTEBlock(Material.ROCK, TileEntitySheepAdapter.class, "sheepAdapter");
+        voidStack = new BlockVoidStack();
 
         rfMeter = new ItemRFMeter(false);
         batteryPotato = new ItemBatteryPotato();
@@ -199,6 +201,7 @@ public class JAPTA {
         registerBlock(dungeonMaker);
         registerBlock(fisher);
         registerBlock(sheepAdapter);
+        registerBlock(voidStack);
 
         GameRegistry.register(rfMeter);
         GameRegistry.register(batteryPotato);
@@ -229,6 +232,7 @@ public class JAPTA {
         GameRegistry.registerTileEntity(TileEntityDungeonMaker.class, "DungeonMaker");
         GameRegistry.registerTileEntity(TileEntityFisher.class, "Fisher");
         GameRegistry.registerTileEntity(TileEntitySheepAdapter.class, "SheepAdapter");
+        GameRegistry.registerTileEntity(TileEntityVoidStack.class, "VoidStack");
 
         RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
         RecipeSorter.register("capacitor", RecipeCapacitorUpgrade.class, RecipeSorter.Category.SHAPELESS, "");
@@ -266,6 +270,7 @@ public class JAPTA {
         addRecipe(new ShapedOreRecipe(dungeonMaker, "imi", "mbm", "ici", 'i', "ingotIron", 'b', machineBase, 'm', Blocks.MOSSY_COBBLESTONE, 'c', coilReception));
         addRecipe(new ShapedOreRecipe(fisher, "ifi", "rmr", "ici", 'i', "ingotIron", 'f', Items.FISHING_ROD, 'r', "dustRedstone", 'c', coilReception, 'm', machineBase));
         addRecipe(new ShapedOreRecipe(sheepAdapter, "iti", "wmw", "iri", 'i', "ingotIron", 't', coilTransmission, 'w', Blocks.WOOL, 'm', machineBase, 'r', coilReception));
+        addRecipe(new ShapedOreRecipe(voidStack, "coc", "oio", "coc", 'c', "chest", 'o', Blocks.OBSIDIAN, 'i', "ingotIron"));
         addRecipe(new RecipePoweredMultiTool());
 
         GameRegistry.addRecipe(new RecipeCapacitorUpgrade());

@@ -134,6 +134,10 @@ public class GuideJAPTA {
                 new PageText("Tools last slightly longer than normal in an RNG Quarry.  Items obtained will be placed in adjacent inventory blocks, or spewed if no space is available."),
                 maybeRecipe(JAPTA.rngQuarry)
         ), "tile.rngQuarry.name", new ItemStack(JAPTA.rngQuarry)));
+        blockMap.put(new ResourceLocation("blocks", "voidStack"), new EntryItemStack(Arrays.asList(
+                new PageItemStack("Ever needed to store a huge number of items?  Now you can, thanks to the Void Stack.  However, it has one problem: you can only take out the item you put in last.", JAPTA.voidStack),
+                maybeRecipe(JAPTA.voidStack)
+        ), "tile.voidStack.name", new ItemStack(JAPTA.voidStack)));
         categories.add(new CategoryItemStack(blockMap, "guide.title.blocks", new ItemStack(JAPTA.machineBase)));
         Map<ResourceLocation, EntryAbstract> itemMap = new HashMap<ResourceLocation, EntryAbstract>();
         itemMap.put(new ResourceLocation("items", "batteryPotato"), new EntryItemStack(Arrays.asList(

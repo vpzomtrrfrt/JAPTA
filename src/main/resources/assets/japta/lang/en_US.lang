@@ -73,6 +73,7 @@ tile.dungeonMaker.diagnostic.noChest=No empty chests present.
 tile.dungeonMaker.diagnostic.yesChest=Ready to make loot.  Just add RF!
 tile.fisher.name=Fisher
 tile.sheepAdapter.name=SheepFlux Adapter
+tile.voidStack.name=Void Stack
 item.batteryPotato.name=Battery Potato
 item.rfMeter.name=RF Meter
 item.diagnosticTool.name=Diagnostic Tool
