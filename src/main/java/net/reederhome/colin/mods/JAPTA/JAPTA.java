@@ -101,6 +101,7 @@ public class JAPTA {
     public static ItemBlockPowerCabinet itemPowerCabinet;
     public static ItemBlockPowerCabinet itemPowerCabinet2;
     public static ItemCapacitor capacitor;
+    public static ItemLevitator levitator;
 
     @CapabilityInject(ITeslaHolder.class)
     public static Capability<ITeslaHolder> CAPABILITY_TESLA_HOLDER;
@@ -173,6 +174,7 @@ public class JAPTA {
         itemPowerCabinet = ((ItemBlockPowerCabinet) new ItemBlockPowerCabinet(powerCabinet).setRegistryName("powerCabinet"));
         itemPowerCabinet2 = ((ItemBlockPowerCabinet) new ItemBlockPowerCabinet(powerCabinet2).setRegistryName("powerCabinet2"));
         capacitor = new ItemCapacitor();
+        levitator = new ItemLevitator();
 
         registerBlock(cakeConverter);
         registerBlock(fluxHopper);
@@ -212,6 +214,7 @@ public class JAPTA {
         GameRegistry.register(itemPowerCabinet);
         GameRegistry.register(itemPowerCabinet2);
         GameRegistry.register(capacitor);
+        GameRegistry.register(levitator);
 
         GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
         GameRegistry.registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
@@ -245,6 +248,7 @@ public class JAPTA {
         addRecipe(new ShapelessOreRecipe(itemInhaler, itemBlaster, Blocks.REDSTONE_TORCH));
         addRecipe(new ShapelessOreRecipe(itemSplitter, itemBlaster, "plankWood"));
         addRecipe(new ShapelessOreRecipe(new ItemStack(capacitor, 1, capacitor.getMaxDamage(null)), powerCabinetBase, Items.BOW));
+        addRecipe(new ShapedOreRecipe(new ItemStack(levitator, 1, levitator.getMaxDamage(null)), " r ", " m ", "g g", 'r', coilReception, 'm', machineBase, 'g', "dustGlowstone"));
 
         addRecipe(new ShapedOreRecipe(cakeConverter, "frf", "gmg", "ftf", 'f', Items.CAKE, 'r', coilReception, 'g', "nuggetGold", 'm', machineBase, 't', coilTransmission));
         addRecipe(new ShapedOreRecipe(fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
@@ -354,6 +358,9 @@ public class JAPTA {
                 ItemStack stack = player.inventory.getStackInSlot(i);
                 if(stack != null && stack.getItem() == capacitor) {
                     capacitors.add(stack);
+                }
+                else if(stack != null && stack.getItem() instanceof ITickableItem) {
+                    ((ITickableItem) stack.getItem()).update(stack, player);
                 }
             }
             if(capacitors.size() > 0) {

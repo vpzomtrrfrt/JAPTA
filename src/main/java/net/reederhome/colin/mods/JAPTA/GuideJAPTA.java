@@ -17,6 +17,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
+import net.reederhome.colin.mods.JAPTA.item.ItemLevitator;
 import net.reederhome.colin.mods.JAPTA.tileentity.*;
 
 import java.awt.*;
@@ -161,6 +162,10 @@ public class GuideJAPTA {
                 maybeRecipe(JAPTA.coilReception),
                 maybeRecipe(JAPTA.coilTransmission)
         ), "guide.title.coils", new ItemStack(JAPTA.coilReception)));
+        itemMap.put(new ResourceLocation("items", "levitator"), new EntryItemStack(Arrays.asList(
+                new PageItemStack("The Personal Levitator is an item capable of lifting you off the ground using up to "+ ItemLevitator.USE+" RF/t.  Right-click to go up, Sneak-right-click to go down.", JAPTA.levitator),
+                maybeRecipe(JAPTA.levitator)
+        ), "item.levitator.name", new ItemStack(JAPTA.levitator)));
         categories.add(new CategoryItemStack(itemMap, "guide.title.items", new ItemStack(JAPTA.batteryPotato)));
         book.setCategoryList(categories);
         book.setAuthor("VpzomTrrfrt");
