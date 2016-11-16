@@ -40,7 +40,7 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
             int d = 1;
             while (true) {
                 BlockPos cp = me.down(d);
-                Block b = worldObj.getBlockState(cp).getBlock();
+                Block b = world.getBlockState(cp).getBlock();
                 if (b == Blocks.AIR) {
                     break;
                 } else if (b != JAPTA.elevatorShaft) {
@@ -49,23 +49,23 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
                 d++;
             }
             int cost = getEnergyCost(d);
-            List<EntityLivingBase> l = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() + 1, me.getZ(), me.getX() + 1, me.getY() + 1.5, me.getZ() + 1));
+            List<EntityLivingBase> l = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() + 1, me.getZ(), me.getX() + 1, me.getY() + 1.5, me.getZ() + 1));
             for (EntityLivingBase b : l) {
-                if (stored >= cost && b.isSneaking() && b.getEntityData().getLong("LastTeleported") != worldObj.getTotalWorldTime()) {
+                if (stored >= cost && b.isSneaking() && b.getEntityData().getLong("LastTeleported") != world.getTotalWorldTime()) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() - d - 1, me.getZ() + 0.5);
-                    worldObj.playSound(null, b.posX, b.posY, b.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.PLAYERS, 1, 1);
+                    world.playSound(null, b.posX, b.posY, b.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.PLAYERS, 1, 1);
                     stored -= cost;
-                    b.getEntityData().setLong("LastTeleported", worldObj.getTotalWorldTime());
+                    b.getEntityData().setLong("LastTeleported", world.getTotalWorldTime());
                 }
             }
-            List<EntityLivingBase> l2 = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() - d + 0.75
+            List<EntityLivingBase> l2 = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() - d + 0.75
                     , me.getZ(), me.getX() + 1, me.getY() - d + 1, me.getZ() + 1));
             for (EntityLivingBase b : l2) {
-                if (stored >= cost && b.motionY > 0 && b.getEntityData().getLong("LastTeleported") != worldObj.getTotalWorldTime()) {
+                if (stored >= cost && b.motionY > 0 && b.getEntityData().getLong("LastTeleported") != world.getTotalWorldTime()) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() + 1, me.getZ() + 0.5);
-                    worldObj.playSound(null, b.posX, b.posY, b.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.PLAYERS, 1, 1);
+                    world.playSound(null, b.posX, b.posY, b.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.PLAYERS, 1, 1);
                     stored -= cost;
-                    b.getEntityData().setLong("LastTeleported", worldObj.getTotalWorldTime());
+                    b.getEntityData().setLong("LastTeleported", world.getTotalWorldTime());
                 }
             }
         }

@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 
@@ -28,7 +29,7 @@ public class ItemBatteryPotato extends ItemJPT {
     }
 
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
+    public void getSubItems(Item item, CreativeTabs p_getSubItems_2_, NonNullList<ItemStack> list) {
         list.add(new ItemStack(item));
         list.add(new ItemStack(item, 1, getMaxDamage()));
     }
@@ -53,7 +54,8 @@ public class ItemBatteryPotato extends ItemJPT {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer p, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World p_onItemRightClick_1_, EntityPlayer p, EnumHand hand) {
+        ItemStack stack = p.getHeldItem(hand);
         if (p.canEat(false) && stack.getItemDamage() + USE <= stack.getMaxDamage()) {
             p.setActiveHand(hand);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);

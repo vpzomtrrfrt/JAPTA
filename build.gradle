@@ -19,24 +19,25 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.matthewprenger.cursegradle'
 
 dependencies {
-    deobfCompile "info.amerifrance.guideapi:Guide-API:1.10.2-2.0.2-45"
-    compile "net.darkhax.tesla:Tesla:1.10.2-1.2.1.49"
+    deobfCompile "com.github.vpzomtrrfrt:Guide-API:a3a50a"
+    compile "com.github.p455w0rd:Tesla:4c804b"
 }
 
 repositories {
     maven { url 'http://tehnut.info/maven' }
     maven { url 'http://maven.epoxide.xyz' }
+    maven { url "https://jitpack.io" }
 }
 
 version = "1.11.0"
 group = "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "JAPTA-1.10.2"
+archivesBaseName = "JAPTA-1.11"
 
 minecraft {
-    version = "1.10.2-12.18.1.2092"
+    version = "1.11-13.19.0.2130"
     runDir = "run"
 
-    mappings = "snapshot_20160518"
+    mappings = "snapshot_20161116"
 }
 
 dependencies {

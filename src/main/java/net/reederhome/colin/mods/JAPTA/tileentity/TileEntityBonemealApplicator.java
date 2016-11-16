@@ -1,6 +1,8 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
+import mcjty.lib.tools.ItemStackTools;
+import net.minecraft.block.BlockRedstoneLight;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
@@ -14,6 +16,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 
 import java.util.Random;
@@ -29,27 +32,25 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
 
     @Override
     public void update() {
-        if (stored >= USE && !worldObj.isRemote && worldObj.isBlockIndirectlyGettingPowered(getPos()) == 0) {
+        if (stored >= USE && !world.isRemote && world.isBlockIndirectlyGettingPowered(getPos()) == 0) {
             for (EnumFacing side : EnumFacing.VALUES) {
-                TileEntity te = worldObj.getTileEntity(getPos().offset(side));
+                TileEntity te = world.getTileEntity(getPos().offset(side));
                 if (te instanceof IInventory) {
                     IInventory inv = (IInventory) te;
                     for (int i = 0; i < inv.getSizeInventory(); i++) {
                         ItemStack stack = inv.getStackInSlot(i);
-                        if (stack != null && stack.getItem() == Items.DYE && stack.getItemDamage() == 15 && stack.stackSize > 0) {
+                        if (ItemStackTools.isValid(stack) && stack.getItem() == Items.DYE && stack.getItemDamage() == 15) {
                             for (int t = 0; t < 3; t++) { // try thrice for a valid spot
                                 BlockPos cp = getPos().add(new Random().nextInt(RANGE * 2) - RANGE, RANGE, new Random().nextInt(RANGE * 2) - RANGE);
                                 while (cp.getY() >= 0) {
-                                    IBlockState state = worldObj.getBlockState(cp);
+                                    IBlockState state = world.getBlockState(cp);
                                     if (state.getBlock() instanceof IGrowable) {
                                         IGrowable bl = (IGrowable) state.getBlock();
-                                        if (bl != Blocks.GRASS && bl.canGrow(worldObj, cp, state, false) && bl.canUseBonemeal(worldObj, new Random(), cp, state)) {
-                                            bl.grow(worldObj, new Random(), cp, state);
-                                            stack.stackSize--;
+                                        if (bl != Blocks.GRASS && bl.canGrow(world, cp, state, false) && bl.canUseBonemeal(world, new Random(), cp, state)) {
+                                            bl.grow(world, new Random(), cp, state);
+                                            //stack.stackSize--;
+                                            ItemStackTools.incStackSize(stack, -1);
                                             stored -= USE;
-                                            if (stack.stackSize == 0) {
-                                                inv.setInventorySlotContents(i, null);
-                                            }
                                             return;
                                         }
                                     }
@@ -68,19 +69,22 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
         boolean bonemeal = false;
         dancing:
         for (EnumFacing side : EnumFacing.VALUES) {
-            TileEntity te = worldObj.getTileEntity(getPos().offset(side));
+            TileEntity te = world.getTileEntity(getPos().offset(side));
             if (te instanceof IInventory) {
                 IInventory inv = (IInventory) te;
                 for (int i = 0; i < inv.getSizeInventory(); i++) {
                     ItemStack stack = inv.getStackInSlot(i);
-                    if (stack != null && stack.getItem() == Items.DYE && stack.getItemDamage() == 15 && stack.stackSize > 0) {
+                    if (ItemStackTools.isValid(stack) && stack.getItem() == Items.DYE && stack.getItemDamage() == 15) {
                         bonemeal = true;
                         break dancing;
                     }
                 }
             }
         }
-        int redstone = worldObj.isBlockIndirectlyGettingPowered(pos);
+        int redstone = 0;
+        if(world instanceof World) {
+            redstone = ((World) world).isBlockIndirectlyGettingPowered(pos);
+        }
         if (!bonemeal) {
             sender.addChatMessage(new TextComponentTranslation("tile.bonemealApplicator.diagnostic.noBonemeal"));
             return true;

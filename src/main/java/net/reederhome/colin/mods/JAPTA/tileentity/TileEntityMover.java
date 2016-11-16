@@ -22,13 +22,13 @@ public class TileEntityMover extends TileEntityJPT implements IEnergyReceiver, I
 
     @Override
     public void update() {
-        long time = worldObj.getTotalWorldTime();
+        long time = world.getTotalWorldTime();
         BlockPos me = getPos();
-        EnumFacing facing = JAPTA.safeGetValue(worldObj.getBlockState(me), BlockMover.FACING);
+        EnumFacing facing = JAPTA.safeGetValue(world.getBlockState(me), BlockMover.FACING);
         transmit(facing);
         BlockPos front = me.offset(facing);
-        List<Entity> l = worldObj.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(me.getX(), me.getY() + 1, me.getZ(), me.getX() + 1, me.getY() + 2, me.getZ() + 1));
-        l.addAll(worldObj.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(front.getX(), front.getY(), front.getZ(), front.getX() + 1, front.getY() + 1, front.getZ() + 1)));
+        List<Entity> l = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(me.getX(), me.getY() + 1, me.getZ(), me.getX() + 1, me.getY() + 2, me.getZ() + 1));
+        l.addAll(world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(front.getX(), front.getY(), front.getZ(), front.getX() + 1, front.getY() + 1, front.getZ() + 1)));
         for (Entity e : l) {
             if (stored >= USE && !e.isSneaking()) {
                 NBTTagCompound ed = e.getEntityData();

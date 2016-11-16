@@ -1,9 +1,12 @@
 package net.reederhome.colin.mods.JAPTA.block;
 
+import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -38,20 +41,20 @@ public class BlockRNGQuarry extends BlockModelContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer p, EnumHand hand, ItemStack stack, EnumFacing p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_, float p_onBlockActivated_10_) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer p, EnumHand hand, EnumFacing p_onBlockActivated_6_, float p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_) {
         if (world.isRemote) return true;
         TileEntityRNGQuarry te = (TileEntityRNGQuarry) world.getTileEntity(pos);
         ItemStack held = p.inventory.getCurrentItem();
-        if (held == null) {
+        if (ItemStackTools.isValid(held)) {
             if (te.item != null) {
-                p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.hasTool", te.item.getTextComponent(), te.stored));
+                p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.hasTool", te.item.getTextComponent(), te.stored), false);
             } else {
-                p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.noTool", te.stored));
+                p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.noTool", te.stored), false);
             }
         } else {
             ItemStack itm = te.item;
             te.item = p.inventory.removeStackFromSlot(p.inventory.currentItem);
-            p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.gotTool", te.item.getTextComponent()));
+            p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.gotTool", te.item.getTextComponent()), false);
             if (itm != null) {
                 p.inventory.setInventorySlotContents(p.inventory.currentItem, itm);
             }

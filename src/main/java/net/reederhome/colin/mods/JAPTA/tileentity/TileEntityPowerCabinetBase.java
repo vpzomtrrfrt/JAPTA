@@ -27,21 +27,21 @@ public class TileEntityPowerCabinetBase extends TileEntityJPTBase implements IEn
         }
         while (true) {
             BlockPos np = cp.up();
-            if (worldObj.getBlockState(np).getBlock() instanceof BlockPowerCabinet) {
+            if (world.getBlockState(np).getBlock() instanceof BlockPowerCabinet) {
                 cp = np;
             } else {
                 break;
             }
         }
         while (leftToExtract > 0) {
-            IBlockState state = worldObj.getBlockState(cp);
+            IBlockState state = world.getBlockState(cp);
             if (state.getBlock() instanceof BlockPowerCabinet) {
                 int v = state.getValue(BlockPowerCabinet.VALUE);
                 while (v > 0 && leftToExtract > 0) {
                     v--;
                     leftToExtract -= ((BlockPowerCabinet) state.getBlock()).getMetaValue();
                 }
-                worldObj.setBlockState(cp, state.withProperty(BlockPowerCabinet.VALUE, v));
+                world.setBlockState(cp, state.withProperty(BlockPowerCabinet.VALUE, v));
                 cp = cp.down();
             } else {
                 break;
@@ -60,14 +60,14 @@ public class TileEntityPowerCabinetBase extends TileEntityJPTBase implements IEn
         int leftToAdd = maxReceive + stored;
         BlockPos cp = getPos().up();
         while (leftToAdd >= BlockPowerCabinet.MAX_META_VALUE) {
-            IBlockState state = worldObj.getBlockState(cp);
+            IBlockState state = world.getBlockState(cp);
             if (state.getBlock() instanceof BlockPowerCabinet) {
                 int v = state.getValue(BlockPowerCabinet.VALUE);
                 while (v < 15 && leftToAdd >= BlockPowerCabinet.MAX_META_VALUE) {
                     v++;
                     leftToAdd -= ((BlockPowerCabinet) state.getBlock()).getMetaValue();
                 }
-                worldObj.setBlockState(cp, state.withProperty(BlockPowerCabinet.VALUE, v));
+                world.setBlockState(cp, state.withProperty(BlockPowerCabinet.VALUE, v));
             } else {
                 break;
             }
@@ -87,7 +87,7 @@ public class TileEntityPowerCabinetBase extends TileEntityJPTBase implements IEn
         int tr = stored;
         BlockPos cp = getPos().up();
         while (true) {
-            IBlockState state = worldObj.getBlockState(cp);
+            IBlockState state = world.getBlockState(cp);
             if (state.getBlock() instanceof BlockPowerCabinet) {
                 tr += state.getValue(BlockPowerCabinet.VALUE) * ((BlockPowerCabinet) state.getBlock()).getMetaValue();
             } else {
@@ -104,7 +104,7 @@ public class TileEntityPowerCabinetBase extends TileEntityJPTBase implements IEn
         BlockPos cp = getPos();
         while (true) {
             cp = cp.up();
-            IBlockState state = worldObj.getBlockState(cp);
+            IBlockState state = world.getBlockState(cp);
             if (state.getBlock() instanceof BlockPowerCabinet) {
                 tr += ((BlockPowerCabinet) state.getBlock()).getMetaValue() * 15;
             } else {

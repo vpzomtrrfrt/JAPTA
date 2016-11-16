@@ -18,18 +18,18 @@ public class TileEntityFluxHopper extends TileEntityJPT implements IEnergyReceiv
     public void update() {
         int remaining = getMaxEnergyStored(null) - stored;
         if (remaining > 0) {
-            TileEntity above = worldObj.getTileEntity(getPos().up());
+            TileEntity above = world.getTileEntity(getPos().up());
             if (above instanceof IEnergyProvider) {
                 stored += ((IEnergyProvider) above).extractEnergy(EnumFacing.DOWN, remaining, false);
             }
         }
         if (stored > 0) {
-            transmit(JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockFluxHopper.FACING));
+            transmit(JAPTA.safeGetValue(world.getBlockState(getPos()), BlockFluxHopper.FACING));
         }
     }
 
     @Override
     public boolean canReceiveEnergy(EnumFacing from) {
-        return super.canReceiveEnergy(from) && from != JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockFluxHopper.FACING);
+        return super.canReceiveEnergy(from) && from != JAPTA.safeGetValue(world.getBlockState(getPos()), BlockFluxHopper.FACING);
     }
 }

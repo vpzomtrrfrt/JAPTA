@@ -31,6 +31,11 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
         return SIZE;
     }
 
+    @Override
+    public boolean func_191420_l() {
+        return false;
+    }
+
     @Nullable
     @Override
     public ItemStack getStackInSlot(int i) {
@@ -42,10 +47,6 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     public ItemStack decrStackSize(int i, int i1) {
         ItemStack stack = getStackInSlot(i);
         ItemStack lvt_3_1_ = stack.splitStack(i1);
-        System.out.println("Decr to " + stack.stackSize);
-        if (pending[i].stackSize == 0) {
-            pending[i] = null;
-        }
 
         markDirty();
         return lvt_3_1_;
@@ -72,7 +73,7 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
+    public boolean isUsableByPlayer(EntityPlayer entityPlayer) {
         return true;
     }
 
@@ -159,7 +160,7 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
         NBTTagList itemList = (NBTTagList) tag.getTag("Items");
         for (int i = 0; i < itemList.tagCount(); i++) {
             NBTTagCompound nbt = itemList.getCompoundTagAt(i);
-            ItemStack stack = ItemStack.loadItemStackFromNBT(nbt);
+            ItemStack stack = new ItemStack(nbt);
             items.add(stack);
         }
         update();
@@ -180,11 +181,11 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     }
 
     public void dropItems() {
-        InventoryHelper.dropInventoryItems(worldObj, getPos(), this);
+        InventoryHelper.dropInventoryItems(world, getPos(), this);
         pending = new ItemStack[SIZE];
         while(items.size() > 0) {
             ItemStack stack = items.remove(0);
-            InventoryHelper.spawnItemStack(worldObj, pos.getX(), pos.getY(), pos.getZ(), stack);
+            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
         }
     }
 }

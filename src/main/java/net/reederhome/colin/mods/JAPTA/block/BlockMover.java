@@ -48,6 +48,6 @@ public class BlockMover extends BlockModelContainer {
 
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        return getDefaultState().withProperty(FACING, BlockPistonBase.getFacingFromEntity(pos, placer));
+        return getDefaultState().withProperty(FACING, EnumFacing.func_190914_a(pos, placer));
     }
 }

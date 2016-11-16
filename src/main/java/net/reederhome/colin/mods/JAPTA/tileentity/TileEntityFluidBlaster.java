@@ -89,14 +89,14 @@ public class TileEntityFluidBlaster extends TileEntity implements IFluidHandler,
 
     @Override
     public void update() {
-        IBlockState state = worldObj.getBlockState(getPos());
+        IBlockState state = world.getBlockState(getPos());
         EnumFacing facing = JAPTA.safeGetValue(state, BlockBlaster.FACING);
         for (int i = 1; i <= BlockBlaster.RANGE; i++) {
             BlockPos cp = getPos().offset(facing, i);
-            while (worldObj.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
+            while (world.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
                 cp = cp.up();
             }
-            TileEntity te = worldObj.getTileEntity(cp);
+            TileEntity te = world.getTileEntity(cp);
             if (te instanceof IFluidHandler) {
                 if (((BlockBlaster) state.getBlock()).isInhaler()) {
                     if (content == null) {

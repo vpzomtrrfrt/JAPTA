@@ -18,7 +18,7 @@ public class TileEntityChargingPlate extends TileEntityJPT implements IEnergyRec
 
     @Override
     public void update() {
-        List<EntityPlayer> l = JAPTA.chargingPlate.getPlayers(worldObj, getPos());
+        List<EntityPlayer> l = JAPTA.chargingPlate.getPlayers(world, getPos());
         for (EntityPlayer p : l) {
             IInventory inv = p.inventory;
             for (int i = 0; i < inv.getSizeInventory(); i++) {

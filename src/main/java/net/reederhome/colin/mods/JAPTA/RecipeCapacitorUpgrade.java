@@ -6,6 +6,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
 import net.reederhome.colin.mods.JAPTA.item.ItemCapacitor;
@@ -72,7 +73,8 @@ public class RecipeCapacitorUpgrade implements IRecipe {
     }
 
     @Override
-    public ItemStack[] getRemainingItems(InventoryCrafting inventoryCrafting) {
-        return new ItemStack[inventoryCrafting.getSizeInventory()];
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inventoryCrafting) {
+        return NonNullList.func_191196_a();
     }
+
 }

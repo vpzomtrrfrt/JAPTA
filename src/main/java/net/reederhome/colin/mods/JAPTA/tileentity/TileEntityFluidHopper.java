@@ -93,11 +93,11 @@ public class TileEntityFluidHopper extends TileEntity implements IFluidHandler, 
 
     @Override
     public void update() {
-        IBlockState state = worldObj.getBlockState(getPos());
+        IBlockState state = world.getBlockState(getPos());
         if (content != null) {
             EnumFacing facing = JAPTA.safeGetValue(state, BlockFluidHopper.FACING);
             BlockPos dest = getPos().offset(facing);
-            TileEntity te = worldObj.getTileEntity(dest);
+            TileEntity te = world.getTileEntity(dest);
             if (te instanceof IFluidHandler) {
                 content.amount -= ((IFluidHandler) te).fill(facing.getOpposite(), content, true);
                 if (content.amount <= 0) {
@@ -108,7 +108,7 @@ public class TileEntityFluidHopper extends TileEntity implements IFluidHandler, 
         int remaining = MAX_HELD - (content == null ? 0 : content.amount);
         if (remaining > 0) {
             BlockPos src = getPos().up();
-            TileEntity te = worldObj.getTileEntity(src);
+            TileEntity te = world.getTileEntity(src);
             if (te instanceof IFluidHandler) {
                 try {
                     if (content != null) {

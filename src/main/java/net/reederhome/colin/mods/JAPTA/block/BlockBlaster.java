@@ -71,7 +71,7 @@ public abstract class BlockBlaster extends BlockModelContainer implements IDiagn
 
     @Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        EnumFacing ts = BlockPistonBase.getFacingFromEntity(pos, placer);
+        EnumFacing ts = EnumFacing.func_190914_a(pos, placer);
         if (!placer.isSneaking()) {
             ts = ts.getOpposite();
         }

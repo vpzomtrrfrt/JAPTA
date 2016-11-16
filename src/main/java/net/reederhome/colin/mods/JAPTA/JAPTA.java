@@ -2,6 +2,7 @@ package net.reederhome.colin.mods.JAPTA;
 
 import amerifrance.guideapi.api.GuideAPI;
 import amerifrance.guideapi.api.impl.Book;
+import mcjty.lib.tools.ItemStackTools;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
@@ -58,8 +59,8 @@ public class JAPTA {
 
     public static CreativeTabs tab = new CreativeTabs("japta") {
         @Override
-        public Item getTabIconItem() {
-            return JAPTA.batteryPotato;
+        public ItemStack getTabIconItem() {
+            return new ItemStack(JAPTA.batteryPotato);
         }
     };
 
@@ -125,7 +126,7 @@ public class JAPTA {
             ItemStack resultSlot = te.getStackInSlot(2);
             if (resultSlot == null) return true;
             if (!resultSlot.isItemEqual(itemstack)) return false;
-            int result = resultSlot.stackSize + itemstack.stackSize;
+            int result = ItemStackTools.getStackSize(resultSlot) + ItemStackTools.getStackSize(itemstack);
             return result <= te.getInventoryStackLimit() && result <= resultSlot.getMaxStackSize();
         }
     }
@@ -338,9 +339,9 @@ public class JAPTA {
     public void onTick(TickEvent ev) {
         if (!notified && UpdateCheckThread.ret != null) {
             if (UpdateCheckThread.ret.equals("update")) {
-                EntityPlayer p = Minecraft.getMinecraft().thePlayer;
+                EntityPlayer p = Minecraft.getMinecraft().player;
                 if (p != null) {
-                    p.addChatComponentMessage(new TextComponentTranslation("text.japta.newversion"));
+                    p.addChatComponentMessage(new TextComponentTranslation("text.japta.newversion"), false);
                     notified = true;
                 }
             } else {

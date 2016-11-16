@@ -1,7 +1,9 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
+import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -26,22 +28,22 @@ public class TileEntityFisher extends TileEntityJPT implements IEnergyReceiver, 
 
     @Override
     public void update() {
-        if (worldObj.isRemote) return;
+        if (world.isRemote) return;
         if (stored >= USE) {
-            LootTable table = worldObj.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING);
-            LootContext.Builder builder = new LootContext.Builder(((WorldServer) worldObj));
+            LootTable table = world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING);
+            LootContext.Builder builder = new LootContext.Builder(((WorldServer) world));
             List<ItemStack> items = table.generateLootForPools(new Random(), builder.build());
             if (!items.isEmpty()) {
                 stored -= USE;
                 ItemStack stack = items.get(0);
                 for (EnumFacing side : EnumFacing.values()) {
-                    TileEntity te = worldObj.getTileEntity(getPos().offset(side));
+                    TileEntity te = world.getTileEntity(getPos().offset(side));
                     if (te instanceof IInventory) {
-                        stack = TileEntityHopper.putStackInInventoryAllSlots(((IInventory) te), stack, side.getOpposite());
+                        stack = TileEntityHopper.putStackInInventoryAllSlots(null, ((IInventory) te), stack, side.getOpposite());
                     }
                 }
-                if (stack != null && stack.stackSize > 0) {
-                    InventoryHelper.spawnItemStack(worldObj, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
+                if (ItemStackTools.isValid(stack)) {
+                    InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
                 }
             } else {
                 System.out.println("No item??");

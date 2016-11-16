@@ -18,15 +18,15 @@ public class TileEntityFluxBlaster extends TileEntityJPT implements IEnergyRecei
 
     @Override
     public void update() {
-        IBlockState state = worldObj.getBlockState(getPos());
+        IBlockState state = world.getBlockState(getPos());
         EnumFacing facing = JAPTA.safeGetValue(state, BlockBlaster.FACING);
         boolean inhaler = ((BlockBlaster) state.getBlock()).isInhaler();
         for (int i = 1; i <= BlockBlaster.RANGE; i++) {
             BlockPos cp = getPos().offset(facing, i);
-            while (worldObj.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
+            while (world.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
                 cp = cp.up();
             }
-            TileEntity te = worldObj.getTileEntity(cp);
+            TileEntity te = world.getTileEntity(cp);
             if (inhaler) {
                 int remaining = getMaxEnergyStored(null) - stored;
                 if (te instanceof IEnergyProvider && remaining > 0) {

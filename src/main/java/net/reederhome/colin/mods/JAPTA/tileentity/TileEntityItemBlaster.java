@@ -1,5 +1,6 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
+import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -34,6 +35,11 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     }
 
     @Override
+    public boolean func_191420_l() {
+        return false;
+    }
+
+    @Override
     public ItemStack getStackInSlot(int index) {
         return inv[index];
     }
@@ -41,7 +47,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     @Override
     public ItemStack decrStackSize(int index, int count) {
         ItemStack sis = inv[index];
-        if (sis.stackSize <= count) {
+        if (ItemStackTools.getStackSize(sis) <= count) {
             inv[index] = null;
             return sis;
         } else {
@@ -67,7 +73,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(EntityPlayer player) {
         return true;
     }
 
@@ -108,7 +114,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
 
     @Override
     public String getName() {
-        return worldObj.getBlockState(getPos()).getBlock().getUnlocalizedName() + ".name";
+        return world.getBlockState(getPos()).getBlock().getUnlocalizedName() + ".name";
     }
 
     @Override
@@ -144,7 +150,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
         NBTTagList l = (NBTTagList) tag.getTag("Items");
         for (int i = 0; i < l.tagCount(); i++) {
             NBTTagCompound nbt = l.getCompoundTagAt(i);
-            inv[nbt.getByte("Slot")] = ItemStack.loadItemStackFromNBT(nbt);
+            inv[nbt.getByte("Slot")] = new ItemStack(nbt);
         }
     }
 
@@ -152,13 +158,10 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
         ItemStack stack = inv.getStackInSlot(j);
         ItemStack copy = stack.copy();
         ItemStack stack1 = stack.splitStack(1);
-        ItemStack remainder = TileEntityHopper.putStackInInventoryAllSlots(this, stack1, null);
-        if (remainder != null && remainder.stackSize > 0) {
+        ItemStack remainder = TileEntityHopper.putStackInInventoryAllSlots(inv, this, stack1, null);
+        if (ItemStackTools.isValid(remainder)) {
             inv.setInventorySlotContents(j, copy);
         } else {
-            if (stack.stackSize == 0) {
-                inv.setInventorySlotContents(j, null);
-            }
             return true;
         }
         return false;
@@ -166,7 +169,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
 
     @Override
     public void update() {
-        IBlockState state = worldObj.getBlockState(getPos());
+        IBlockState state = world.getBlockState(getPos());
         EnumFacing facing = JAPTA.safeGetValue(state, BlockBlaster.FACING);
         boolean placedItem = false;
         if (!((BlockItemBlaster) state.getBlock()).isSplitting()) {
@@ -180,10 +183,10 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
         while (!once || pos != initialPos) {
             once = true;
             BlockPos cp = getPos().offset(facing, pos);
-            while (worldObj.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
+            while (world.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
                 cp = cp.up();
             }
-            TileEntity te = worldObj.getTileEntity(cp);
+            TileEntity te = world.getTileEntity(cp);
             if (te instanceof IInventory) {
                 IInventory ci = (IInventory) te;
                 if (((BlockBlaster) state.getBlock()).isInhaler()) {
@@ -192,11 +195,12 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
                             if (side != facing) {
                                 ItemStack fs = getFirstStack(false);
                                 if (fs != null) {
-                                    TileEntity cte = worldObj.getTileEntity(getPos().offset(side));
+                                    TileEntity cte = world.getTileEntity(getPos().offset(side));
                                     if (cte instanceof IInventory) {
-                                        ItemStack ret = TileEntityHopper.putStackInInventoryAllSlots(((IInventory) cte), fs.splitStack(1), side.getOpposite());
+                                        ItemStack ret = TileEntityHopper.putStackInInventoryAllSlots(((IInventory) cte), this, fs.splitStack(1), side.getOpposite());
                                         if (ret != null) {
-                                            fs.stackSize++;
+//                                            fs.stackSize++;
+                                            ItemStackTools.incStackSize(fs, 1);
                                         } else {
                                             getFirstStack(false);
                                             placedItem = true;
@@ -225,11 +229,11 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
                 } else {
                     ItemStack fs = getFirstStack(false);
                     if (fs != null) {
-                        ItemStack ret = TileEntityHopper.putStackInInventoryAllSlots(ci, fs.splitStack(1), facing);
+                        ItemStack ret = TileEntityHopper.putStackInInventoryAllSlots(ci, this, fs.splitStack(1), facing);
                         if (ret != null) {
-                            fs.stackSize++;
+                            //fs.stackSize++;
+                            ItemStackTools.incStackSize(fs, 1);
                         } else {
-                            getFirstStack(false); // clear out the zero if it's there
                             return;
                         }
                     }
@@ -246,10 +250,6 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
         for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack sis = getStackInSlot(i);
             if (sis != null) {
-                if (sis.stackSize < 1) {
-                    removeStackFromSlot(i);
-                    continue;
-                }
                 if (remove) {
                     removeStackFromSlot(i);
                 }

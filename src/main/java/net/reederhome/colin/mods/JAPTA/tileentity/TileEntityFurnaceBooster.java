@@ -14,7 +14,7 @@ public class TileEntityFurnaceBooster extends TileEntity implements ITickable {
         for (int i = 0; i < 6; i++) {
             EnumFacing side = EnumFacing.getFront(i);
             BlockPos cp = getPos().offset(side);
-            TileEntity te = worldObj.getTileEntity(cp);
+            TileEntity te = world.getTileEntity(cp);
             if (te instanceof TileEntityFurnace) {
                 TileEntityFurnace furnace = (TileEntityFurnace) te;
                 if (furnace.isBurning() && (JAPTA.canSmelt(furnace) && furnace.getField(2) > 0 && furnace.getField(2) + 1 < furnace.getField(3) && furnace.getField(0) > 1)) {

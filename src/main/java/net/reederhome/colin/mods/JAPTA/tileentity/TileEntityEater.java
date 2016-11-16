@@ -1,6 +1,7 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyProvider;
+import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
@@ -8,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
@@ -32,15 +34,13 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
 
     @Override
     public void update() {
-        if (worldObj.isRemote) return;
+        if (world.isRemote) return;
         if (progress >= TIME) {
             int value = getPowerValue();
             stored += value;
             if (item != null) {
-                item.stackSize--;
-                if (item.stackSize < 1) {
-                    item = null;
-                }
+                //item.stackSize--;
+                item = ItemStackTools.incStackSize(item, -1);
             }
             progress = 0;
         }
@@ -52,8 +52,8 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
         } else if (progress > 0) {
             progress++;
             BlockPos pos = getPos();
-            if (worldObj.getTotalWorldTime() % 2 == 0)
-                worldObj.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS, 0.5f + 0.5f * new Random().nextInt(2), (float) ((Math.random() - Math.random()) * 0.2 + 1));
+            if (world.getTotalWorldTime() % 2 == 0)
+                world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS, 0.5f + 0.5f * new Random().nextInt(2), (float) ((Math.random() - Math.random()) * 0.2 + 1));
         }
         if (stored > 0) {
             transmit();
@@ -74,6 +74,11 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     @Override
     public int getSizeInventory() {
         return 1;
+    }
+
+    @Override
+    public boolean func_191420_l() {
+        return false;
     }
 
     @Nullable
@@ -105,7 +110,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
+    public boolean isUsableByPlayer(EntityPlayer entityPlayer) {
         return false;
     }
 
@@ -175,7 +180,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
         if (tag.hasKey("Item")) {
-            item = ItemStack.loadItemStackFromNBT(((NBTTagCompound) tag.getTag("Item")));
+            item = new ItemStack(tag.getCompoundTag("Item"));
         }
         progress = tag.getByte("Progress");
     }

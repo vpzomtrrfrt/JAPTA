@@ -37,7 +37,7 @@ public class ItemRFMeter extends Item {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand p_onItemUse_4_, EnumFacing side, float p_onItemUse_6_, float p_onItemUse_7_, float p_onItemUse_8_) {
         if (!world.isRemote) {
             IBlockState state = world.getBlockState(pos);
             TileEntity te = world.getTileEntity(pos);
@@ -64,7 +64,7 @@ public class ItemRFMeter extends Item {
             }
             boolean someinfo = false;
             if (value != -2) {
-                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter.power", value, max, powerType));
+                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter.power", value, max, powerType), false);
                 someinfo = true;
             }
             if (advanced) {
@@ -80,7 +80,7 @@ public class ItemRFMeter extends Item {
                 }
             }
             if (!someinfo) {
-                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter." + (advanced ? "advancedNo" : "no")));
+                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter." + (advanced ? "advancedNo" : "no")), false);
             }
         }
         return EnumActionResult.SUCCESS;

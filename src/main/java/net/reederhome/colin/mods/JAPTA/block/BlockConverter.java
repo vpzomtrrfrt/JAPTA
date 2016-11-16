@@ -47,12 +47,12 @@ public abstract class BlockConverter extends BlockModelContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer p, EnumHand hand, ItemStack stack, EnumFacing p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_, float p_onBlockActivated_10_) {
+    public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer p, EnumHand hand, EnumFacing p_onBlockActivated_6_, float p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_) {
         if (!w.isRemote) {
             EnumConverterMode mode = state.getValue(MODE);
             mode = mode.getOpposite();
             w.setBlockState(pos, state.withProperty(MODE, mode));
-            p.addChatComponentMessage(new TextComponentTranslation("text.japta.converter.mode", getModeName(mode), getConverterType()));
+            p.addChatComponentMessage(new TextComponentTranslation("text.japta.converter.mode", getModeName(mode), getConverterType()), false);
         }
         return true;
     }

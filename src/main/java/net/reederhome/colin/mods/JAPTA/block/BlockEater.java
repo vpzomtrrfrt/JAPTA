@@ -31,18 +31,18 @@ public class BlockEater extends BlockModelContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack p_onBlockActivated_6_, EnumFacing p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_, float p_onBlockActivated_10_) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState p_onBlockActivated_3_, EntityPlayer player, EnumHand hand, EnumFacing p_onBlockActivated_6_, float p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_) {
         if (world.isRemote) return true;
         TileEntityEater te = ((TileEntityEater) world.getTileEntity(pos));
         ItemStack item = te.getStackInSlot(0);
         if (item != null) {
-            player.addChatComponentMessage(new TextComponentTranslation("text.japta.eater.hasItem", item.getTextComponent(), te.getProgress() * 100 / TileEntityEater.TIME));
+            player.addChatComponentMessage(new TextComponentTranslation("text.japta.eater.hasItem", item.getTextComponent(), te.getProgress() * 100 / TileEntityEater.TIME), false);
         } else {
             ItemStack held = player.getHeldItem(hand);
             if (te.isItemValidForSlot(0, held)) {
                 te.setInventorySlotContents(0, held.splitStack(1));
             } else {
-                player.addChatComponentMessage(new TextComponentTranslation("text.japta.eater.noItem"));
+                player.addChatComponentMessage(new TextComponentTranslation("text.japta.eater.noItem"), false);
             }
         }
         return true;

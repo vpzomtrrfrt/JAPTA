@@ -162,11 +162,12 @@ public class ItemPoweredMultiTool extends ItemJPT {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer p_onItemUse_2_, World p_onItemUse_3_, BlockPos p_onItemUse_4_, EnumHand hand, EnumFacing p_onItemUse_5_, float p_onItemUse_6_, float p_onItemUse_7_, float p_onItemUse_8_) {
+    public EnumActionResult onItemUse(EntityPlayer player, World p_onItemUse_2_, BlockPos p_onItemUse_3_, EnumHand hand, EnumFacing p_onItemUse_5_, float p_onItemUse_6_, float p_onItemUse_7_, float p_onItemUse_8_) {
+        ItemStack stack = player.getHeldItem(hand);
         if (!isDead(stack)) {
-            EnumActionResult tr = Items.DIAMOND_HOE.onItemUse(stack, p_onItemUse_2_, p_onItemUse_3_, p_onItemUse_4_, hand, p_onItemUse_5_, p_onItemUse_6_, p_onItemUse_7_, p_onItemUse_8_);
+            EnumActionResult tr = Items.DIAMOND_HOE.onItemUse(player, p_onItemUse_2_, p_onItemUse_3_, hand, p_onItemUse_5_, p_onItemUse_6_, p_onItemUse_7_, p_onItemUse_8_);
             if (tr == EnumActionResult.SUCCESS) {
-                stack.damageItem(USE - 1, p_onItemUse_2_);
+                stack.damageItem(USE - 1, player);
             }
             return tr;
         }

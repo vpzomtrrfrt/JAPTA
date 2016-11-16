@@ -19,7 +19,7 @@ public class TileEntityChestCharger extends TileEntityJPT implements IEnergyRece
         for (EnumFacing side : EnumFacing.VALUES) {
             if (stored > 0) {
                 BlockPos cp = getPos().offset(side);
-                TileEntity te = worldObj.getTileEntity(cp);
+                TileEntity te = world.getTileEntity(cp);
                 if (te instanceof IInventory) {
                     IInventory inv = (IInventory) te;
                     for (int i = 0; i < inv.getSizeInventory(); i++) {

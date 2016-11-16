@@ -36,8 +36,8 @@ public class ItemLevitator extends ItemJPT implements ITickableItem {
             int i;
             for(i = 0; i < height; i++) {
                 BlockPos cp = pos.down(i);
-                IBlockState state = player.worldObj.getBlockState(cp);
-                if(!state.getBlock().isAir(state, player.worldObj, cp)) {
+                IBlockState state = player.world.getBlockState(cp);
+                if(!state.getBlock().isAir(state, player.world, cp)) {
                     break;
                 }
             }
@@ -52,7 +52,8 @@ public class ItemLevitator extends ItemJPT implements ITickableItem {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        ItemStack stack = player.getHeldItem(hand);
         if(world.isRemote) return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
         int height = 0;
         NBTTagCompound tag = stack.getTagCompound();
@@ -70,7 +71,7 @@ public class ItemLevitator extends ItemJPT implements ITickableItem {
         }
         if(diff != 0) {
             height += diff;
-            player.addChatComponentMessage(new TextComponentTranslation("text.japta.levitator.heightChange", height));
+            player.addChatComponentMessage(new TextComponentTranslation("text.japta.levitator.heightChange", height), false);
             if(tag == null) {
                 tag = new NBTTagCompound();
                 stack.setTagCompound(tag);

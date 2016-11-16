@@ -37,8 +37,8 @@ public class BlockItemBlaster extends BlockBlaster {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack p_onBlockActivated_6_, EnumFacing p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_, float p_onBlockActivated_10_) {
-        player.displayGUIChest((IInventory) world.getTileEntity(pos));
+    public boolean onBlockActivated(World p_onBlockActivated_1_, BlockPos p_onBlockActivated_2_, IBlockState p_onBlockActivated_3_, EntityPlayer p_onBlockActivated_4_, EnumHand p_onBlockActivated_5_, EnumFacing p_onBlockActivated_6_, float p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_) {
+        p_onBlockActivated_4_.displayGUIChest(((IInventory) p_onBlockActivated_1_.getTileEntity(p_onBlockActivated_2_)));
         return true;
     }
 

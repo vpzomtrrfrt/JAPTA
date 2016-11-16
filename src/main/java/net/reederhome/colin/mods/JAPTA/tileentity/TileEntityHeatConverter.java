@@ -2,7 +2,9 @@ package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
+import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.block.BlockFurnace;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -26,10 +28,10 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
         synchronized (this) {
             for(EnumFacing facing : EnumFacing.VALUES) {
                 BlockPos dest = getPos().offset(facing);
-                TileEntity te = worldObj.getTileEntity(dest);
+                TileEntity te = world.getTileEntity(dest);
                 if (te instanceof TileEntityFurnace) {
                     TileEntityFurnace furnace = (TileEntityFurnace) te;
-                    EnumConverterMode mode = JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockConverter.MODE);
+                    EnumConverterMode mode = JAPTA.safeGetValue(world.getBlockState(getPos()), BlockConverter.MODE);
                     if (mode == EnumConverterMode.ABSORB) {
                         if (stored > 0) {
                             transmit();
@@ -41,12 +43,14 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
                                 ItemStack stack = furnace.getStackInSlot(1);
                                 int burnTime = TileEntityFurnace.getItemBurnTime(stack);
                                 if (burnTime > 0) {
-                                    stack.stackSize--;
-                                    if (stack.stackSize < 1) {
-                                        furnace.setInventorySlotContents(1, stack.getItem().getContainerItem(stack));
+                                    //stack.stackSize--;
+                                    Item item = stack.getItem();
+                                    stack = ItemStackTools.incStackSize(stack, -1);
+                                    if (ItemStackTools.isValid(stack)) {
+                                        furnace.setInventorySlotContents(1, item.getContainerItem(stack));
                                     }
                                     furnace.setField(0, burnTime);
-                                    BlockFurnace.setState(true, worldObj, dest);
+                                    BlockFurnace.setState(true, world, dest);
                                 }
                             }
                         }
@@ -60,7 +64,7 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
                             if (JAPTA.canSmelt(furnace) && stored >= USE * furnace.getCookTime(furnace.getStackInSlot(0))) {
                                 furnace.setField(0, 2);
                                 stored -= USE;
-                                BlockFurnace.setState(true, worldObj, dest);
+                                BlockFurnace.setState(true, world, dest);
                             }
                         }
                     }
@@ -71,6 +75,6 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
 
     @Override
     public boolean canReceiveEnergy(EnumFacing from) {
-        return JAPTA.safeGetValue(worldObj.getBlockState(getPos()), BlockConverter.MODE) != EnumConverterMode.ABSORB;
+        return JAPTA.safeGetValue(world.getBlockState(getPos()), BlockConverter.MODE) != EnumConverterMode.ABSORB;
     }
 }
