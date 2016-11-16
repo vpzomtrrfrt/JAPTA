@@ -1,5 +1,6 @@
 package net.reederhome.colin.mods.JAPTA.block;
 
+import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +36,7 @@ public class BlockEater extends BlockModelContainer {
         if (world.isRemote) return true;
         TileEntityEater te = ((TileEntityEater) world.getTileEntity(pos));
         ItemStack item = te.getStackInSlot(0);
-        if (item != null) {
+        if (ItemStackTools.isValid(item)) {
             player.addChatComponentMessage(new TextComponentTranslation("text.japta.eater.hasItem", item.getTextComponent(), te.getProgress() * 100 / TileEntityEater.TIME), false);
         } else {
             ItemStack held = player.getHeldItem(hand);

@@ -44,9 +44,9 @@ public class BlockRNGQuarry extends BlockModelContainer {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer p, EnumHand hand, EnumFacing p_onBlockActivated_6_, float p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_) {
         if (world.isRemote) return true;
         TileEntityRNGQuarry te = (TileEntityRNGQuarry) world.getTileEntity(pos);
-        ItemStack held = p.inventory.getCurrentItem();
-        if (ItemStackTools.isValid(held)) {
-            if (te.item != null) {
+        ItemStack held = p.getHeldItem(hand);
+        if (!ItemStackTools.isValid(held)) {
+            if (ItemStackTools.isValid(te.item)) {
                 p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.hasTool", te.item.getTextComponent(), te.stored), false);
             } else {
                 p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.noTool", te.stored), false);
@@ -55,7 +55,7 @@ public class BlockRNGQuarry extends BlockModelContainer {
             ItemStack itm = te.item;
             te.item = p.inventory.removeStackFromSlot(p.inventory.currentItem);
             p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.gotTool", te.item.getTextComponent()), false);
-            if (itm != null) {
+            if (ItemStackTools.isValid(itm)) {
                 p.inventory.setInventorySlotContents(p.inventory.currentItem, itm);
             }
         }
@@ -67,9 +67,9 @@ public class BlockRNGQuarry extends BlockModelContainer {
         super.onBlockClicked(world, pos, player);
         if (player.isSneaking()) {
             TileEntityRNGQuarry te = (TileEntityRNGQuarry) world.getTileEntity(pos);
-            if (te.item != null) {
+            if (ItemStackTools.isValid(te.item)) {
                 if (player.inventory.addItemStackToInventory(te.item)) {
-                    te.item = null;
+                    te.item = ItemStack.field_190927_a;
                 }
             }
         }
@@ -78,9 +78,9 @@ public class BlockRNGQuarry extends BlockModelContainer {
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         TileEntityRNGQuarry te = (TileEntityRNGQuarry) world.getTileEntity(pos);
-        if (te.item != null) {
+        if (ItemStackTools.isValid(te.item)) {
             InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, te.item);
-            te.item = null;
+            te.item = ItemStack.field_190927_a;
         }
         super.breakBlock(world, pos, state);
     }

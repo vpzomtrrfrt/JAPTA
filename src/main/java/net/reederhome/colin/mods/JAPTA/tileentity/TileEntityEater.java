@@ -38,7 +38,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
         if (progress >= TIME) {
             int value = getPowerValue();
             stored += value;
-            if (item != null) {
+            if (ItemStackTools.isValid(item)) {
                 //item.stackSize--;
                 item = ItemStackTools.incStackSize(item, -1);
             }
@@ -61,7 +61,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     }
 
     private int getPowerValue() {
-        if (item != null) {
+        if (ItemStackTools.isValid(item)) {
             Item type = item.getItem();
             if (type instanceof ItemFood) {
                 ItemFood food = ((ItemFood) type);
@@ -90,13 +90,13 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     @Nullable
     @Override
     public ItemStack decrStackSize(int i, int i1) {
-        return null;
+        return ItemStack.field_190927_a;
     }
 
     @Nullable
     @Override
     public ItemStack removeStackFromSlot(int i) {
-        return null;
+        return ItemStack.field_190927_a;
     }
 
     @Override
@@ -126,7 +126,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemStack) {
-        return itemStack != null && itemStack.getItem() instanceof ItemFood;
+        return itemStack.getItem() instanceof ItemFood;
     }
 
     @Override
@@ -146,7 +146,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
 
     @Override
     public void clear() {
-        item = null;
+        item = ItemStack.field_190927_a;
     }
 
     @Override
@@ -167,7 +167,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         tag = super.writeToNBT(tag);
-        if (item != null) {
+        if (ItemStackTools.isValid(item)) {
             NBTTagCompound nbt = new NBTTagCompound();
             item.writeToNBT(nbt);
             tag.setTag("Item", nbt);

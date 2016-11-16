@@ -1,6 +1,7 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import cofh.api.energy.IEnergyReceiver;
+import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
@@ -50,7 +51,7 @@ public class TileEntityDungeonMaker extends TileEntityJPT implements IEnergyRece
 
     private boolean isEmpty(IInventory inv) {
         for (int i = 0; i < inv.getSizeInventory(); i++) {
-            if (inv.getStackInSlot(i) != null) return false;
+            if (ItemStackTools.isValid(inv.getStackInSlot(i))) return false;
         }
         return true;
     }
