@@ -33,7 +33,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
     public static int RANGE = 8;
     public static final int USE = 500;
 
-    public ItemStack item = null;
+    public ItemStack item = ItemStack.field_190927_a;
 
     private long lastMinedTick;
 

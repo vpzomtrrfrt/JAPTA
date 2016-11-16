@@ -23,6 +23,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
@@ -48,6 +49,8 @@ import net.reederhome.colin.mods.JAPTA.block.*;
 import net.reederhome.colin.mods.JAPTA.item.*;
 import net.reederhome.colin.mods.JAPTA.tileentity.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -217,26 +220,26 @@ public class JAPTA {
         GameRegistry.register(capacitor);
         GameRegistry.register(levitator);
 
-        GameRegistry.registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
-        GameRegistry.registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
-        GameRegistry.registerTileEntity(TileEntityChargingPlate.class, "ChargingPlate");
-        GameRegistry.registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
-        GameRegistry.registerTileEntity(TileEntityFluxBlaster.class, "FluxBlaster");
-        GameRegistry.registerTileEntity(TileEntityItemBlaster.class, "ItemBlaster");
-        GameRegistry.registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
-        GameRegistry.registerTileEntity(TileEntityChestCharger.class, "ChestCharger");
-        GameRegistry.registerTileEntity(TileEntityMover.class, "Mover");
-        GameRegistry.registerTileEntity(TileEntityBonemealApplicator.class, "BonemealApplicator");
-        GameRegistry.registerTileEntity(TileEntityPowerCabinetBase.class, "PowerCabinetBase");
-        GameRegistry.registerTileEntity(TileEntityHeatConverter.class, "HeatConverter");
-        GameRegistry.registerTileEntity(TileEntityFurnaceBooster.class, "FurnaceBooster");
-        GameRegistry.registerTileEntity(TileEntityFluidHopper.class, "FluidHopper");
-        GameRegistry.registerTileEntity(TileEntityFluidBlaster.class, "FluidBlaster");
-        GameRegistry.registerTileEntity(TileEntityEater.class, "Eater");
-        GameRegistry.registerTileEntity(TileEntityDungeonMaker.class, "DungeonMaker");
-        GameRegistry.registerTileEntity(TileEntityFisher.class, "Fisher");
-        GameRegistry.registerTileEntity(TileEntitySheepAdapter.class, "SheepAdapter");
-        GameRegistry.registerTileEntity(TileEntityVoidStack.class, "VoidStack");
+        registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
+        registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
+        registerTileEntity(TileEntityChargingPlate.class, "ChargingPlate");
+        registerTileEntity(TileEntityElevatorTop.class, "ElevatorTop");
+        registerTileEntity(TileEntityFluxBlaster.class, "FluxBlaster");
+        registerTileEntity(TileEntityItemBlaster.class, "ItemBlaster");
+        registerTileEntity(TileEntityRNGQuarry.class, "RNGQuarry");
+        registerTileEntity(TileEntityChestCharger.class, "ChestCharger");
+        registerTileEntity(TileEntityMover.class, "Mover");
+        registerTileEntity(TileEntityBonemealApplicator.class, "BonemealApplicator");
+        registerTileEntity(TileEntityPowerCabinetBase.class, "PowerCabinetBase");
+        registerTileEntity(TileEntityHeatConverter.class, "HeatConverter");
+        registerTileEntity(TileEntityFurnaceBooster.class, "FurnaceBooster");
+        registerTileEntity(TileEntityFluidHopper.class, "FluidHopper");
+        registerTileEntity(TileEntityFluidBlaster.class, "FluidBlaster");
+        registerTileEntity(TileEntityEater.class, "Eater");
+        registerTileEntity(TileEntityDungeonMaker.class, "DungeonMaker");
+        registerTileEntity(TileEntityFisher.class, "Fisher");
+        registerTileEntity(TileEntitySheepAdapter.class, "SheepAdapter");
+        registerTileEntity(TileEntityVoidStack.class, "VoidStack");
 
         RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
         RecipeSorter.register("capacitor", RecipeCapacitorUpgrade.class, RecipeSorter.Category.SHAPELESS, "");
@@ -304,11 +307,28 @@ public class JAPTA {
         TileEntityDungeonMaker.USE = config.get("machines.dungeonifier", "cost", TileEntityDungeonMaker.USE).getInt();
         TileEntitySheepAdapter.RANGE = config.get("machines.sheepAdapter", "range", TileEntitySheepAdapter.RANGE).getInt();
         TileEntitySheepAdapter.MAX_SHEEP_AMOUNT = config.get("machines.sheepAdapter", "held", TileEntitySheepAdapter.MAX_SHEEP_AMOUNT).getInt();
+        ItemLevitator.USE = config.get("machines.levitator", "cost", ItemLevitator.USE).getInt();
 
         MinecraftForge.EVENT_BUS.register(this);
 
         if (ev.getSide() == Side.CLIENT) {
             JAPTAClient.preInit();
+        }
+    }
+
+    private static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
+        // this is a terrible idea, but I can't figure out how else to do it
+        // TODO not this
+        try {
+            Method method = TileEntity.class.getDeclaredMethod("func_190560_a", String.class, Class.class);
+            method.setAccessible(true);
+            method.invoke(TileEntity.class, name, clazz);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 

@@ -5,6 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -12,12 +13,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
 import net.reederhome.colin.mods.JAPTA.block.BlockItemBlaster;
+
+import java.util.Arrays;
 
 public class TileEntityItemBlaster extends TileEntity implements IInventory, ITickable {
 
@@ -48,7 +52,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     public ItemStack decrStackSize(int index, int count) {
         ItemStack sis = inv[index];
         if (ItemStackTools.getStackSize(sis) <= count) {
-            inv[index] = null;
+            inv[index] = ItemStack.field_190927_a;
             return sis;
         } else {
             return sis.splitStack(count);
@@ -58,7 +62,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     @Override
     public ItemStack removeStackFromSlot(int index) {
         ItemStack sis = inv[index];
-        inv[index] = null;
+        inv[index] = ItemStack.field_190927_a;
         return sis;
     }
 
@@ -110,6 +114,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     @Override
     public void clear() {
         inv = new ItemStack[getSizeInventory()];
+        Arrays.fill(inv, ItemStack.field_190927_a);
     }
 
     @Override
@@ -133,7 +138,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
         NBTTagList l = new NBTTagList();
         for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack sis = getStackInSlot(i);
-            if (sis != null) {
+            if (ItemStackTools.isValid(sis)) {
                 NBTTagCompound nbt = new NBTTagCompound();
                 sis.writeToNBT(nbt);
                 nbt.setByte("Slot", (byte) i);
@@ -194,11 +199,11 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
                         for (EnumFacing side : EnumFacing.values()) {
                             if (side != facing) {
                                 ItemStack fs = getFirstStack(false);
-                                if (fs != null) {
+                                if (ItemStackTools.isValid(fs)) {
                                     TileEntity cte = world.getTileEntity(getPos().offset(side));
                                     if (cte instanceof IInventory) {
                                         ItemStack ret = TileEntityHopper.putStackInInventoryAllSlots(((IInventory) cte), this, fs.splitStack(1), side.getOpposite());
-                                        if (ret != null) {
+                                        if (ItemStackTools.isValid(ret)) {
 //                                            fs.stackSize++;
                                             ItemStackTools.incStackSize(fs, 1);
                                         } else {
@@ -215,7 +220,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
                         int[] slots = ((ISidedInventory) ci).getSlotsForFace(facing.getOpposite());
                         for (int slot : slots) {
                             ItemStack stack = ci.getStackInSlot(slot);
-                            if (stack != null && ((ISidedInventory) ci).canExtractItem(slot, stack, facing.getOpposite()) && attemptInhale(ci, slot)) {
+                            if (ItemStackTools.isValid(stack) && ((ISidedInventory) ci).canExtractItem(slot, stack, facing.getOpposite()) && attemptInhale(ci, slot)) {
                                 break;
                             }
                         }
@@ -228,9 +233,9 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
                     }
                 } else {
                     ItemStack fs = getFirstStack(false);
-                    if (fs != null) {
-                        ItemStack ret = TileEntityHopper.putStackInInventoryAllSlots(ci, this, fs.splitStack(1), facing);
-                        if (ret != null) {
+                    if (ItemStackTools.isValid(fs)) {
+                        ItemStack ret = TileEntityHopper.putStackInInventoryAllSlots(this, ci, fs.splitStack(1), facing);
+                        if (ItemStackTools.isValid(ret)) {
                             //fs.stackSize++;
                             ItemStackTools.incStackSize(fs, 1);
                         } else {
@@ -249,7 +254,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     private ItemStack getFirstStack(boolean remove) {
         for (int i = 0; i < getSizeInventory(); i++) {
             ItemStack sis = getStackInSlot(i);
-            if (sis != null) {
+            if (ItemStackTools.isValid(sis)) {
                 if (remove) {
                     removeStackFromSlot(i);
                 }

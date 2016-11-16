@@ -1,6 +1,8 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
+import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.block.BlockChest;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
@@ -10,16 +12,20 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.IBlockAccess;
+import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class TileEntityVoidStack extends TileEntity implements IInventory, ITickable {
+public class TileEntityVoidStack extends TileEntity implements IInventory, ITickable, IDiagnosable {
 
     private static final int SIZE = 9;
     private List<ItemStack> items = new ArrayList<ItemStack>();
@@ -57,7 +63,7 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     public ItemStack removeStackFromSlot(int i) {
         markDirty();
         ItemStack stack = pending[i];
-        pending[i] = null;
+        pending[i] = ItemStack.field_190927_a;
         return stack;
     }
 
@@ -110,6 +116,7 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     @Override
     public void clear() {
         items.clear();
+        Arrays.fill(pending, ItemStack.field_190927_a);
     }
 
     @Override
@@ -143,7 +150,7 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
         }
         for(int i = 0; i < SIZE; i++) {
             ItemStack stack = pending[i];
-            if(stack != null) {
+            if(ItemStackTools.isValid(stack)) {
                 itemList.appendTag(stack.writeToNBT(new NBTTagCompound()));
             }
         }
@@ -170,9 +177,9 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     public void update() {
         for(int i = 0; i < SIZE; i++) {
             ItemStack stack = pending[i];
-            if(stack != null) {
+            if(ItemStackTools.isValid(stack)) {
                 items.add(stack);
-                pending[i] = null;
+                pending[i] = ItemStack.field_190927_a;
             }
         }
         if(items.size() > 0) {
@@ -187,5 +194,15 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
             ItemStack stack = items.remove(0);
             InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
         }
+    }
+
+    public TileEntityVoidStack() {
+        clear();
+    }
+
+    @Override
+    public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
+        sender.addChatMessage(new TextComponentTranslation("tile.voidStack.diagnostic", items.size()));
+        return true;
     }
 }

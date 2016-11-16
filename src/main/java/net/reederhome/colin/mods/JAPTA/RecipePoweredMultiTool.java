@@ -1,5 +1,6 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipe;
@@ -10,7 +11,7 @@ import net.minecraft.world.World;
 public class RecipePoweredMultiTool implements IRecipe {
     @Override
     public boolean matches(InventoryCrafting inventoryCrafting, World world) {
-        return getCraftingResult(inventoryCrafting) != null;
+        return ItemStackTools.isValid(getCraftingResult(inventoryCrafting));
     }
 
     @Override
@@ -35,7 +36,7 @@ public class RecipePoweredMultiTool implements IRecipe {
                 shovel = ((ItemSpade) stack.getItem()).getToolMaterial();
             } else if (stack.getItem() instanceof ItemHoe) {
                 hoe = ((ItemHoe) stack.getItem()).getMaterialName();
-            } else {
+            } else if(ItemStackTools.isValid(stack)) {
                 return ItemStack.field_190927_a;
             }
         }
