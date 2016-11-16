@@ -23,9 +23,6 @@ public class RecipePoweredMultiTool implements IRecipe {
         String hoe = null;
         for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
-            if (stack == null) {
-                continue;
-            }
             if (stack.getItem() == JAPTA.coilReception) {
                 numCoils++;
             } else if (stack.getItem() instanceof ItemPickaxe) {
@@ -39,7 +36,7 @@ public class RecipePoweredMultiTool implements IRecipe {
             } else if (stack.getItem() instanceof ItemHoe) {
                 hoe = ((ItemHoe) stack.getItem()).getMaterialName();
             } else {
-                return null;
+                return ItemStack.field_190927_a;
             }
         }
         if (numCoils == 1 && pickaxe != null && sword != null && axe != null && shovel != null && hoe != null) {
@@ -56,7 +53,7 @@ public class RecipePoweredMultiTool implements IRecipe {
             tr.setItemDamage(tr.getMaxDamage());
             return tr;
         }
-        return null;
+        return ItemStack.field_190927_a;
     }
 
     @Override

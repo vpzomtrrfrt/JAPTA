@@ -19,7 +19,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.matthewprenger.cursegradle'
 
 dependencies {
-    deobfCompile "com.github.vpzomtrrfrt:Guide-API:a3a50a"
+    deobfCompile "com.github.vpzomtrrfrt:Guide-API:a3a50"
     compile "com.github.p455w0rd:Tesla:4c804b"
 }
 

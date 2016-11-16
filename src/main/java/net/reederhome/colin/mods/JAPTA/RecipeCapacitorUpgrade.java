@@ -28,31 +28,29 @@ public class RecipeCapacitorUpgrade implements IRecipe {
         int addedPower = 0;
         for(int i = 0; i < inventoryCrafting.getSizeInventory(); i++) {
             ItemStack stack = inventoryCrafting.getStackInSlot(i);
-            if(stack != null) {
-                Item item = stack.getItem();
-                if(item == JAPTA.capacitor) {
-                    if(capacitor == null) {
-                        capacitor = stack;
-                    }
-                    else {
-                        return null;
-                    }
-                }
-                else if(item instanceof ItemBlock && ((ItemBlock) item).getBlock() instanceof BlockPowerCabinet) {
-                    BlockPowerCabinet block = ((BlockPowerCabinet) ((ItemBlock) item).getBlock());
-                    addedCapacity += block.getMetaValue()*15;
-                    addedPower += block.getMetaValue()*item.getDamage(stack);
+            Item item = stack.getItem();
+            if(item == JAPTA.capacitor) {
+                if(capacitor == null) {
+                    capacitor = stack;
                 }
                 else {
-                    return null;
+                    return ItemStack.field_190927_a;
                 }
+            }
+            else if(item instanceof ItemBlock && ((ItemBlock) item).getBlock() instanceof BlockPowerCabinet) {
+                BlockPowerCabinet block = ((BlockPowerCabinet) ((ItemBlock) item).getBlock());
+                addedCapacity += block.getMetaValue()*15;
+                addedPower += block.getMetaValue()*item.getDamage(stack);
+            }
+            else {
+                return ItemStack.field_190927_a;
             }
         }
         if(capacitor == null || addedCapacity == 0) {
-            return null;
+            return ItemStack.field_190927_a;
         }
         else {
-            ItemStack tr = new ItemStack(JAPTA.capacitor);
+            ItemStack tr = getRecipeOutput();
             NBTTagCompound tag = new NBTTagCompound();
             tag.setInteger(ItemCapacitor.BONUS_CAPACITY_TAG, addedCapacity+JAPTA.capacitor.getBonusCapacity(capacitor));
             tr.setTagCompound(tag);
@@ -66,10 +64,9 @@ public class RecipeCapacitorUpgrade implements IRecipe {
         return 2;
     }
 
-    @Nullable
     @Override
     public ItemStack getRecipeOutput() {
-        return null;
+        return new ItemStack(JAPTA.capacitor);
     }
 
     @Override
