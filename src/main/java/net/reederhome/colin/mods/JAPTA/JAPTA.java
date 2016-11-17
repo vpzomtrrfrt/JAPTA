@@ -317,19 +317,7 @@ public class JAPTA {
     }
 
     private static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
-        // this is a terrible idea, but I can't figure out how else to do it
-        // TODO not this
-        try {
-            Method method = TileEntity.class.getDeclaredMethod("func_190560_a", String.class, Class.class);
-            method.setAccessible(true);
-            method.invoke(TileEntity.class, name, clazz);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        GameRegistry.registerTileEntity(clazz, name);
     }
 
     private void registerBlock(Block block) {

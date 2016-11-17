@@ -15,6 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityFluidHopper;
 
@@ -66,9 +68,9 @@ public class BlockFluidHopper extends BlockModelContainer {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState p_onBlockActivated_3_, EntityPlayer player, EnumHand p_onBlockActivated_5_, EnumFacing p_onBlockActivated_6_, float p_onBlockActivated_7_, float p_onBlockActivated_8_, float p_onBlockActivated_9_) {
         if (world.isRemote) return true;
         TileEntityFluidHopper te = (TileEntityFluidHopper) world.getTileEntity(pos);
-        FluidTankInfo info = te.getTankInfo(null)[0];
-        if (info.fluid != null) {
-            player.addChatComponentMessage(new TextComponentTranslation("text.japta.fluidHopper.status", info.fluid.getFluid().getLocalizedName(info.fluid), info.fluid.amount), false);
+        IFluidTankProperties info = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN).getTankProperties()[0];
+        if (info.getContents() != null) {
+            player.addChatComponentMessage(new TextComponentTranslation("text.japta.fluidHopper.status", info.getContents().getFluid().getLocalizedName(info.getContents()), info.getContents().amount), false);
         } else {
             player.addChatComponentMessage(new TextComponentTranslation("text.japta.fluidHopper.empty"), false);
         }
