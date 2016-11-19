@@ -109,11 +109,11 @@ public class TileEntityFluidHopper extends TileEntity implements ITickable {
 
     @Override
     public void update() {
-        IBlockState state = world.getBlockState(getPos());
+        IBlockState state = getWorld().getBlockState(getPos());
         if (content != null) {
             EnumFacing facing = JAPTA.safeGetValue(state, BlockFluidHopper.FACING);
             BlockPos dest = getPos().offset(facing);
-            TileEntity te = world.getTileEntity(dest);
+            TileEntity te = getWorld().getTileEntity(dest);
             if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite())) {
                 IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite());
                 content.amount -= handler.fill(content, true);
@@ -125,7 +125,7 @@ public class TileEntityFluidHopper extends TileEntity implements ITickable {
         int remaining = MAX_HELD - (content == null ? 0 : content.amount);
         if (remaining > 0) {
             BlockPos src = getPos().up();
-            TileEntity te = world.getTileEntity(src);
+            TileEntity te = getWorld().getTileEntity(src);
             if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
                 IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
                 try {

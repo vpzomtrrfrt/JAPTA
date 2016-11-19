@@ -27,7 +27,7 @@ public class TileEntityDungeonMaker extends TileEntityJPT implements IEnergyRece
 
     @Override
     public void update() {
-        if (world.isRemote) return;
+        if (getWorld().isRemote) return;
         if (stored >= USE) {
             TileEntityChest chest = findEmptyChest();
             if (chest != null) {
@@ -40,7 +40,7 @@ public class TileEntityDungeonMaker extends TileEntityJPT implements IEnergyRece
     private TileEntityChest findEmptyChest() {
         for (EnumFacing side : EnumFacing.values()) {
             BlockPos tr = getPos().offset(side);
-            TileEntity te = world.getTileEntity(tr);
+            TileEntity te = getWorld().getTileEntity(tr);
             if (te instanceof TileEntityChest) {
                 TileEntityChest chest = ((TileEntityChest) te);
                 if (isEmpty(chest)) return chest;

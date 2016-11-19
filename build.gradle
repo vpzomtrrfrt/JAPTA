@@ -29,15 +29,15 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
-version = "1.11.2"
+version = "1.11.4"
 group = "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "JAPTA-1.11"
 
 minecraft {
-    version = "1.11-13.19.0.2138"
+    version = "1.11-13.19.0.2153"
     runDir = "run"
 
-    mappings = "snapshot_20161116"
+    mappings = "snapshot_20161111"
 }
 
 dependencies {

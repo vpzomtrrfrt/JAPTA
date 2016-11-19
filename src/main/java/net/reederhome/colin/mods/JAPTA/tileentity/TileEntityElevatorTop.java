@@ -40,7 +40,7 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
             int d = 1;
             while (true) {
                 BlockPos cp = me.down(d);
-                Block b = world.getBlockState(cp).getBlock();
+                Block b = getWorld().getBlockState(cp).getBlock();
                 if (b == Blocks.AIR) {
                     break;
                 } else if (b != JAPTA.elevatorShaft) {
@@ -49,23 +49,23 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
                 d++;
             }
             int cost = getEnergyCost(d);
-            List<EntityLivingBase> l = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() + 1, me.getZ(), me.getX() + 1, me.getY() + 1.5, me.getZ() + 1));
+            List<EntityLivingBase> l = getWorld().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() + 1, me.getZ(), me.getX() + 1, me.getY() + 1.5, me.getZ() + 1));
             for (EntityLivingBase b : l) {
-                if (stored >= cost && b.isSneaking() && b.getEntityData().getLong("LastTeleported") != world.getTotalWorldTime()) {
+                if (stored >= cost && b.isSneaking() && b.getEntityData().getLong("LastTeleported") != getWorld().getTotalWorldTime()) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() - d - 1, me.getZ() + 0.5);
-                    world.playSound(null, b.posX, b.posY, b.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.PLAYERS, 1, 1);
+                    getWorld().playSound(null, b.posX, b.posY, b.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.PLAYERS, 1, 1);
                     stored -= cost;
-                    b.getEntityData().setLong("LastTeleported", world.getTotalWorldTime());
+                    b.getEntityData().setLong("LastTeleported", getWorld().getTotalWorldTime());
                 }
             }
-            List<EntityLivingBase> l2 = world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() - d + 0.75
+            List<EntityLivingBase> l2 = getWorld().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(me.getX(), me.getY() - d + 0.75
                     , me.getZ(), me.getX() + 1, me.getY() - d + 1, me.getZ() + 1));
             for (EntityLivingBase b : l2) {
-                if (stored >= cost && b.motionY > 0 && b.getEntityData().getLong("LastTeleported") != world.getTotalWorldTime()) {
+                if (stored >= cost && b.motionY > 0 && b.getEntityData().getLong("LastTeleported") != getWorld().getTotalWorldTime()) {
                     b.setPositionAndUpdate(me.getX() + 0.5, me.getY() + 1, me.getZ() + 0.5);
-                    world.playSound(null, b.posX, b.posY, b.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.PLAYERS, 1, 1);
+                    getWorld().playSound(null, b.posX, b.posY, b.posZ, SoundEvents.ENTITY_CHICKEN_EGG, SoundCategory.PLAYERS, 1, 1);
                     stored -= cost;
-                    b.getEntityData().setLong("LastTeleported", world.getTotalWorldTime());
+                    b.getEntityData().setLong("LastTeleported", getWorld().getTotalWorldTime());
                 }
             }
         }
@@ -76,7 +76,7 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
         int i = 1;
         boolean air;
         while (true) {
-            IBlockState state = world.getBlockState(pos.down(i));
+            IBlockState state = getWorld().getBlockState(pos.down(i));
             if (state.getBlock() == JAPTA.elevatorShaft) {
                 i++;
             } else {

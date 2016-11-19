@@ -77,7 +77,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
+    public boolean isUseableByPlayer(EntityPlayer player) {
         return true;
     }
 
@@ -119,7 +119,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
 
     @Override
     public String getName() {
-        return world.getBlockState(getPos()).getBlock().getUnlocalizedName() + ".name";
+        return getWorld().getBlockState(getPos()).getBlock().getUnlocalizedName() + ".name";
     }
 
     @Override
@@ -174,7 +174,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
 
     @Override
     public void update() {
-        IBlockState state = world.getBlockState(getPos());
+        IBlockState state = getWorld().getBlockState(getPos());
         EnumFacing facing = JAPTA.safeGetValue(state, BlockBlaster.FACING);
         boolean placedItem = false;
         if (!((BlockItemBlaster) state.getBlock()).isSplitting()) {
@@ -188,10 +188,10 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
         while (!once || pos != initialPos) {
             once = true;
             BlockPos cp = getPos().offset(facing, pos);
-            while (world.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
+            while (getWorld().getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
                 cp = cp.up();
             }
-            TileEntity te = world.getTileEntity(cp);
+            TileEntity te = getWorld().getTileEntity(cp);
             if (te instanceof IInventory) {
                 IInventory ci = (IInventory) te;
                 if (((BlockBlaster) state.getBlock()).isInhaler()) {
@@ -200,7 +200,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
                             if (side != facing) {
                                 ItemStack fs = getFirstStack(false);
                                 if (ItemStackTools.isValid(fs)) {
-                                    TileEntity cte = world.getTileEntity(getPos().offset(side));
+                                    TileEntity cte = getWorld().getTileEntity(getPos().offset(side));
                                     if (cte instanceof IInventory) {
                                         ItemStack ret = TileEntityHopper.putStackInInventoryAllSlots(((IInventory) cte), this, fs.splitStack(1), side.getOpposite());
                                         if (ItemStackTools.isValid(ret)) {

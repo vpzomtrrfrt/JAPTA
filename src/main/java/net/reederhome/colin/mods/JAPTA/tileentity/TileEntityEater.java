@@ -34,7 +34,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
 
     @Override
     public void update() {
-        if (world.isRemote) return;
+        if (getWorld().isRemote) return;
         if (progress >= TIME) {
             int value = getPowerValue();
             stored += value;
@@ -52,8 +52,8 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
         } else if (progress > 0) {
             progress++;
             BlockPos pos = getPos();
-            if (world.getTotalWorldTime() % 2 == 0)
-                world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS, 0.5f + 0.5f * new Random().nextInt(2), (float) ((Math.random() - Math.random()) * 0.2 + 1));
+            if (getWorld().getTotalWorldTime() % 2 == 0)
+                getWorld().playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS, 0.5f + 0.5f * new Random().nextInt(2), (float) ((Math.random() - Math.random()) * 0.2 + 1));
         }
         if (stored > 0) {
             transmit();
@@ -110,7 +110,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer entityPlayer) {
+    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
         return false;
     }
 

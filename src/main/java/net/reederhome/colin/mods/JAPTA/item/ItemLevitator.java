@@ -36,8 +36,8 @@ public class ItemLevitator extends ItemJPT implements ITickableItem {
             int i;
             for(i = 0; i < height; i++) {
                 BlockPos cp = pos.down(i);
-                IBlockState state = player.world.getBlockState(cp);
-                if(!state.getBlock().isAir(state, player.world, cp)) {
+                IBlockState state = player.getEntityWorld().getBlockState(cp);
+                if(!state.getBlock().isAir(state, player.getEntityWorld(), cp)) {
                     break;
                 }
             }

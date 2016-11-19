@@ -32,9 +32,9 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
 
     @Override
     public void update() {
-        if (stored >= USE && !world.isRemote && world.isBlockIndirectlyGettingPowered(getPos()) == 0) {
+        if (stored >= USE && !getWorld().isRemote && getWorld().isBlockIndirectlyGettingPowered(getPos()) == 0) {
             for (EnumFacing side : EnumFacing.VALUES) {
-                TileEntity te = world.getTileEntity(getPos().offset(side));
+                TileEntity te = getWorld().getTileEntity(getPos().offset(side));
                 if (te instanceof IInventory) {
                     IInventory inv = (IInventory) te;
                     for (int i = 0; i < inv.getSizeInventory(); i++) {
@@ -43,11 +43,11 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
                             for (int t = 0; t < 3; t++) { // try thrice for a valid spot
                                 BlockPos cp = getPos().add(new Random().nextInt(RANGE * 2) - RANGE, RANGE, new Random().nextInt(RANGE * 2) - RANGE);
                                 while (cp.getY() >= 0) {
-                                    IBlockState state = world.getBlockState(cp);
+                                    IBlockState state = getWorld().getBlockState(cp);
                                     if (state.getBlock() instanceof IGrowable) {
                                         IGrowable bl = (IGrowable) state.getBlock();
-                                        if (bl != Blocks.GRASS && bl.canGrow(world, cp, state, false) && bl.canUseBonemeal(world, new Random(), cp, state)) {
-                                            bl.grow(world, new Random(), cp, state);
+                                        if (bl != Blocks.GRASS && bl.canGrow(getWorld(), cp, state, false) && bl.canUseBonemeal(getWorld(), new Random(), cp, state)) {
+                                            bl.grow(getWorld(), new Random(), cp, state);
                                             //stack.stackSize--;
                                             ItemStackTools.incStackSize(stack, -1);
                                             stored -= USE;
@@ -69,7 +69,7 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
         boolean bonemeal = false;
         dancing:
         for (EnumFacing side : EnumFacing.VALUES) {
-            TileEntity te = world.getTileEntity(getPos().offset(side));
+            TileEntity te = getWorld().getTileEntity(getPos().offset(side));
             if (te instanceof IInventory) {
                 IInventory inv = (IInventory) te;
                 for (int i = 0; i < inv.getSizeInventory(); i++) {
@@ -82,8 +82,8 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
             }
         }
         int redstone = 0;
-        if(world instanceof World) {
-            redstone = ((World) world).isBlockIndirectlyGettingPowered(pos);
+        if(getWorld() instanceof World) {
+            redstone = ((World) getWorld()).isBlockIndirectlyGettingPowered(pos);
         }
         if (!bonemeal) {
             sender.addChatMessage(new TextComponentTranslation("tile.bonemealApplicator.diagnostic.noBonemeal"));

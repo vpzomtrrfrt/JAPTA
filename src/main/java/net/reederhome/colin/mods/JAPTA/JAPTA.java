@@ -347,7 +347,7 @@ public class JAPTA {
     public void onTick(TickEvent ev) {
         if (!notified && UpdateCheckThread.ret != null) {
             if (UpdateCheckThread.ret.equals("update")) {
-                EntityPlayer p = Minecraft.getMinecraft().player;
+                EntityPlayer p = Minecraft.getMinecraft().thePlayer;
                 if (p != null) {
                     p.addChatComponentMessage(new TextComponentTranslation("text.japta.newversion"), false);
                     notified = true;

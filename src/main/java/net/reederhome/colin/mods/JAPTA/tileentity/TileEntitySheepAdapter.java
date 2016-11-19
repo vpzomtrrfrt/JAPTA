@@ -26,7 +26,7 @@ public class TileEntitySheepAdapter extends TileEntityJPT implements ITickable, 
 
     @Override
     public void update() {
-        stored += equalize(world, stored, null, getPos());
+        stored += equalize(getWorld(), stored, null, getPos());
         transmit();
     }
 

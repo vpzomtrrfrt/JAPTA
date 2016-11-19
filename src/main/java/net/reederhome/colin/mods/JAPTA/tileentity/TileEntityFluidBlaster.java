@@ -87,14 +87,14 @@ public class TileEntityFluidBlaster extends TileEntity implements ITickable {
 
     @Override
     public void update() {
-        IBlockState state = world.getBlockState(getPos());
+        IBlockState state = getWorld().getBlockState(getPos());
         EnumFacing facing = JAPTA.safeGetValue(state, BlockBlaster.FACING);
         for (int i = 1; i <= BlockBlaster.RANGE; i++) {
             BlockPos cp = getPos().offset(facing, i);
-            while (world.getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
+            while (getWorld().getBlockState(cp).getBlock() == JAPTA.elevatorShaft) {
                 cp = cp.up();
             }
-            TileEntity te = world.getTileEntity(cp);
+            TileEntity te = getWorld().getTileEntity(cp);
             if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite())) {
                 IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing.getOpposite());
                 if (((BlockBlaster) state.getBlock()).isInhaler()) {

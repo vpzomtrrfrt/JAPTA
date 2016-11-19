@@ -79,7 +79,7 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer entityPlayer) {
+    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
         return true;
     }
 
@@ -188,11 +188,11 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     }
 
     public void dropItems() {
-        InventoryHelper.dropInventoryItems(world, getPos(), this);
+        InventoryHelper.dropInventoryItems(getWorld(), getPos(), this);
         pending = new ItemStack[SIZE];
         while(items.size() > 0) {
             ItemStack stack = items.remove(0);
-            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+            InventoryHelper.spawnItemStack(getWorld(), pos.getX(), pos.getY(), pos.getZ(), stack);
         }
     }
 

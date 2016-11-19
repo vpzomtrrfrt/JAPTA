@@ -28,22 +28,22 @@ public class TileEntityFisher extends TileEntityJPT implements IEnergyReceiver, 
 
     @Override
     public void update() {
-        if (world.isRemote) return;
+        if (getWorld().isRemote) return;
         if (stored >= USE) {
-            LootTable table = world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING);
-            LootContext.Builder builder = new LootContext.Builder(((WorldServer) world));
+            LootTable table = getWorld().getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING);
+            LootContext.Builder builder = new LootContext.Builder(((WorldServer) getWorld()));
             List<ItemStack> items = table.generateLootForPools(new Random(), builder.build());
             if (!items.isEmpty()) {
                 stored -= USE;
                 ItemStack stack = items.get(0);
                 for (EnumFacing side : EnumFacing.values()) {
-                    TileEntity te = world.getTileEntity(getPos().offset(side));
+                    TileEntity te = getWorld().getTileEntity(getPos().offset(side));
                     if (te instanceof IInventory) {
                         stack = TileEntityHopper.putStackInInventoryAllSlots(null, ((IInventory) te), stack, side.getOpposite());
                     }
                 }
                 if (ItemStackTools.isValid(stack)) {
-                    InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
+                    InventoryHelper.spawnItemStack(getWorld(), pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
                 }
             } else {
                 System.out.println("No item??");

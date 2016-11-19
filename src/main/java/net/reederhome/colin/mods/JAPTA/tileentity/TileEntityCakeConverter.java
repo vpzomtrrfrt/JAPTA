@@ -24,8 +24,8 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
 
     @Override
     public void update() {
-        if (world.isRemote) return;
-        IBlockState me = world.getBlockState(getPos());
+        if (getWorld().isRemote) return;
+        IBlockState me = getWorld().getBlockState(getPos());
         try {
             EnumConverterMode mode = JAPTA.safeGetValue(me, BlockConverter.MODE);
             dancing:
@@ -35,15 +35,15 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
                         for (int z = -RANGE; z < RANGE; z++) {
                             if (stored + BITE_VALUE < getMaxEnergyStored(null)) {
                                 BlockPos cp = getPos().add(x, y, z);
-                                IBlockState state = world.getBlockState(cp);
+                                IBlockState state = getWorld().getBlockState(cp);
                                 if (state.getBlock() == Blocks.CAKE) {
                                     int bites = state.getValue(BlockCake.BITES);
                                     bites++;
                                     stored += BITE_VALUE;
                                     if (bites >= 6) {
-                                        world.setBlockToAir(cp);
+                                        getWorld().setBlockToAir(cp);
                                     } else {
-                                        world.setBlockState(cp, state.withProperty(BlockCake.BITES, bites));
+                                        getWorld().setBlockState(cp, state.withProperty(BlockCake.BITES, bites));
                                     }
                                     break dancing;
                                 }
@@ -60,17 +60,17 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
                         for (int y = -1; y < 1; y++) {
                             for (int z = -RANGE; z < RANGE; z++) {
                                 BlockPos cp = getPos().add(x, y, z);
-                                IBlockState state = world.getBlockState(cp);
+                                IBlockState state = getWorld().getBlockState(cp);
                                 if (state.getBlock() == Blocks.CAKE) {
                                     int bites = state.getValue(BlockCake.BITES);
                                     if (bites > 0) {
                                         stored -= BITE_VALUE;
-                                        world.setBlockState(cp, state.withProperty(BlockCake.BITES, bites - 1));
+                                        getWorld().setBlockState(cp, state.withProperty(BlockCake.BITES, bites - 1));
                                         break dancing;
                                     }
-                                } else if (state.getBlock().isReplaceable(world, cp)) {
+                                } else if (state.getBlock().isReplaceable(getWorld(), cp)) {
                                     stored -= BITE_VALUE;
-                                    world.setBlockState(cp, Blocks.CAKE.getDefaultState().withProperty(BlockCake.BITES, 5));
+                                    getWorld().setBlockState(cp, Blocks.CAKE.getDefaultState().withProperty(BlockCake.BITES, 5));
                                     break dancing;
                                 }
                             }
@@ -85,7 +85,7 @@ public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyPro
 
     @Override
     public boolean canReceiveEnergy(EnumFacing from) {
-        return JAPTA.safeGetValue(world.getBlockState(getPos()), BlockConverter.MODE) != EnumConverterMode.ABSORB;
+        return JAPTA.safeGetValue(getWorld().getBlockState(getPos()), BlockConverter.MODE) != EnumConverterMode.ABSORB;
     }
 
     @Override

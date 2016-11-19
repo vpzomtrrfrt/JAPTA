@@ -28,10 +28,10 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
         synchronized (this) {
             for(EnumFacing facing : EnumFacing.VALUES) {
                 BlockPos dest = getPos().offset(facing);
-                TileEntity te = world.getTileEntity(dest);
+                TileEntity te = getWorld().getTileEntity(dest);
                 if (te instanceof TileEntityFurnace) {
                     TileEntityFurnace furnace = (TileEntityFurnace) te;
-                    EnumConverterMode mode = JAPTA.safeGetValue(world.getBlockState(getPos()), BlockConverter.MODE);
+                    EnumConverterMode mode = JAPTA.safeGetValue(getWorld().getBlockState(getPos()), BlockConverter.MODE);
                     if (mode == EnumConverterMode.ABSORB) {
                         if (stored > 0) {
                             transmit();
@@ -50,7 +50,7 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
                                         furnace.setInventorySlotContents(1, item.getContainerItem(stack));
                                     }
                                     furnace.setField(0, burnTime);
-                                    BlockFurnace.setState(true, world, dest);
+                                    BlockFurnace.setState(true, getWorld(), dest);
                                 }
                             }
                         }
@@ -64,7 +64,7 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
                             if (JAPTA.canSmelt(furnace) && stored >= USE * furnace.getCookTime(furnace.getStackInSlot(0))) {
                                 furnace.setField(0, 2);
                                 stored -= USE;
-                                BlockFurnace.setState(true, world, dest);
+                                BlockFurnace.setState(true, getWorld(), dest);
                             }
                         }
                     }
@@ -75,6 +75,6 @@ public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyRec
 
     @Override
     public boolean canReceiveEnergy(EnumFacing from) {
-        return JAPTA.safeGetValue(world.getBlockState(getPos()), BlockConverter.MODE) != EnumConverterMode.ABSORB;
+        return JAPTA.safeGetValue(getWorld().getBlockState(getPos()), BlockConverter.MODE) != EnumConverterMode.ABSORB;
     }
 }

@@ -83,7 +83,7 @@ public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabi
         if (!canTransmitEnergy(side)) {
             return;
         }
-        TileEntity te = world.getTileEntity(getPos().offset(side));
+        TileEntity te = getWorld().getTileEntity(getPos().offset(side));
         if (te instanceof IEnergyReceiver) {
             stored -= ((IEnergyReceiver) te).receiveEnergy(side.getOpposite(), stored, false);
         } else if (te != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, side)) {
