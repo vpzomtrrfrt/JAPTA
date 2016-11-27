@@ -1,5 +1,6 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -17,10 +18,9 @@ public class RecipeCapacitorUpgrade implements IRecipe {
 
     @Override
     public boolean matches(InventoryCrafting inventoryCrafting, World world) {
-        return getCraftingResult(inventoryCrafting) != null;
+        return ItemStackTools.isValid(getCraftingResult(inventoryCrafting));
     }
 
-    @Nullable
     @Override
     public ItemStack getCraftingResult(InventoryCrafting inventoryCrafting) {
         ItemStack capacitor = null;
