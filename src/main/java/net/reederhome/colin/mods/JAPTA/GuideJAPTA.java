@@ -1,5 +1,8 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import amerifrance.guideapi.api.GuideAPI;
+import amerifrance.guideapi.api.GuideBook;
+import amerifrance.guideapi.api.IGuideBook;
 import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.Book;
 import amerifrance.guideapi.api.impl.abstraction.CategoryAbstract;
@@ -15,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
 import net.reederhome.colin.mods.JAPTA.item.ItemLevitator;
@@ -24,11 +28,12 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class GuideJAPTA {
+@GuideBook
+public class GuideJAPTA implements IGuideBook {
     private static GuideJAPTA instance;
     private Book book;
 
-    private GuideJAPTA() {
+    public Book buildBook() {
         book = new Book();
         List<CategoryAbstract> categories = new ArrayList<CategoryAbstract>();
         Map<ResourceLocation, EntryAbstract> blockMap = new HashMap<ResourceLocation, EntryAbstract>();
@@ -170,11 +175,23 @@ public class GuideJAPTA {
         book.setCategoryList(categories);
         book.setAuthor("VpzomTrrfrt");
         book.setTitle("The JAPTA Book");
-        book.setRegistryName(JAPTA.MODID + ":guideJAPTA");
+        book.setRegistryName(new ResourceLocation(JAPTA.MODID, "guideJAPTA"));
         book.setCustomModel(true);
         book.setDisplayName("guide.title");
         book.setWelcomeMessage("guide.title");
         book.setColor(Color.white);
+        return book;
+    }
+
+    @Override
+    public void handleModel(ItemStack bookStack) {
+        GuideAPI.setModel(book, new ResourceLocation(JAPTA.MODID + ":guideBook"), "inventory");
+    }
+
+    @Override
+    public void handlePost(ItemStack bookStack) {
+        JAPTA.addRecipe(new ShapelessOreRecipe(bookStack, "paper", "ingotIron", "dustRedstone", "dustRedstone"));
+        JAPTA.saveConfig();
     }
 
     private IPage maybeRecipe(Item item) {

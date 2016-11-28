@@ -70,10 +70,7 @@ public class JAPTAClient {
     }
 
     public static void preInit() {
-        if (Loader.isModLoaded("guideapi")) {
-            System.out.println("Setting guideBook model");
-            GuideAPI.setModel(GuideJAPTA.get().getBook(), new ResourceLocation(JAPTA.MODID + ":guideBook"), "inventory");
-        }
+
     }
 
     public static void registerItem(Item item, int meta, ModelResourceLocation loc) {

@@ -56,7 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Mod(name = "JAPTA", modid = JAPTA.MODID, dependencies = "after:guideapi")
+@Mod(name = "JAPTA", modid = JAPTA.MODID, dependencies = "before:guideapi")
 public class JAPTA {
     public static final String MODID = "japta";
 
@@ -118,6 +118,9 @@ public class JAPTA {
 
     private Configuration config;
     private static Map<Item, IRecipe> recipeMap = new HashMap<Item, IRecipe>();
+
+    @Mod.Instance
+    private static JAPTA instance;
 
     public static boolean canSmelt(TileEntityFurnace te) {
         // took this from decompiled forge
@@ -285,13 +288,6 @@ public class JAPTA {
 
         GameRegistry.addSmelting(powerCabinet, new ItemStack(powerCabinet2), 0);
 
-        if (Loader.isModLoaded("guideapi")) {
-            System.out.println("Guide-API detected, adding book");
-            Book book = GuideJAPTA.get().getBook();
-            GameRegistry.register(book);
-            addRecipe(new ShapelessOreRecipe(GuideAPI.getStackFromBook(book), "paper", "ingotIron", "dustRedstone", "dustRedstone"));
-        }
-
         BlockBlaster.RANGE = config.get("machines.blaster", "range", BlockBlaster.RANGE).getInt();
         TileEntityRNGQuarry.RANGE = config.get("machines.rngQuarry", "range", TileEntityRNGQuarry.RANGE).getInt();
         TileEntityBonemealApplicator.RANGE = config.get("machines.bonemealApplicator", "range", TileEntityBonemealApplicator.RANGE).getInt();
@@ -337,7 +333,11 @@ public class JAPTA {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent ev) {
-        config.save();
+        saveConfig();
+    }
+
+    public static void saveConfig() {
+        instance.config.save();
     }
 
     private boolean notified = false;
@@ -399,21 +399,21 @@ public class JAPTA {
         }
     }
 
-    public void addRecipe(IRecipe recipe) {
+    public static void addRecipe(IRecipe recipe) {
         addRecipe(recipe, recipe.getRecipeOutput());
     }
 
-    public void addRecipe(IRecipe recipe, ItemStack stack) {
+    public static void addRecipe(IRecipe recipe, ItemStack stack) {
         addRecipe(recipe, stack.getItem(), stack.getDisplayName());
     }
 
-    public void addRecipe(IRecipe recipe, Item item, String name) {
+    public static void addRecipe(IRecipe recipe, Item item, String name) {
         addRecipe(recipe, item, name, true);
     }
 
-    public void addRecipe(IRecipe recipe, Item item, String name, boolean defaultEnabled) {
+    public static void addRecipe(IRecipe recipe, Item item, String name, boolean defaultEnabled) {
         recipeMap.put(item, recipe);
-        if (config.get("recipes", name, defaultEnabled, "").getBoolean()) {
+        if (instance.config.get("recipes", name, defaultEnabled, "").getBoolean()) {
             GameRegistry.addRecipe(recipe);
         }
     }
