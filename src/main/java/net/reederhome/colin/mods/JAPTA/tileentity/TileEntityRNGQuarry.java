@@ -62,7 +62,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
                 if (item != null) {
                     if (!isBroken(item)) {
                         canUseItem = true;
-                        thl = Math.max(thl, item.getItem().getHarvestLevel(item, state.getBlock().getHarvestTool(state)));
+                        thl = Math.max(thl, item.getItem().getHarvestLevel(item, state.getBlock().getHarvestTool(state), player, state));
                     }
                 }
                 int bhl = state.getBlock().getHarvestLevel(state);
