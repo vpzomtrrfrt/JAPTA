@@ -244,6 +244,8 @@ public class JAPTA {
         registerTileEntity(TileEntitySheepAdapter.class, "SheepAdapter");
         registerTileEntity(TileEntityVoidStack.class, "VoidStack");
 
+        // commented out crafting for now
+        /*
         RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
         RecipeSorter.register("capacitor", RecipeCapacitorUpgrade.class, RecipeSorter.Category.SHAPELESS, "");
 
@@ -285,6 +287,7 @@ public class JAPTA {
         addRecipe(new RecipePoweredMultiTool());
 
         GameRegistry.addRecipe(new RecipeCapacitorUpgrade());
+        */
 
         GameRegistry.addSmelting(powerCabinet, new ItemStack(powerCabinet2), 0);
 
@@ -347,9 +350,9 @@ public class JAPTA {
     public void onTick(TickEvent ev) {
         if (!notified && UpdateCheckThread.ret != null) {
             if (UpdateCheckThread.ret.equals("update")) {
-                EntityPlayer p = Minecraft.getMinecraft().thePlayer;
+                EntityPlayer p = Minecraft.getMinecraft().player;
                 if (p != null) {
-                    p.addChatComponentMessage(new TextComponentTranslation("text.japta.newversion"), false);
+                    p.sendMessage(new TextComponentTranslation("text.japta.newversion", false));
                     notified = true;
                 }
             } else {
@@ -414,7 +417,7 @@ public class JAPTA {
     public static void addRecipe(IRecipe recipe, Item item, String name, boolean defaultEnabled) {
         recipeMap.put(item, recipe);
         if (instance.config.get("recipes", name, defaultEnabled, "").getBoolean()) {
-            GameRegistry.addRecipe(recipe);
+            //GameRegistry.addRecipe(recipe);
         }
     }
 

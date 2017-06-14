@@ -71,7 +71,7 @@ public class ItemLevitator extends ItemJPT implements ITickableItem {
         }
         if(diff != 0) {
             height += diff;
-            player.addChatComponentMessage(new TextComponentTranslation("text.japta.levitator.heightChange", height), false);
+            player.sendMessage(new TextComponentTranslation("text.japta.levitator.heightChange", height));
             if(tag == null) {
                 tag = new NBTTagCompound();
                 stack.setTagCompound(tag);

@@ -77,8 +77,8 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     }
 
     @Override
-    public boolean func_191420_l() {
-        return false;
+    public boolean isEmpty() {
+        return !ItemStackTools.isValid(item);
     }
 
     @Nullable
@@ -90,13 +90,13 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     @Nullable
     @Override
     public ItemStack decrStackSize(int i, int i1) {
-        return ItemStack.field_190927_a;
+        return ItemStack.EMPTY;
     }
 
     @Nullable
     @Override
     public ItemStack removeStackFromSlot(int i) {
-        return ItemStack.field_190927_a;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -110,7 +110,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
+    public boolean isUsableByPlayer(EntityPlayer entityPlayer) {
         return false;
     }
 
@@ -146,7 +146,7 @@ public class TileEntityEater extends TileEntityJPT implements IEnergyProvider, I
 
     @Override
     public void clear() {
-        item = ItemStack.field_190927_a;
+        item = ItemStack.EMPTY;
     }
 
     @Override

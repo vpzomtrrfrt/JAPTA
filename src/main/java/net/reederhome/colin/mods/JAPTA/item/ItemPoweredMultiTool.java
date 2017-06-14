@@ -3,6 +3,7 @@ package net.reederhome.colin.mods.JAPTA.item;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -17,6 +18,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
 
@@ -50,7 +52,7 @@ public class ItemPoweredMultiTool extends ItemJPT {
     }
 
     @Override
-    public int getHarvestLevel(ItemStack stack, String type) {
+    public int getHarvestLevel(ItemStack stack, String type, @Nullable EntityPlayer p_getHarvestLevel_3_, @Nullable IBlockState p_getHarvestLevel_4_) {
         if (!isDead(stack)) {
             return getMaterial(stack, type).getHarvestLevel();
         }
@@ -88,7 +90,8 @@ public class ItemPoweredMultiTool extends ItemJPT {
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean p_addInformation_4_) {
+    public void addInformation(ItemStack stack, @Nullable World world, List<String> list, ITooltipFlag p_addInformation_4_) {
+        super.addInformation(stack, world, list, p_addInformation_4_);
         NBTTagCompound materials = getMaterialsTag(stack);
         if (materials != null) {
             for (String type : materials.getKeySet()) {
@@ -157,7 +160,7 @@ public class ItemPoweredMultiTool extends ItemJPT {
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
         Multimap<String, AttributeModifier> tr = super.getAttributeModifiers(slot, stack);
-        tr.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getMaterial(stack, "sword").getDamageVsEntity() + 4, 0));
+        tr.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getMaterial(stack, "sword").getDamageVsEntity() + 4, 0));
         return tr;
     }
 

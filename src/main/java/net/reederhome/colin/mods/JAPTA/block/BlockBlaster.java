@@ -7,6 +7,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -70,23 +71,24 @@ public abstract class BlockBlaster extends BlockModelContainer implements IDiagn
     }
 
     @Override
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        EnumFacing ts = EnumFacing.func_190914_a(pos, placer);
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack p_onBlockPlacedBy_5_) {
+        super.onBlockPlacedBy(world, pos, state, placer, p_onBlockPlacedBy_5_);
+        EnumFacing ts = EnumFacing.getDirectionFromEntityLiving(pos, placer);
         if (!placer.isSneaking()) {
             ts = ts.getOpposite();
         }
-        return getDefaultState().withProperty(FACING, ts);
+        world.setBlockState(pos, state.withProperty(FACING, ts), 2);
     }
 
     @Override
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
         EnumFacing side = state.getValue(FACING);
-        sender.addChatMessage(new TextComponentTranslation("tile.blaster.diagnostic.top", side.getName()));
+        sender.sendMessage(new TextComponentTranslation("tile.blaster.diagnostic.top", side.getName()));
         for (int i = 1; i <= RANGE; i++) {
             BlockPos cp = pos.offset(side, i);
             IBlockState cs = world.getBlockState(cp);
-            sender.addChatMessage(new TextComponentString(cs.getBlock().getUnlocalizedName()));
+            sender.sendMessage(new TextComponentString(cs.getBlock().getUnlocalizedName()));
         }
         return true;
     }

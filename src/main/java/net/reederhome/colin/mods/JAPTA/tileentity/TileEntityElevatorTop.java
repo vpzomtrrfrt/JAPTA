@@ -84,9 +84,9 @@ public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyRecei
                 break;
             }
         }
-        sender.addChatMessage(new TextComponentTranslation("tile.elevatorTop.diagnostic", i, getEnergyCost(i)));
+        sender.sendMessage(new TextComponentTranslation("tile.elevatorTop.diagnostic", i, getEnergyCost(i)));
         if (!air) {
-            sender.addChatMessage(new TextComponentTranslation("tile.elevatorTop.diagnostic.noAir"));
+            sender.sendMessage(new TextComponentTranslation("tile.elevatorTop.diagnostic.noAir"));
         }
         return true;
     }

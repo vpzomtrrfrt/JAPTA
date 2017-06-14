@@ -37,13 +37,13 @@ public class BlockEater extends BlockModelContainer {
         TileEntityEater te = ((TileEntityEater) world.getTileEntity(pos));
         ItemStack item = te.getStackInSlot(0);
         if (ItemStackTools.isValid(item)) {
-            player.addChatComponentMessage(new TextComponentTranslation("text.japta.eater.hasItem", item.getTextComponent(), te.getProgress() * 100 / TileEntityEater.TIME), false);
+            player.sendMessage(new TextComponentTranslation("text.japta.eater.hasItem", item.getTextComponent(), te.getProgress() * 100 / TileEntityEater.TIME));
         } else {
             ItemStack held = player.getHeldItem(hand);
             if (te.isItemValidForSlot(0, held)) {
                 te.setInventorySlotContents(0, held.splitStack(1));
             } else {
-                player.addChatComponentMessage(new TextComponentTranslation("text.japta.eater.noItem"), false);
+                player.sendMessage(new TextComponentTranslation("text.japta.eater.noItem"));
             }
         }
         return true;

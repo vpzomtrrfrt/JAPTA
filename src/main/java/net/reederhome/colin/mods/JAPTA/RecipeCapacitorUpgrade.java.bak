@@ -34,7 +34,7 @@ public class RecipeCapacitorUpgrade implements IRecipe {
                     capacitor = stack;
                 }
                 else {
-                    return ItemStack.field_190927_a;
+                    return ItemStack.EMPTY;
                 }
             }
             else if(item instanceof ItemBlock && ((ItemBlock) item).getBlock() instanceof BlockPowerCabinet) {
@@ -43,11 +43,11 @@ public class RecipeCapacitorUpgrade implements IRecipe {
                 addedPower += block.getMetaValue()*item.getDamage(stack);
             }
             else {
-                return ItemStack.field_190927_a;
+                return ItemStack.EMPTY;
             }
         }
         if(capacitor == null || addedCapacity == 0) {
-            return ItemStack.field_190927_a;
+            return ItemStack.EMPTY;
         }
         else {
             ItemStack tr = getRecipeOutput();

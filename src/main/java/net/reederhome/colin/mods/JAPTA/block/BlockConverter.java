@@ -52,7 +52,7 @@ public abstract class BlockConverter extends BlockModelContainer {
             EnumConverterMode mode = state.getValue(MODE);
             mode = mode.getOpposite();
             w.setBlockState(pos, state.withProperty(MODE, mode));
-            p.addChatComponentMessage(new TextComponentTranslation("text.japta.converter.mode", getModeName(mode), getConverterType()), false);
+            p.sendMessage(new TextComponentTranslation("text.japta.converter.mode", getModeName(mode), getConverterType(), false));
         }
         return true;
     }

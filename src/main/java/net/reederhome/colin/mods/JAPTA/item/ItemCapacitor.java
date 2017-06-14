@@ -1,13 +1,16 @@
 package net.reederhome.colin.mods.JAPTA.item;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemCapacitor extends ItemJPT {
@@ -24,6 +27,13 @@ public class ItemCapacitor extends ItemJPT {
         setUnlocalizedName("capacitor");
     }
 
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World world, List<String> list, ITooltipFlag p_addInformation_4_) {
+        super.addInformation(stack, world, list, p_addInformation_4_);
+        list.add(this.getEnergyStored(stack)+" / "+this.getMaxEnergyStored(stack)+" RF");
+    }
+
     public int getBonusCapacity(ItemStack stack) {
         if(stack != null && stack.hasTagCompound()) {
             NBTTagCompound tag = stack.getTagCompound();
@@ -32,12 +42,5 @@ public class ItemCapacitor extends ItemJPT {
             }
         }
         return 0;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer p_addInformation_2_, List<String> list, boolean p_addInformation_4_) {
-        super.addInformation(stack, p_addInformation_2_, list, p_addInformation_4_);
-        list.add(this.getEnergyStored(stack)+" / "+this.getMaxEnergyStored(stack)+" RF");
     }
 }

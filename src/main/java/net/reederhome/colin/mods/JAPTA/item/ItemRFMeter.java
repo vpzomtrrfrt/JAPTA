@@ -64,7 +64,7 @@ public class ItemRFMeter extends Item {
             }
             boolean someinfo = false;
             if (value != -2) {
-                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter.power", value, max, powerType), false);
+                player.sendMessage(new TextComponentTranslation("text.japta.rfmeter.power", value, max, powerType));
                 someinfo = true;
             }
             if (advanced) {
@@ -80,7 +80,7 @@ public class ItemRFMeter extends Item {
                 }
             }
             if (!someinfo) {
-                player.addChatComponentMessage(new TextComponentTranslation("text.japta.rfmeter." + (advanced ? "advancedNo" : "no")), false);
+                player.sendMessage(new TextComponentTranslation("text.japta.rfmeter." + (advanced ? "advancedNo" : "no")));
             }
         }
         return EnumActionResult.SUCCESS;
@@ -90,7 +90,7 @@ public class ItemRFMeter extends Item {
         boolean someinfo = false;
         if(target instanceof EntitySheep) {
             int held = target.getEntityData().getInteger("Energy");
-            player.addChatMessage(new TextComponentTranslation("text.japta.rfmeter.powerEntity", held, TileEntitySheepAdapter.MAX_SHEEP_AMOUNT, "RF"));
+            player.sendMessage(new TextComponentTranslation("text.japta.rfmeter.powerEntity", held, TileEntitySheepAdapter.MAX_SHEEP_AMOUNT, "RF"));
             someinfo = true;
         }
         if(advanced && target instanceof IDiagnosable) {
@@ -99,7 +99,7 @@ public class ItemRFMeter extends Item {
             }
         }
         if(!someinfo) {
-            player.addChatMessage(new TextComponentTranslation("text.japta.rfmeter."+(advanced?"advancedNoEntity":"no")));
+            player.sendMessage(new TextComponentTranslation("text.japta.rfmeter."+(advanced?"advancedNoEntity":"no")));
         }
     }
 }

@@ -38,8 +38,8 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     }
 
     @Override
-    public boolean func_191420_l() {
-        return false;
+    public boolean isEmpty() {
+        return items.size() < 1;
     }
 
     @Nullable
@@ -63,7 +63,7 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     public ItemStack removeStackFromSlot(int i) {
         markDirty();
         ItemStack stack = pending[i];
-        pending[i] = ItemStack.field_190927_a;
+        pending[i] = ItemStack.EMPTY;
         return stack;
     }
 
@@ -79,7 +79,7 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
+    public boolean isUsableByPlayer(EntityPlayer entityPlayer) {
         return true;
     }
 
@@ -116,7 +116,7 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
     @Override
     public void clear() {
         items.clear();
-        Arrays.fill(pending, ItemStack.field_190927_a);
+        Arrays.fill(pending, ItemStack.EMPTY);
     }
 
     @Override
@@ -179,7 +179,7 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
             ItemStack stack = pending[i];
             if(ItemStackTools.isValid(stack)) {
                 items.add(stack);
-                pending[i] = ItemStack.field_190927_a;
+                pending[i] = ItemStack.EMPTY;
             }
         }
         if(items.size() > 0) {
@@ -202,7 +202,7 @@ public class TileEntityVoidStack extends TileEntity implements IInventory, ITick
 
     @Override
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
-        sender.addChatMessage(new TextComponentTranslation("tile.voidStack.diagnostic", items.size()));
+        sender.sendMessage(new TextComponentTranslation("tile.voidStack.diagnostic", items.size()));
         return true;
     }
 }

@@ -57,15 +57,15 @@ public class BlockPowerCabinet extends Block implements IDiagnosable {
     }
 
     @Override
-    public void getSubBlocks(Item itemIn, CreativeTabs p_getSubBlocks_2_, NonNullList<ItemStack> list) {
-        list.add(new ItemStack(itemIn, 1, 0));
-        list.add(new ItemStack(itemIn, 1, 15));
+    public void getSubBlocks(CreativeTabs p_getSubBlocks_2_, NonNullList<ItemStack> list) {
+        list.add(new ItemStack(this, 1, 0));
+        list.add(new ItemStack(this, 1, 15));
     }
 
     @Override
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
-        sender.addChatMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic", getMetaValue() * state.getValue(VALUE)));
+        sender.sendMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic", getMetaValue() * state.getValue(VALUE)));
         BlockPos cp = pos.down();
         while (true) {
             IBlockState cs = world.getBlockState(cp);
@@ -77,9 +77,9 @@ public class BlockPowerCabinet extends Block implements IDiagnosable {
         }
         TileEntity te = world.getTileEntity(cp);
         if (te instanceof TileEntityPowerCabinetBase) {
-            sender.addChatMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic2", ((TileEntityPowerCabinetBase) te).getEnergyStored(null)));
+            sender.sendMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic2", ((TileEntityPowerCabinetBase) te).getEnergyStored(null)));
         } else {
-            sender.addChatMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic3"));
+            sender.sendMessage(new TextComponentTranslation("tile.powerCabinet.diagnostic3"));
         }
         return true;
     }

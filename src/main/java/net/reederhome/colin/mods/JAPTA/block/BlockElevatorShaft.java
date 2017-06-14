@@ -33,7 +33,7 @@ public class BlockElevatorShaft extends Block implements IDiagnosable {
                 if (state.getBlock() == JAPTA.elevatorTop) {
                     ((IDiagnosable) world.getTileEntity(cp)).addInformation(sender, world, cp);
                 } else {
-                    sender.addChatMessage(new TextComponentTranslation("tile.elevatorShaft.diagnostic.noTop"));
+                    sender.sendMessage(new TextComponentTranslation("tile.elevatorShaft.diagnostic.noTop"));
                 }
                 return true;
             }

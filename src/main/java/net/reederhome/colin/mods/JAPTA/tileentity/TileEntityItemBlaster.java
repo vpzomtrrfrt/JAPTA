@@ -39,7 +39,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     }
 
     @Override
-    public boolean func_191420_l() {
+    public boolean isEmpty() {
         return false;
     }
 
@@ -52,7 +52,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     public ItemStack decrStackSize(int index, int count) {
         ItemStack sis = inv[index];
         if (ItemStackTools.getStackSize(sis) <= count) {
-            inv[index] = ItemStack.field_190927_a;
+            inv[index] = ItemStack.EMPTY;
             return sis;
         } else {
             return sis.splitStack(count);
@@ -62,7 +62,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     @Override
     public ItemStack removeStackFromSlot(int index) {
         ItemStack sis = inv[index];
-        inv[index] = ItemStack.field_190927_a;
+        inv[index] = ItemStack.EMPTY;
         return sis;
     }
 
@@ -77,7 +77,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(EntityPlayer player) {
         return true;
     }
 
@@ -114,7 +114,7 @@ public class TileEntityItemBlaster extends TileEntity implements IInventory, ITi
     @Override
     public void clear() {
         inv = new ItemStack[getSizeInventory()];
-        Arrays.fill(inv, ItemStack.field_190927_a);
+        Arrays.fill(inv, ItemStack.EMPTY);
     }
 
     @Override

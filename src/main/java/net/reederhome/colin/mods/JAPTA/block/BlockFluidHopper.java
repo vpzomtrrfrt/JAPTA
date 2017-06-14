@@ -1,5 +1,6 @@
 package net.reederhome.colin.mods.JAPTA.block;
 
+
 import com.google.common.base.Predicate;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -29,6 +30,11 @@ public class BlockFluidHopper extends BlockModelContainer {
         public boolean apply(EnumFacing input) {
             return input != EnumFacing.UP;
         }
+
+        @Override
+        public boolean test(@Nullable EnumFacing input) {
+            return apply(input);
+        }
     });
 
     @Override
@@ -46,7 +52,7 @@ public class BlockFluidHopper extends BlockModelContainer {
     }
 
     @Override
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         EnumFacing dir = facing.getOpposite();
         if (dir == EnumFacing.UP) {
             dir = EnumFacing.DOWN;
@@ -70,9 +76,9 @@ public class BlockFluidHopper extends BlockModelContainer {
         TileEntityFluidHopper te = (TileEntityFluidHopper) world.getTileEntity(pos);
         IFluidTankProperties info = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN).getTankProperties()[0];
         if (info.getContents() != null) {
-            player.addChatComponentMessage(new TextComponentTranslation("text.japta.fluidHopper.status", info.getContents().getFluid().getLocalizedName(info.getContents()), info.getContents().amount), false);
+            player.sendMessage(new TextComponentTranslation("text.japta.fluidHopper.status", info.getContents().getFluid().getLocalizedName(info.getContents()), info.getContents().amount));
         } else {
-            player.addChatComponentMessage(new TextComponentTranslation("text.japta.fluidHopper.empty"), false);
+            player.sendMessage(new TextComponentTranslation("text.japta.fluidHopper.empty"));
         }
         return true;
     }

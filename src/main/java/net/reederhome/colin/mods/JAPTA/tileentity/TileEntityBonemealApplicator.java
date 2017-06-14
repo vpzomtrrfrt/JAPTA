@@ -86,11 +86,11 @@ public class TileEntityBonemealApplicator extends TileEntityJPT implements IEner
             redstone = ((World) getWorld()).isBlockIndirectlyGettingPowered(pos);
         }
         if (!bonemeal) {
-            sender.addChatMessage(new TextComponentTranslation("tile.bonemealApplicator.diagnostic.noBonemeal"));
+            sender.sendMessage(new TextComponentTranslation("tile.bonemealApplicator.diagnostic.noBonemeal"));
             return true;
         } else {
             if (redstone > 0) {
-                sender.addChatMessage(new TextComponentTranslation("tile.bonemealApplicator.diagnostic.redstone"));
+                sender.sendMessage(new TextComponentTranslation("tile.bonemealApplicator.diagnostic.redstone"));
                 return true;
             }
         }

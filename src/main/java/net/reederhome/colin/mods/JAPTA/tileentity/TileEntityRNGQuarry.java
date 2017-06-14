@@ -33,7 +33,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
     public static int RANGE = 8;
     public static final int USE = 500;
 
-    public ItemStack item = ItemStack.field_190927_a;
+    public ItemStack item = ItemStack.EMPTY;
 
     private long lastMinedTick;
 
@@ -92,7 +92,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
                         if (drop != null) {
                             EntityItem ent = new EntityItem(getWorld(), me.getX() + 0.5, me.getY() + 1, me.getZ() + 0.5);
                             ent.setEntityItemStack(drop);
-                            getWorld().spawnEntityInWorld(ent);
+                            getWorld().spawnEntity(ent);
                         }
                     }
                     stored -= USE;
@@ -152,10 +152,10 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceive
     @Override
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
         if (isBroken(item)) {
-            sender.addChatMessage(new TextComponentTranslation("tile.rngQuarry.diagnostic.brokenTool"));
+            sender.sendMessage(new TextComponentTranslation("tile.rngQuarry.diagnostic.brokenTool"));
             return true;
         } else if (getWorld() instanceof World && lastMinedTick + 10 < ((World) getWorld()).getTotalWorldTime() && stored >= USE) {
-            sender.addChatMessage(new TextComponentTranslation("tile.rngQuarry.diagnostic.notMining"));
+            sender.sendMessage(new TextComponentTranslation("tile.rngQuarry.diagnostic.notMining"));
             return true;
         }
         return false;

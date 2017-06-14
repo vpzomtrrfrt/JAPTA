@@ -58,7 +58,7 @@ public class TileEntityDungeonMaker extends TileEntityJPT implements IEnergyRece
 
     @Override
     public boolean addInformation(ICommandSender sender, IBlockAccess world, BlockPos pos) {
-        sender.addChatMessage(new TextComponentTranslation("tile.dungeonMaker.diagnostic." + (findEmptyChest() == null ? "noChest" : "yesChest")));
+        sender.sendMessage(new TextComponentTranslation("tile.dungeonMaker.diagnostic." + (findEmptyChest() == null ? "noChest" : "yesChest")));
         return true;
     }
 }

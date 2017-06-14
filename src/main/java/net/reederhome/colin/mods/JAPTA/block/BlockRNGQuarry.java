@@ -33,11 +33,10 @@ public class BlockRNGQuarry extends BlockModelContainer {
     }
 
     @Override
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        if (!worldIn.isRemote) {
-            placer.addChatMessage(new TextComponentTranslation("text.japta.rngQuarry.noTool", 0));
-        }
-        return getDefaultState();
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack p_onBlockPlacedBy_5_) {
+        super.onBlockPlacedBy(world, pos, state, placer, p_onBlockPlacedBy_5_);
+        if(world.isRemote) return;
+        placer.sendMessage(new TextComponentTranslation("text.japta.rngQuarry.noTool", 0));
     }
 
     @Override
@@ -47,14 +46,14 @@ public class BlockRNGQuarry extends BlockModelContainer {
         ItemStack held = p.getHeldItem(hand);
         if (!ItemStackTools.isValid(held)) {
             if (ItemStackTools.isValid(te.item)) {
-                p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.hasTool", te.item.getTextComponent(), te.stored), false);
+                p.sendMessage(new TextComponentTranslation("text.japta.rngQuarry.hasTool", te.item.getTextComponent(), te.stored));
             } else {
-                p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.noTool", te.stored), false);
+                p.sendMessage(new TextComponentTranslation("text.japta.rngQuarry.noTool", te.stored));
             }
         } else {
             ItemStack itm = te.item;
             te.item = p.inventory.removeStackFromSlot(p.inventory.currentItem);
-            p.addChatComponentMessage(new TextComponentTranslation("text.japta.rngQuarry.gotTool", te.item.getTextComponent()), false);
+            p.sendMessage(new TextComponentTranslation("text.japta.rngQuarry.gotTool", te.item.getTextComponent()));
             if (ItemStackTools.isValid(itm)) {
                 p.inventory.setInventorySlotContents(p.inventory.currentItem, itm);
             }
@@ -69,7 +68,7 @@ public class BlockRNGQuarry extends BlockModelContainer {
             TileEntityRNGQuarry te = (TileEntityRNGQuarry) world.getTileEntity(pos);
             if (ItemStackTools.isValid(te.item)) {
                 if (player.inventory.addItemStackToInventory(te.item)) {
-                    te.item = ItemStack.field_190927_a;
+                    te.item = ItemStack.EMPTY;
                 }
             }
         }
@@ -80,7 +79,7 @@ public class BlockRNGQuarry extends BlockModelContainer {
         TileEntityRNGQuarry te = (TileEntityRNGQuarry) world.getTileEntity(pos);
         if (ItemStackTools.isValid(te.item)) {
             InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, te.item);
-            te.item = ItemStack.field_190927_a;
+            te.item = ItemStack.EMPTY;
         }
         super.breakBlock(world, pos, state);
     }
