@@ -8,13 +8,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
 import net.reederhome.colin.mods.JAPTA.item.ItemCapacitor;
 
 import javax.annotation.Nullable;
 
-public class RecipeCapacitorUpgrade implements IRecipe {
+public class RecipeCapacitorUpgrade extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
     @Override
     public boolean matches(InventoryCrafting inventoryCrafting, World world) {
@@ -59,9 +61,13 @@ public class RecipeCapacitorUpgrade implements IRecipe {
         }
     }
 
+    public RecipeCapacitorUpgrade() {
+        setRegistryName(new ResourceLocation(JAPTA.MODID, "crafting_capacitorUpgrade"));
+    }
+
     @Override
-    public int getRecipeSize() {
-        return 2;
+    public boolean func_194133_a(int i, int i1) {
+        return i*i1 > 1;
     }
 
     @Override
@@ -71,7 +77,7 @@ public class RecipeCapacitorUpgrade implements IRecipe {
 
     @Override
     public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inventoryCrafting) {
-        return NonNullList.func_191196_a();
+        return NonNullList.create();
     }
 
 }

@@ -7,8 +7,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
-public class RecipePoweredMultiTool implements IRecipe {
+public class RecipePoweredMultiTool extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
     @Override
     public boolean matches(InventoryCrafting inventoryCrafting, World world) {
         return ItemStackTools.isValid(getCraftingResult(inventoryCrafting));
@@ -58,8 +59,8 @@ public class RecipePoweredMultiTool implements IRecipe {
     }
 
     @Override
-    public int getRecipeSize() {
-        return 3;
+    public boolean func_194133_a(int i, int i1) {
+        return i*i1 >= 7;
     }
 
     @Override
@@ -69,6 +70,6 @@ public class RecipePoweredMultiTool implements IRecipe {
 
     @Override
     public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inventoryCrafting) {
-        return NonNullList.func_191196_a();
+        return NonNullList.create();
     }
 }

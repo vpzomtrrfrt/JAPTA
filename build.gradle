@@ -20,7 +20,7 @@ apply plugin: 'com.matthewprenger.cursegradle'
 
 dependencies {
     deobfCompile "info.amerifrance.guideapi:Guide-API:1.11-2.1.0-47"
-    compile "net.darkhax.tesla:Tesla-1.12:1.12-1.0.58"
+    compile "net.darkhax.tesla:Tesla-1.12:1.0.58"
 }
 
 repositories {
@@ -33,7 +33,7 @@ group = "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini
 archivesBaseName = "JAPTA-1.11"
 
 minecraft {
-    version = "1.12-14.21.0.2322"
+    version = "1.12-14.21.0.2344"
     runDir = "run"
 
     mappings = "snapshot_20161220"
