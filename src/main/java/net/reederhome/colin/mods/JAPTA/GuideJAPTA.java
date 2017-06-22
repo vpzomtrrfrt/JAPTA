@@ -190,7 +190,7 @@ public class GuideJAPTA implements IGuideBook {
 
     @Override
     public void handlePost(ItemStack bookStack) {
-        //JAPTA.addRecipe(new ShapelessOreRecipe(bookStack, "paper", "ingotIron", "dustRedstone", "dustRedstone"));
+        JAPTA.addRecipe(new ShapelessOreRecipe(JAPTA.CRAFTING_CATEGORY, bookStack, "paper", "ingotIron", "dustRedstone", "dustRedstone"));
         JAPTA.saveConfig();
     }
 

@@ -69,7 +69,7 @@ public class JAPTA {
         }
     };
 
-    private static ResourceLocation CRAFTING_CATEGORY = new ResourceLocation(MODID, "crafting");
+    static final ResourceLocation CRAFTING_CATEGORY = new ResourceLocation(MODID, "crafting");
 
     public static BlockCakeConverter cakeConverter;
     public static BlockFluxHopper fluxHopper;
@@ -417,7 +417,8 @@ public class JAPTA {
     public static void addRecipe(IRecipe recipe, Item item, String name, boolean defaultEnabled) {
         recipeMap.put(item, recipe);
         if (instance.config.get("recipes", name, defaultEnabled, "").getBoolean()) {
-            GameRegistry.register((IForgeRegistryEntry) recipe).setRegistryName(new ResourceLocation(MODID, "crafting_"+name));
+            ((IForgeRegistryEntry) recipe).setRegistryName(new ResourceLocation(MODID, "crafting_"+name));
+            GameRegistry.register(recipe);
         }
     }
 

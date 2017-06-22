@@ -19,7 +19,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.matthewprenger.cursegradle'
 
 dependencies {
-    deobfCompile "info.amerifrance.guideapi:Guide-API:1.11-2.1.0-47"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-2.1.2-53"
     compile "net.darkhax.tesla:Tesla-1.12:1.0.58"
 }
 
@@ -30,7 +30,7 @@ repositories {
 
 version = "1.11.7"
 group = "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "JAPTA-1.11"
+archivesBaseName = "JAPTA-1.12"
 
 minecraft {
     version = "1.12-14.21.0.2344"
