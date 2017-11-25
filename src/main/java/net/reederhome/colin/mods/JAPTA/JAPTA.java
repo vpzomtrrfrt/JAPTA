@@ -1,7 +1,5 @@
 package net.reederhome.colin.mods.JAPTA;
 
-import amerifrance.guideapi.api.GuideAPI;
-import amerifrance.guideapi.api.impl.Book;
 import mcjty.lib.tools.ItemStackTools;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
@@ -30,6 +28,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Loader;
@@ -40,23 +39,19 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.reederhome.colin.mods.JAPTA.block.*;
 import net.reederhome.colin.mods.JAPTA.item.*;
 import net.reederhome.colin.mods.JAPTA.tileentity.*;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 @Mod(name = "JAPTA", modid = JAPTA.MODID, dependencies = "before:guideapi")
 public class JAPTA {
@@ -123,6 +118,8 @@ public class JAPTA {
     private Configuration config;
     private static Map<Item, IRecipe> recipeMap = new HashMap<Item, IRecipe>();
 
+    protected static ItemStack bookStack;
+
     @Mod.Instance
     private static JAPTA instance;
 
@@ -139,6 +136,86 @@ public class JAPTA {
             int result = ItemStackTools.getStackSize(resultSlot) + ItemStackTools.getStackSize(itemstack);
             return result <= te.getInventoryStackLimit() && result <= resultSlot.getMaxStackSize();
         }
+    }
+
+    @SubscribeEvent
+    public void onRegisterBlocks(RegistryEvent.Register<Block> event) {
+        event.getRegistry().registerAll(cakeConverter,
+                fluxHopper,
+                chargingPlate,
+                elevatorShaft,
+                elevatorTop,
+                fluxBlaster,
+                itemBlaster,
+                rngQuarry,
+                chestCharger,
+                mover,
+                bonemealApplicator,
+                powerCabinet,
+                powerCabinet2,
+                powerCabinetBase,
+                heatConverter,
+                furnaceBooster,
+                machineBase,
+                fluidHopper,
+                fluidBlaster,
+                fluxInhaler,
+                fluidInhaler,
+                itemInhaler,
+                itemSplitter,
+                eater,
+                dungeonMaker,
+                fisher,
+                sheepAdapter,
+                voidStack);
+    }
+
+    private void registerBlockItems(IForgeRegistry<Item> registry, Block... blocks) {
+        for (Block block : blocks) {
+            registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+        }
+    }
+
+    @SubscribeEvent
+    public void onRegisterItems(RegistryEvent.Register<Item> event) {
+        registerBlockItems(event.getRegistry(),
+                cakeConverter,
+                fluxHopper,
+                chargingPlate,
+                elevatorShaft,
+                elevatorTop,
+                fluxBlaster,
+                itemBlaster,
+                rngQuarry,
+                chestCharger,
+                mover,
+                bonemealApplicator,
+                powerCabinetBase,
+                heatConverter,
+                furnaceBooster,
+                machineBase,
+                fluidHopper,
+                fluidBlaster,
+                fluxInhaler,
+                fluidInhaler,
+                itemInhaler,
+                itemSplitter,
+                eater,
+                dungeonMaker,
+                fisher,
+                sheepAdapter,
+                voidStack);
+
+        event.getRegistry().register(rfMeter);
+        event.getRegistry().register(batteryPotato);
+        event.getRegistry().register(diagnosticTool);
+        event.getRegistry().register(coilReception);
+        event.getRegistry().register(coilTransmission);
+        event.getRegistry().register(poweredMultiTool);
+        event.getRegistry().register(itemPowerCabinet);
+        event.getRegistry().register(itemPowerCabinet2);
+        event.getRegistry().register(capacitor);
+        event.getRegistry().register(levitator);
     }
 
     @Mod.EventHandler
@@ -187,46 +264,6 @@ public class JAPTA {
         capacitor = new ItemCapacitor();
         levitator = new ItemLevitator();
 
-        registerBlock(cakeConverter);
-        registerBlock(fluxHopper);
-        registerBlock(chargingPlate);
-        registerBlock(elevatorShaft);
-        registerBlock(elevatorTop);
-        registerBlock(fluxBlaster);
-        registerBlock(itemBlaster);
-        registerBlock(rngQuarry);
-        registerBlock(chestCharger);
-        registerBlock(mover);
-        registerBlock(bonemealApplicator);
-        GameRegistry.register(powerCabinet);
-        GameRegistry.register(powerCabinet2);
-        registerBlock(powerCabinetBase);
-        registerBlock(heatConverter);
-        registerBlock(furnaceBooster);
-        registerBlock(machineBase);
-        registerBlock(fluidHopper);
-        registerBlock(fluidBlaster);
-        registerBlock(fluxInhaler);
-        registerBlock(fluidInhaler);
-        registerBlock(itemInhaler);
-        registerBlock(itemSplitter);
-        registerBlock(eater);
-        registerBlock(dungeonMaker);
-        registerBlock(fisher);
-        registerBlock(sheepAdapter);
-        registerBlock(voidStack);
-
-        GameRegistry.register(rfMeter);
-        GameRegistry.register(batteryPotato);
-        GameRegistry.register(diagnosticTool);
-        GameRegistry.register(coilReception);
-        GameRegistry.register(coilTransmission);
-        GameRegistry.register(poweredMultiTool);
-        GameRegistry.register(itemPowerCabinet);
-        GameRegistry.register(itemPowerCabinet2);
-        GameRegistry.register(capacitor);
-        GameRegistry.register(levitator);
-
         registerTileEntity(TileEntityCakeConverter.class, "CakeConverter");
         registerTileEntity(TileEntityFluxHopper.class, "FluxHopper");
         registerTileEntity(TileEntityChargingPlate.class, "ChargingPlate");
@@ -250,46 +287,6 @@ public class JAPTA {
 
         /*RecipeSorter.register("poweredMultiTool", RecipePoweredMultiTool.class, RecipeSorter.Category.SHAPELESS, "");
         RecipeSorter.register("capacitor", RecipeCapacitorUpgrade.class, RecipeSorter.Category.SHAPELESS, "");*/
-
-        addRecipe(new ShapelessOreRecipe(CRAFTING_CATEGORY, rfMeter, "nuggetGold", "dustRedstone"));
-        addRecipe(new ShapelessOreRecipe(CRAFTING_CATEGORY, new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", coilReception));
-        addRecipe(new ShapelessOreRecipe(CRAFTING_CATEGORY, diagnosticTool, rfMeter, "dyeBlue"));
-        addRecipe(new ShapelessOreRecipe(CRAFTING_CATEGORY, fluxInhaler, fluxBlaster, Blocks.REDSTONE_TORCH));
-        addRecipe(new ShapelessOreRecipe(CRAFTING_CATEGORY, fluidInhaler, fluidBlaster, Blocks.REDSTONE_TORCH));
-        addRecipe(new ShapelessOreRecipe(CRAFTING_CATEGORY, itemInhaler, itemBlaster, Blocks.REDSTONE_TORCH));
-        addRecipe(new ShapelessOreRecipe(CRAFTING_CATEGORY, itemSplitter, itemBlaster, "plankWood"));
-        addRecipe(new ShapelessOreRecipe(CRAFTING_CATEGORY, new ItemStack(capacitor, 1, capacitor.getMaxDamage(null)), powerCabinetBase, Items.BOW));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, new ItemStack(levitator, 1, levitator.getMaxDamage(null)), " r ", " m ", "g g", 'r', coilReception, 'm', machineBase, 'g', "dustGlowstone"));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, cakeConverter, "frf", "gmg", "ftf", 'f', Items.CAKE, 'r', coilReception, 'g', "nuggetGold", 'm', machineBase, 't', coilTransmission));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, chargingPlate, "   ", "gpg", "oto", 'g', "dustGlowstone", 'p', Blocks.STONE_PRESSURE_PLATE, 'o', Blocks.OBSIDIAN, 't', coilTransmission));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, elevatorTop, "gcg", "geg", "rsr", 'g', "nuggetGold", 'c', coilReception, 'e', Items.ENDER_PEARL, 's', elevatorShaft, 'r', "dustRedstone"));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, fluxBlaster, "gdg", "rmt", "gug", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'r', coilReception, 'm', machineBase, 't', coilTransmission, 'u', "dustRedstone"));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, itemBlaster, "gdg", "cmc", "gug", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'c', "chest", 'm', machineBase, 'u', "dustRedstone"));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, fluidBlaster, "gdg", "bmb", "gug", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'b', Items.BUCKET, 'm', machineBase, 'u', "dustRedstone"));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, rngQuarry, "srs", "imi", "PgS", 's', "stone", 'i', "ingotIron", 'm', machineBase, 'g', "nuggetGold", 'P', Items.WOODEN_PICKAXE, 'S', Items.WOODEN_SHOVEL, 'r', coilReception));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, chestCharger, "rhr", "cmt", "rhr", 'r', "dustRedstone", 'h', "chest", 'c', coilReception, 'm', machineBase, 't', coilTransmission));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, new ItemStack(mover, 4), "rpr", "gmg", "rcr", 'r', "dustRedstone", 'p', Blocks.PISTON, 'm', machineBase, 'g', "nuggetGold", 'c', coilReception));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, bonemealApplicator, "gbg", "bmb", "gcg", 'g', "nuggetGold", 'b', new ItemStack(Items.DYE, 1, 15), 'm', machineBase, 'c', coilReception));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, powerCabinet, " i ", "iri", " i ", 'i', "ingotIron", 'r', "blockRedstone"));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, powerCabinetBase, "lrl", "gcg", 'l', "dyeBlue", 'r', coilReception, 'g', "nuggetGold", 'c', powerCabinet));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, heatConverter, "frf", "gmg", "ftf", 'f', Blocks.FURNACE, 'r', coilReception, 'g', "nuggetGold", 't', coilTransmission, 'm', machineBase));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, furnaceBooster, " r ", "rfr", " r ", 'r', "dustRedstone", 'f', Blocks.FURNACE));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, new ItemStack(machineBase, 2), "gig", "iri", "gig", 'g', "nuggetGold", 'i', "ingotIron", 'r', "dustRedstone"));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, coilReception, "rg ", " i ", " gr", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, coilTransmission, "r  ", "gig", "  r", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, fluidHopper, "i i", "i i", " b ", 'i', "ingotIron", 'b', Items.BUCKET));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, eater, "iii", "imi", "rcr", 'i', "ingotIron", 'm', machineBase, 'r', "dustRedstone", 'c', coilTransmission));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, dungeonMaker, "imi", "mbm", "ici", 'i', "ingotIron", 'b', machineBase, 'm', Blocks.MOSSY_COBBLESTONE, 'c', coilReception));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, fisher, "ifi", "rmr", "ici", 'i', "ingotIron", 'f', Items.FISHING_ROD, 'r', "dustRedstone", 'c', coilReception, 'm', machineBase));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, sheepAdapter, "iti", "wmw", "iri", 'i', "ingotIron", 't', coilTransmission, 'w', Blocks.WOOL, 'm', machineBase, 'r', coilReception));
-        addRecipe(new ShapedOreRecipe(CRAFTING_CATEGORY, voidStack, "coc", "oio", "coc", 'c', "chest", 'o', Blocks.OBSIDIAN, 'i', "ingotIron"));
-        addRecipe(new RecipePoweredMultiTool());
-
-        GameRegistry.register(new RecipeCapacitorUpgrade());
-
-        GameRegistry.addSmelting(powerCabinet, new ItemStack(powerCabinet2), 0);
 
         BlockBlaster.RANGE = config.get("machines.blaster", "range", BlockBlaster.RANGE).getInt();
         TileEntityRNGQuarry.RANGE = config.get("machines.rngQuarry", "range", TileEntityRNGQuarry.RANGE).getInt();
@@ -315,13 +312,57 @@ public class JAPTA {
         }
     }
 
-    private static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
-        GameRegistry.registerTileEntity(clazz, name);
+    @SubscribeEvent
+    public void onRegisterRecipes(RegistryEvent.Register<IRecipe> event) {
+        addRecipe(event, new ShapelessOreRecipe(CRAFTING_CATEGORY, rfMeter, "nuggetGold", "dustRedstone"));
+        addRecipe(event, new ShapelessOreRecipe(CRAFTING_CATEGORY, new ItemStack(batteryPotato, 1, batteryPotato.getMaxDamage()), "cropPotato", "nuggetGold", coilReception));
+        addRecipe(event, new ShapelessOreRecipe(CRAFTING_CATEGORY, diagnosticTool, rfMeter, "dyeBlue"));
+        addRecipe(event, new ShapelessOreRecipe(CRAFTING_CATEGORY, fluxInhaler, fluxBlaster, Blocks.REDSTONE_TORCH));
+        addRecipe(event, new ShapelessOreRecipe(CRAFTING_CATEGORY, fluidInhaler, fluidBlaster, Blocks.REDSTONE_TORCH));
+        addRecipe(event, new ShapelessOreRecipe(CRAFTING_CATEGORY, itemInhaler, itemBlaster, Blocks.REDSTONE_TORCH));
+        addRecipe(event, new ShapelessOreRecipe(CRAFTING_CATEGORY, itemSplitter, itemBlaster, "plankWood"));
+        addRecipe(event, new ShapelessOreRecipe(CRAFTING_CATEGORY, new ItemStack(capacitor, 1, capacitor.getMaxDamage(null)), powerCabinetBase, Items.BOW));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, new ItemStack(levitator, 1, levitator.getMaxDamage(null)), " r ", " m ", "g g", 'r', coilReception, 'm', machineBase, 'g', "dustGlowstone"));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, cakeConverter, "frf", "gmg", "ftf", 'f', Items.CAKE, 'r', coilReception, 'g', "nuggetGold", 'm', machineBase, 't', coilTransmission));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, fluxHopper, "i i", "iri", " i ", 'i', "ingotIron", 'r', "dustRedstone"));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, chargingPlate, "   ", "gpg", "oto", 'g', "dustGlowstone", 'p', Blocks.STONE_PRESSURE_PLATE, 'o', Blocks.OBSIDIAN, 't', coilTransmission));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, new ItemStack(elevatorShaft, 4), "igi", "igi", "igi", 'i', "ingotIron", 'g', "blockGlass"));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, elevatorTop, "gcg", "geg", "rsr", 'g', "nuggetGold", 'c', coilReception, 'e', Items.ENDER_PEARL, 's', elevatorShaft, 'r', "dustRedstone"));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, fluxBlaster, "gdg", "rmt", "gug", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'r', coilReception, 'm', machineBase, 't', coilTransmission, 'u', "dustRedstone"));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, itemBlaster, "gdg", "cmc", "gug", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'c', "chest", 'm', machineBase, 'u', "dustRedstone"));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, fluidBlaster, "gdg", "bmb", "gug", 'g', "nuggetGold", 'd', Blocks.DISPENSER, 'b', Items.BUCKET, 'm', machineBase, 'u', "dustRedstone"));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, rngQuarry, "srs", "imi", "PgS", 's', "stone", 'i', "ingotIron", 'm', machineBase, 'g', "nuggetGold", 'P', Items.WOODEN_PICKAXE, 'S', Items.WOODEN_SHOVEL, 'r', coilReception));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, chestCharger, "rhr", "cmt", "rhr", 'r', "dustRedstone", 'h', "chest", 'c', coilReception, 'm', machineBase, 't', coilTransmission));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, new ItemStack(mover, 4), "rpr", "gmg", "rcr", 'r', "dustRedstone", 'p', Blocks.PISTON, 'm', machineBase, 'g', "nuggetGold", 'c', coilReception));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, bonemealApplicator, "gbg", "bmb", "gcg", 'g', "nuggetGold", 'b', new ItemStack(Items.DYE, 1, 15), 'm', machineBase, 'c', coilReception));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, powerCabinet, " i ", "iri", " i ", 'i', "ingotIron", 'r', "blockRedstone"));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, powerCabinetBase, "lrl", "gcg", 'l', "dyeBlue", 'r', coilReception, 'g', "nuggetGold", 'c', powerCabinet));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, heatConverter, "frf", "gmg", "ftf", 'f', Blocks.FURNACE, 'r', coilReception, 'g', "nuggetGold", 't', coilTransmission, 'm', machineBase));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, furnaceBooster, " r ", "rfr", " r ", 'r', "dustRedstone", 'f', Blocks.FURNACE));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, new ItemStack(machineBase, 2), "gig", "iri", "gig", 'g', "nuggetGold", 'i', "ingotIron", 'r', "dustRedstone"));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, coilReception, "rg ", " i ", " gr", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, coilTransmission, "r  ", "gig", "  r", 'r', "dustRedstone", 'i', "ingotIron", 'g', "nuggetGold"));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, fluidHopper, "i i", "i i", " b ", 'i', "ingotIron", 'b', Items.BUCKET));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, eater, "iii", "imi", "rcr", 'i', "ingotIron", 'm', machineBase, 'r', "dustRedstone", 'c', coilTransmission));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, dungeonMaker, "imi", "mbm", "ici", 'i', "ingotIron", 'b', machineBase, 'm', Blocks.MOSSY_COBBLESTONE, 'c', coilReception));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, fisher, "ifi", "rmr", "ici", 'i', "ingotIron", 'f', Items.FISHING_ROD, 'r', "dustRedstone", 'c', coilReception, 'm', machineBase));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, sheepAdapter, "iti", "wmw", "iri", 'i', "ingotIron", 't', coilTransmission, 'w', Blocks.WOOL, 'm', machineBase, 'r', coilReception));
+        addRecipe(event, new ShapedOreRecipe(CRAFTING_CATEGORY, voidStack, "coc", "oio", "coc", 'c', "chest", 'o', Blocks.OBSIDIAN, 'i', "ingotIron"));
+        addRecipe(event, new RecipePoweredMultiTool());
+
+        if(bookStack != null) {
+            addRecipe(event, new ShapelessOreRecipe(JAPTA.CRAFTING_CATEGORY, bookStack, "paper", "ingotIron", "dustRedstone", "dustRedstone"));
+        }
+
+        event.getRegistry().register(new RecipeCapacitorUpgrade());
+
+        GameRegistry.addSmelting(powerCabinet, new ItemStack(powerCabinet2), 0);
+
+        saveConfig();
     }
 
-    private void registerBlock(Block block) {
-        GameRegistry.register(block);
-        GameRegistry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+    private static void registerTileEntity(Class<? extends TileEntity> clazz, String name) {
+        GameRegistry.registerTileEntity(clazz, name);
     }
 
     @Mod.EventHandler
@@ -402,23 +443,23 @@ public class JAPTA {
         }
     }
 
-    public static void addRecipe(IRecipe recipe) {
-        addRecipe(recipe, recipe.getRecipeOutput());
+    public static void addRecipe(RegistryEvent.Register<IRecipe> event, IRecipe recipe) {
+        addRecipe(event, recipe, recipe.getRecipeOutput());
     }
 
-    public static void addRecipe(IRecipe recipe, ItemStack stack) {
-        addRecipe(recipe, stack.getItem(), stack.getDisplayName());
+    public static void addRecipe(RegistryEvent.Register<IRecipe> event, IRecipe recipe, ItemStack stack) {
+        addRecipe(event, recipe, stack.getItem(), stack.getDisplayName());
     }
 
-    public static void addRecipe(IRecipe recipe, Item item, String name) {
-        addRecipe(recipe, item, name, true);
+    public static void addRecipe(RegistryEvent.Register<IRecipe> event, IRecipe recipe, Item item, String name) {
+        addRecipe(event, recipe, item, name, true);
     }
 
-    public static void addRecipe(IRecipe recipe, Item item, String name, boolean defaultEnabled) {
+    public static void addRecipe(RegistryEvent.Register<IRecipe> event, IRecipe recipe, Item item, String name, boolean defaultEnabled) {
         recipeMap.put(item, recipe);
         if (instance.config.get("recipes", name, defaultEnabled, "").getBoolean()) {
-            ((IForgeRegistryEntry) recipe).setRegistryName(new ResourceLocation(MODID, "crafting_"+name));
-            GameRegistry.register(recipe);
+            recipe.setRegistryName(new ResourceLocation(MODID, "crafting_"+name));
+            event.getRegistry().register(recipe);
         }
     }
 

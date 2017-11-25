@@ -7,7 +7,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RecipePoweredMultiTool extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
     @Override

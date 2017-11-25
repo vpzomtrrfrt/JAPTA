@@ -19,8 +19,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.matthewprenger.cursegradle'
 
 dependencies {
-    deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-2.1.2-53"
-    compile "net.darkhax.tesla:Tesla-1.12:1.0.58"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-2.1.4-57"
+    compile "net.darkhax.tesla:Tesla-1.12:1.0.61"
 }
 
 repositories {
@@ -28,12 +28,12 @@ repositories {
     maven { url 'http://maven.epoxide.xyz' }
 }
 
-version = "1.11.8"
+version = "1.11.9"
 group = "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "JAPTA-1.12"
 
 minecraft {
-    version = "1.12-14.21.0.2344"
+    version = "1.12.2-14.23.1.2554"
     runDir = "run"
 
     mappings = "snapshot_20161220"

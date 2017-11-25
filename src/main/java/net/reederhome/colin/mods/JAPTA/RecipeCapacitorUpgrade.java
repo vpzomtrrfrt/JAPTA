@@ -10,11 +10,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
 import net.reederhome.colin.mods.JAPTA.item.ItemCapacitor;
-
-import javax.annotation.Nullable;
 
 public class RecipeCapacitorUpgrade extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
