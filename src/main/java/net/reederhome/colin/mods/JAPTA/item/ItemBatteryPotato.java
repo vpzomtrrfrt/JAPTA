@@ -29,9 +29,11 @@ public class ItemBatteryPotato extends ItemJPT {
     }
 
     @Override
-    public void getSubItems(CreativeTabs p_getSubItems_2_, NonNullList<ItemStack> list) {
-        list.add(new ItemStack(this));
-        list.add(new ItemStack(this, 1, getMaxDamage()));
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
+        if(tab == JAPTA.tab) {
+            list.add(new ItemStack(this));
+            list.add(new ItemStack(this, 1, getMaxDamage()));
+        }
     }
 
     @Override
