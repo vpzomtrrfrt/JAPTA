@@ -1,20 +1,16 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Iterator;
 import java.util.List;
 
-public class TileEntitySheepAdapter extends TileEntityJPT implements ITickable, IEnergyReceiver, IEnergyProvider {
+public class TileEntitySheepAdapter extends TileEntityJPT implements ITickable, TileEntityJPT.EnergyReceiver, TileEntityJPT.EnergyProvider {
     public static int MAX_SHEEP_AMOUNT = 8000;
     public static int RANGE = 4;
 

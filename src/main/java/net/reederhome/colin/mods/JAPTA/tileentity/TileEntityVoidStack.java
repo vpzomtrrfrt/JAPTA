@@ -1,7 +1,6 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
 import mcjty.lib.tools.ItemStackTools;
-import net.minecraft.block.BlockChest;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -10,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -22,7 +20,6 @@ import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class TileEntityVoidStack extends TileEntity implements IInventory, ITickable, IDiagnosable {

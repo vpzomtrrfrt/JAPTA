@@ -1,7 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -10,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockBlaster;
 
-public class TileEntityFluxBlaster extends TileEntityJPT implements IEnergyReceiver, IEnergyProvider, ITickable {
+public class TileEntityFluxBlaster extends TileEntityJPT implements TileEntityJPT.EnergyReceiver, TileEntityJPT.EnergyProvider, ITickable {
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
         return 10000;
@@ -29,11 +27,11 @@ public class TileEntityFluxBlaster extends TileEntityJPT implements IEnergyRecei
             TileEntity te = getWorld().getTileEntity(cp);
             if (inhaler) {
                 int remaining = getMaxEnergyStored(null) - stored;
-                if (te instanceof IEnergyProvider && remaining > 0) {
-                    stored += ((IEnergyProvider) te).extractEnergy(facing.getOpposite(), remaining, false);
+                if (remaining > 0) {
+                     stored += JAPTA.extractEnergy(te, facing.getOpposite(), remaining);
                 }
-            } else if (te instanceof IEnergyReceiver && stored > 0) {
-                stored -= ((IEnergyReceiver) te).receiveEnergy(facing.getOpposite(), stored, false);
+            } else if (stored > 0) {
+                stored -= JAPTA.receiveEnergy(te, facing.getOpposite(), stored);
             }
         }
         if (stored > 0 && inhaler) {

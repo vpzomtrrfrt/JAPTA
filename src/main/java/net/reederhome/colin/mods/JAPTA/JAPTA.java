@@ -1,5 +1,6 @@
 package net.reederhome.colin.mods.JAPTA;
 
+import com.google.common.primitives.Ints;
 import mcjty.lib.tools.ItemStackTools;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
@@ -21,6 +22,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
@@ -494,5 +496,41 @@ public class JAPTA {
 
     public static <T extends Comparable<T>> T safeGetValue(TileEntity te, IProperty<T> prop) {
         return safeGetValue(te.getWorld().getBlockState(te.getPos()), prop);
+    }
+
+    public static long receiveEnergy(TileEntity te, EnumFacing side, int max) {
+        if (te instanceof TileEntityJPT.EnergyReceiver) {
+            return ((TileEntityJPT.EnergyReceiver) te).receiveEnergy(side, max, false);
+        } else if (te != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, side)) {
+            ITeslaConsumer cap = te.getCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, side);
+            if(cap != null) {
+                return cap.givePower(max, false);
+            }
+        }
+        else if(te != null && te.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side)) {
+            IEnergyStorage cap = te.getCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side);
+            if(cap != null) {
+                return cap.receiveEnergy(max, false);
+            }
+        }
+        return 0;
+    }
+
+    public static long extractEnergy(TileEntity te, EnumFacing side, int max) {
+        if (te instanceof TileEntityJPT.EnergyProvider) {
+            return ((TileEntityJPT.EnergyProvider) te).extractEnergy(side, max, false);
+        } else if (te != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_PRODUCER, side)) {
+            ITeslaProducer cap = te.getCapability(JAPTA.CAPABILITY_TESLA_PRODUCER, side);
+            if(cap != null) {
+                return cap.takePower(max, false);
+            }
+        }
+        else if(te != null && te.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side)) {
+            IEnergyStorage cap = te.getCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side);
+            if(cap != null) {
+                return cap.extractEnergy(max, false);
+            }
+        }
+        return 0;
     }
 }

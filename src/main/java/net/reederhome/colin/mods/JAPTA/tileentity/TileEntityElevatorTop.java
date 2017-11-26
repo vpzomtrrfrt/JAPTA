@@ -1,6 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
@@ -19,7 +18,7 @@ import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 import java.util.List;
 
-public class TileEntityElevatorTop extends TileEntityJPT implements IEnergyReceiver, ITickable, IDiagnosable {
+public class TileEntityElevatorTop extends TileEntityJPT implements TileEntityJPT.EnergyReceiver, ITickable, IDiagnosable {
 
     public static int USE_BASE = 1000;
     public static int USE_EXTRA = 100;

@@ -1,6 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyReceiver;
 import com.mojang.authlib.GameProfile;
 import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.block.state.IBlockState;
@@ -28,7 +27,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-public class TileEntityRNGQuarry extends TileEntityJPT implements IEnergyReceiver, ITickable, IDiagnosable {
+public class TileEntityRNGQuarry extends TileEntityJPT implements TileEntityJPT.EnergyReceiver, ITickable, IDiagnosable {
 
     public static int RANGE = 8;
     public static final int USE = 500;

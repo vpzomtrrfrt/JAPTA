@@ -1,7 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.item.Item;
@@ -15,7 +13,7 @@ import net.reederhome.colin.mods.JAPTA.EnumConverterMode;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockConverter;
 
-public class TileEntityHeatConverter extends TileEntityJPT implements IEnergyReceiver, IEnergyProvider, ITickable {
+public class TileEntityHeatConverter extends TileEntityJPT implements TileEntityJPT.EnergyReceiver, TileEntityJPT.EnergyProvider, ITickable {
     public static int USE = 20;
 
     @Override

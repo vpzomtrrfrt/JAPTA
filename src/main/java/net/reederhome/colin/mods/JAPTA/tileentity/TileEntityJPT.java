@@ -1,19 +1,12 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyContainerItem;
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
-import net.darkhax.tesla.api.ITeslaConsumer;
-import net.darkhax.tesla.api.ITeslaHolder;
-import net.darkhax.tesla.api.ITeslaProducer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
+import net.reederhome.colin.mods.JAPTA.item.ItemJPT;
 
 public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabilityProvider {
     public int stored = 0;
@@ -59,7 +52,7 @@ public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabi
     }
 
     public boolean canReceiveEnergy(EnumFacing from) {
-        return this instanceof IEnergyReceiver;
+        return this instanceof EnergyReceiver;
     }
 
     public boolean canTransmitEnergy(EnumFacing from) {
@@ -84,11 +77,7 @@ public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabi
             return;
         }
         TileEntity te = getWorld().getTileEntity(getPos().offset(side));
-        if (te instanceof IEnergyReceiver) {
-            stored -= ((IEnergyReceiver) te).receiveEnergy(side.getOpposite(), stored, false);
-        } else if (te != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, side)) {
-            stored -= te.getCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, side).givePower(stored, false);
-        }
+        stored -= JAPTA.receiveEnergy(te, side.getOpposite(), stored);
     }
 
     public void transmit(int side) {
@@ -111,8 +100,8 @@ public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabi
     public static int chargeItem(ItemStack stack, int maxAmount) {
         int stored = maxAmount;
         if (stored > 0 && stack != null) {
-            if (stack.getItem() instanceof IEnergyContainerItem) {
-                stored -= ((IEnergyContainerItem) stack.getItem()).receiveEnergy(stack, stored, false);
+            if (stack.getItem() instanceof ItemJPT) {
+                stored -= ((ItemJPT) stack.getItem()).receiveEnergy(stack, stored, false);
             }
             try {
                 if (stack.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null)) {
@@ -126,5 +115,18 @@ public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabi
             }
         }
         return maxAmount-stored;
+    }
+
+    public interface EnergyReceiver {
+        int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate);
+    }
+
+    public interface EnergyProvider {
+        int extractEnergy(EnumFacing from, int maxExtract, boolean simulate);
+    }
+
+    public interface EnergyHolder {
+        int getEnergyStored(EnumFacing from);
+        int getMaxEnergyStored(EnumFacing from);
     }
 }

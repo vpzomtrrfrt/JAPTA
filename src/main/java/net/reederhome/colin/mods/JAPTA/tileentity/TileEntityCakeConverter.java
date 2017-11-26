@@ -1,7 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.BlockCake;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -13,7 +11,7 @@ import net.reederhome.colin.mods.JAPTA.EnumConverterMode;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockConverter;
 
-public class TileEntityCakeConverter extends TileEntityJPT implements IEnergyProvider, IEnergyReceiver, ITickable {
+public class TileEntityCakeConverter extends TileEntityJPT implements TileEntityJPT.EnergyProvider, TileEntityJPT.EnergyReceiver, ITickable {
     public static int RANGE = 4;
     public static int BITE_VALUE = 18000;
 

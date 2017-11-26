@@ -1,17 +1,12 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
-import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.block.BlockPowerCabinet;
 
-public class TileEntityPowerCabinetBase extends TileEntityJPTBase implements IEnergyReceiver, IEnergyProvider {
+public class TileEntityPowerCabinetBase extends TileEntityJPTBase implements TileEntityJPT.EnergyReceiver, TileEntityJPT.EnergyProvider, TileEntityJPT.EnergyHolder {
     private int stored = 0;
 
     @Override
@@ -112,11 +107,6 @@ public class TileEntityPowerCabinetBase extends TileEntityJPTBase implements IEn
             }
         }
         return tr + getMaxInternalStorage();
-    }
-
-    @Override
-    public boolean canConnectEnergy(EnumFacing from) {
-        return true;
     }
 
     @Override

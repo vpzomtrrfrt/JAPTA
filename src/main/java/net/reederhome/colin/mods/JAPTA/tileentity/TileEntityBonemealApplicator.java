@@ -1,8 +1,6 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyReceiver;
 import mcjty.lib.tools.ItemStackTools;
-import net.minecraft.block.BlockRedstoneLight;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
@@ -21,7 +19,7 @@ import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 
 import java.util.Random;
 
-public class TileEntityBonemealApplicator extends TileEntityJPT implements IEnergyReceiver, ITickable, IDiagnosable {
+public class TileEntityBonemealApplicator extends TileEntityJPT implements TileEntityJPT.EnergyReceiver, ITickable, IDiagnosable {
     public static int USE = 100;
     public static int RANGE = 4;
 

@@ -1,7 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.item;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.ICommandSender;
@@ -9,9 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -21,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
+import net.reederhome.colin.mods.JAPTA.tileentity.TileEntityJPT;
 import net.reederhome.colin.mods.JAPTA.tileentity.TileEntitySheepAdapter;
 
 public class ItemRFMeter extends Item {
@@ -44,12 +41,9 @@ public class ItemRFMeter extends Item {
             int value = -2;
             int max = -1;
             String powerType = "RF";
-            if (te instanceof IEnergyReceiver) {
-                value = ((IEnergyReceiver) te).getEnergyStored(side);
-                max = ((IEnergyReceiver) te).getMaxEnergyStored(side);
-            } else if (te instanceof IEnergyProvider) {
-                value = ((IEnergyProvider) te).getEnergyStored(side);
-                max = ((IEnergyProvider) te).getMaxEnergyStored(side);
+            if (te instanceof TileEntityJPT) {
+                value = ((TileEntityJPT) te).getEnergyStored(side);
+                max = ((TileEntityJPT) te).getMaxEnergyStored(side);
             } else if (te != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_HOLDER, side)) {
                 ITeslaHolder holder = te.getCapability(JAPTA.CAPABILITY_TESLA_HOLDER, side);
                 value = (int) holder.getStoredPower();

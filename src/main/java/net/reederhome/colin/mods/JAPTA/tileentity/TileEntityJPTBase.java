@@ -1,7 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyProvider;
-import cofh.api.energy.IEnergyReceiver;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
@@ -39,13 +37,13 @@ public class TileEntityJPTBase extends TileEntity implements ICapabilityProvider
 
     @Override
     public boolean isFull() {
-        return !(this instanceof IEnergyReceiver) || ((IEnergyReceiver) this).getEnergyStored(null) >= ((IEnergyReceiver) this).getMaxEnergyStored(null);
+        return !(this instanceof TileEntityJPT.EnergyHolder) || ((TileEntityJPT.EnergyHolder) this).getEnergyStored(null) >= ((TileEntityJPT.EnergyHolder) this).getMaxEnergyStored(null);
     }
 
     @Override
     public void recieveMana(int mana) {
-        if (this instanceof IEnergyReceiver) {
-            ((IEnergyReceiver) this).receiveEnergy(null, mana * MANA_CONVERSION_RATE, false);
+        if (this instanceof TileEntityJPT.EnergyHolder) {
+            ((TileEntityJPT.EnergyReceiver) this).receiveEnergy(null, mana * MANA_CONVERSION_RATE, false);
         }
     }
 
@@ -56,8 +54,8 @@ public class TileEntityJPTBase extends TileEntity implements ICapabilityProvider
 
     @Override
     public int getCurrentMana() {
-        if (this instanceof IEnergyReceiver) {
-            return ((IEnergyReceiver) this).getEnergyStored(null) / MANA_CONVERSION_RATE;
+        if (this instanceof TileEntityJPT.EnergyHolder) {
+            return ((TileEntityJPT.EnergyHolder) this).getEnergyStored(null) / MANA_CONVERSION_RATE;
         }
         return 0;
     }
@@ -73,22 +71,34 @@ public class TileEntityJPTBase extends TileEntity implements ICapabilityProvider
 
         @Override
         public long givePower(long power, boolean simulated) {
-            return ((IEnergyReceiver) te).receiveEnergy(facing, (int) power, simulated);
+            if(!(te instanceof TileEntityJPT.EnergyReceiver)) {
+                return 0;
+            }
+            return ((TileEntityJPT.EnergyReceiver) te).receiveEnergy(facing, (int) power, simulated);
         }
 
         @Override
         public long getStoredPower() {
-            return ((IEnergyReceiver) te).getEnergyStored(facing);
+            if(!(te instanceof TileEntityJPT.EnergyHolder)) {
+                return 0;
+            }
+            return ((TileEntityJPT.EnergyHolder) te).getEnergyStored(facing);
         }
 
         @Override
         public long getCapacity() {
-            return ((IEnergyReceiver) te).getMaxEnergyStored(facing);
+            if(!(te instanceof TileEntityJPT.EnergyHolder)) {
+                return 0;
+            }
+            return ((TileEntityJPT.EnergyHolder) te).getMaxEnergyStored(facing);
         }
 
         @Override
         public long takePower(long power, boolean simulated) {
-            return ((IEnergyProvider) te).extractEnergy(facing, (int) power, simulated);
+            if(!(te instanceof TileEntityJPT.EnergyProvider)) {
+                return 0;
+            }
+            return ((TileEntityJPT.EnergyProvider) te).extractEnergy(facing, (int) power, simulated);
         }
     }
 
@@ -103,32 +113,44 @@ public class TileEntityJPTBase extends TileEntity implements ICapabilityProvider
 
         @Override
         public int receiveEnergy(int i, boolean b) {
-            return ((IEnergyReceiver) te).receiveEnergy(facing, i, b);
+            if(!(te instanceof TileEntityJPT.EnergyReceiver)) {
+                return 0;
+            }
+            return ((TileEntityJPT.EnergyReceiver) te).receiveEnergy(facing, i, b);
         }
 
         @Override
         public int extractEnergy(int i, boolean b) {
-            return ((IEnergyProvider) te).extractEnergy(facing, i, b);
+            if(!(te instanceof TileEntityJPT.EnergyProvider)) {
+                return 0;
+            }
+            return ((TileEntityJPT.EnergyProvider) te).extractEnergy(facing, i, b);
         }
 
         @Override
         public int getEnergyStored() {
-            return ((IEnergyReceiver) te).getEnergyStored(facing);
+            if(!(te instanceof TileEntityJPT.EnergyHolder)) {
+                return 0;
+            }
+            return ((TileEntityJPT.EnergyHolder) te).getEnergyStored(facing);
         }
 
         @Override
         public int getMaxEnergyStored() {
-            return ((IEnergyReceiver) te).getMaxEnergyStored(facing);
+            if(!(te instanceof TileEntityJPT.EnergyHolder)) {
+                return 0;
+            }
+            return ((TileEntityJPT.EnergyHolder) te).getMaxEnergyStored(facing);
         }
 
         @Override
         public boolean canExtract() {
-            return true;
+            return te instanceof TileEntityJPT.EnergyProvider;
         }
 
         @Override
         public boolean canReceive() {
-            return te instanceof TileEntityJPT && ((TileEntityJPT) te).canReceiveEnergy(facing);
+            return te instanceof TileEntityJPT.EnergyReceiver;
         }
     }
 }

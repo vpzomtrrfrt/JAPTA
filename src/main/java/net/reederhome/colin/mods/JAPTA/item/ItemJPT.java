@@ -1,6 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.item;
 
-import cofh.api.energy.IEnergyContainerItem;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
@@ -19,8 +18,7 @@ import vazkii.botania.api.mana.IManaItem;
 import static net.reederhome.colin.mods.JAPTA.tileentity.TileEntityJPTBase.MANA_CONVERSION_RATE;
 
 @Optional.Interface(iface="vazkii.botania.api.mana.IManaItem", modid="Botania")
-public class ItemJPT extends Item implements IEnergyContainerItem, IManaItem {
-    @Override
+public class ItemJPT extends Item implements IManaItem {
     public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
         int remaining = getMaxEnergyStored(container) - getEnergyStored(container);
         int tr;
@@ -35,7 +33,6 @@ public class ItemJPT extends Item implements IEnergyContainerItem, IManaItem {
         return tr;
     }
 
-    @Override
     public int extractEnergy(ItemStack container, int maxExtract, boolean simulate) {
         int tr;
         int stored = getEnergyStored(container);
@@ -50,12 +47,10 @@ public class ItemJPT extends Item implements IEnergyContainerItem, IManaItem {
         return tr;
     }
 
-    @Override
     public int getEnergyStored(ItemStack container) {
         return container.getMaxDamage() - container.getItemDamage();
     }
 
-    @Override
     public int getMaxEnergyStored(ItemStack container) {
         return getMaxDamage(container);
     }

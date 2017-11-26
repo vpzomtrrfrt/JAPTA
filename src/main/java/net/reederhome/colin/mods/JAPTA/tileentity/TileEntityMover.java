@@ -1,6 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -12,7 +11,7 @@ import net.reederhome.colin.mods.JAPTA.block.BlockMover;
 
 import java.util.List;
 
-public class TileEntityMover extends TileEntityJPT implements IEnergyReceiver, ITickable {
+public class TileEntityMover extends TileEntityJPT implements TileEntityJPT.EnergyReceiver, ITickable {
     public static int USE = 40;
 
     @Override

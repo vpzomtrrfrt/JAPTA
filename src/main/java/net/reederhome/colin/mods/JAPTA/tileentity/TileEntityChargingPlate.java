@@ -1,6 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -10,7 +9,7 @@ import net.reederhome.colin.mods.JAPTA.JAPTA;
 
 import java.util.List;
 
-public class TileEntityChargingPlate extends TileEntityJPT implements IEnergyReceiver, ITickable {
+public class TileEntityChargingPlate extends TileEntityJPT implements TileEntityJPT.EnergyReceiver, ITickable {
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
         return 1000;

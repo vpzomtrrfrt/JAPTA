@@ -1,9 +1,7 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyReceiver;
 import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -18,7 +16,7 @@ import net.minecraft.world.storage.loot.LootTableList;
 import java.util.List;
 import java.util.Random;
 
-public class TileEntityFisher extends TileEntityJPT implements IEnergyReceiver, ITickable {
+public class TileEntityFisher extends TileEntityJPT implements TileEntityJPT.EnergyReceiver, ITickable {
     public static int USE = 30000;
 
     @Override

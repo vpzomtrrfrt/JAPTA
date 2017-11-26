@@ -1,6 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyReceiver;
 import mcjty.lib.tools.ItemStackTools;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.inventory.IInventory;
@@ -16,7 +15,7 @@ import net.reederhome.colin.mods.JAPTA.IDiagnosable;
 
 import java.util.Random;
 
-public class TileEntityDungeonMaker extends TileEntityJPT implements IEnergyReceiver, ITickable, IDiagnosable {
+public class TileEntityDungeonMaker extends TileEntityJPT implements TileEntityJPT.EnergyReceiver, ITickable, IDiagnosable {
 
     public static int USE = 1000000;
 

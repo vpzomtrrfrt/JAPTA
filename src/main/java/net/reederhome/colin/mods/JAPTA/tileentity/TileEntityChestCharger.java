@@ -1,6 +1,5 @@
 package net.reederhome.colin.mods.JAPTA.tileentity;
 
-import cofh.api.energy.IEnergyReceiver;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -8,7 +7,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEntityChestCharger extends TileEntityJPT implements IEnergyReceiver, ITickable {
+public class TileEntityChestCharger extends TileEntityJPT implements TileEntityJPT.EnergyReceiver, ITickable {
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
         return 2000;
