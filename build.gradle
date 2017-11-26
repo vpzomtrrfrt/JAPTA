@@ -28,7 +28,7 @@ repositories {
     maven { url 'http://maven.epoxide.xyz' }
 }
 
-version = "1.11.9"
+version = "1.11.10"
 group = "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "JAPTA-1.12"
 
