@@ -41,9 +41,10 @@ public class ItemRFMeter extends Item {
             int value = -2;
             int max = -1;
             String powerType = "RF";
-            if (te instanceof TileEntityJPT) {
-                value = ((TileEntityJPT) te).getEnergyStored(side);
-                max = ((TileEntityJPT) te).getMaxEnergyStored(side);
+            if (te instanceof TileEntityJPT.EnergyHolder) {
+                value = ((TileEntityJPT.EnergyHolder) te).getEnergyStored(side);
+                max = ((TileEntityJPT.EnergyHolder) te).getMaxEnergyStored(side);
+                powerType = "J";
             } else if (te != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_HOLDER, side)) {
                 ITeslaHolder holder = te.getCapability(JAPTA.CAPABILITY_TESLA_HOLDER, side);
                 value = (int) holder.getStoredPower();
