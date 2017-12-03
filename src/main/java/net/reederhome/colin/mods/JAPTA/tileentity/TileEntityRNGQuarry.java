@@ -58,7 +58,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements TileEntityJPT.
                 }
                 int thl = 0;
                 boolean canUseItem = false;
-                if (item != null) {
+                if (ItemStackTools.isValid(item)) {
                     if (!isBroken(item)) {
                         canUseItem = true;
                         thl = Math.max(thl, item.getItem().getHarvestLevel(item, state.getBlock().getHarvestTool(state), player, state));
