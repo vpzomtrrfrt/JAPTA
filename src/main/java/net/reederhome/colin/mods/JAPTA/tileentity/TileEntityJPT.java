@@ -8,7 +8,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.reederhome.colin.mods.JAPTA.JAPTA;
 import net.reederhome.colin.mods.JAPTA.item.ItemJPT;
 
-public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabilityProvider {
+public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabilityProvider, TileEntityJPTBase.EnergyHolder {
     public int stored = 0;
 
     public int getEnergyStored(EnumFacing from) {
@@ -125,8 +125,4 @@ public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabi
         int extractEnergy(EnumFacing from, int maxExtract, boolean simulate);
     }
 
-    public interface EnergyHolder {
-        int getEnergyStored(EnumFacing from);
-        int getMaxEnergyStored(EnumFacing from);
-    }
 }

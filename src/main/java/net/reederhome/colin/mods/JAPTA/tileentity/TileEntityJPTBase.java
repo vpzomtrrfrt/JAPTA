@@ -60,6 +60,11 @@ public class TileEntityJPTBase extends TileEntity implements ICapabilityProvider
         return 0;
     }
 
+    public interface EnergyHolder {
+        int getEnergyStored(EnumFacing from);
+        int getMaxEnergyStored(EnumFacing from);
+    }
+
     public static class JPTTeslaAdapter implements ITeslaHolder, ITeslaConsumer, ITeslaProducer {
         private EnumFacing facing;
         private TileEntity te;
