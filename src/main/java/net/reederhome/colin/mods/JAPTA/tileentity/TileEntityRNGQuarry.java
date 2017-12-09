@@ -61,7 +61,10 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements TileEntityJPT.
                 if (ItemStackTools.isValid(item)) {
                     if (!isBroken(item)) {
                         canUseItem = true;
-                        thl = Math.max(thl, item.getItem().getHarvestLevel(item, state.getBlock().getHarvestTool(state), player, state));
+                        String harvestTool = state.getBlock().getHarvestTool(state);
+                        if(harvestTool != null) {
+                            thl = Math.max(thl, item.getItem().getHarvestLevel(item, harvestTool, player, state));
+                        }
                     }
                 }
                 int bhl = state.getBlock().getHarvestLevel(state);
@@ -153,7 +156,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements TileEntityJPT.
         if (isBroken(item)) {
             sender.sendMessage(new TextComponentTranslation("tile.rngQuarry.diagnostic.brokenTool"));
             return true;
-        } else if (getWorld() instanceof World && lastMinedTick + 10 < ((World) getWorld()).getTotalWorldTime() && stored >= USE) {
+        } else if (lastMinedTick + 10 < getWorld().getTotalWorldTime() && stored >= USE) {
             sender.sendMessage(new TextComponentTranslation("tile.rngQuarry.diagnostic.notMining"));
             return true;
         }
