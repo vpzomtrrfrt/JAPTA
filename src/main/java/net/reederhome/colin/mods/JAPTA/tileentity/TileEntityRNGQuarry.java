@@ -36,6 +36,14 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements TileEntityJPT.
 
     private long lastMinedTick;
 
+    private FakePlayer player;
+
+    @Override
+    public void setWorld(World p_setWorld_1_) {
+        super.setWorld(p_setWorld_1_);
+        player = new FakePlayer((WorldServer) getWorld(), new GameProfile(UUID.randomUUID(), "fake_player_"));
+    }
+
     @Override
     public int getMaxEnergyStored(EnumFacing from) {
         return 2000;
@@ -44,73 +52,70 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements TileEntityJPT.
     @Override
     public void update() {
         BlockPos me = getPos();
-        if (stored >= USE && getWorld() instanceof WorldServer) {
-            FakePlayer player = new FakePlayer((WorldServer) getWorld(), new GameProfile(UUID.randomUUID(), "fake_player_"));
-            for (int i = 0; i < 2; i++) { // try twice to find a valid spot
-                BlockPos cp = me.add(new Random().nextInt(RANGE * 2) - RANGE, -1, new Random().nextInt(RANGE * 2) - RANGE);
-                IBlockState state = getWorld().getBlockState(cp);
-                while ((getWorld().isAirBlock(cp) || state.getBlock().getMaterial(state).isLiquid()) && cp.getY() >= 0) {
-                    cp = cp.down();
-                    state = getWorld().getBlockState(cp);
+        if (stored >= USE && getWorld() instanceof WorldServer && player != null) {
+            BlockPos cp = me.add(new Random().nextInt(RANGE * 2) - RANGE, -1, new Random().nextInt(RANGE * 2) - RANGE);
+            IBlockState state = getWorld().getBlockState(cp);
+            while ((getWorld().isAirBlock(cp) || state.getBlock().getMaterial(state).isLiquid()) && cp.getY() >= 0) {
+                cp = cp.down();
+                state = getWorld().getBlockState(cp);
+            }
+            if (cp.getY() < 0) {
+                continue;
+            }
+            int thl = 0;
+            boolean canUseItem = false;
+            if (ItemStackTools.isValid(item)) {
+                if (!isBroken(item)) {
+                    canUseItem = true;
+                    String harvestTool = state.getBlock().getHarvestTool(state);
+                    if (harvestTool != null) {
+                        thl = Math.max(thl, item.getItem().getHarvestLevel(item, harvestTool, player, state));
+                    }
                 }
-                if (cp.getY() < 0) {
-                    continue;
+            }
+            int bhl = state.getBlock().getHarvestLevel(state);
+            boolean usedItem = ItemStackTools.isValid(item) && bhl > 0;
+            if (thl >= bhl && state.getBlock().getBlockHardness(state, getWorld(), cp) != -1) {
+                List<ItemStack> drops;
+                int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, item);
+                if (canUseItem && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, item) > 0 && state.getBlock().canSilkHarvest(getWorld(), cp, state, player)) {
+                    drops = new ArrayList<ItemStack>();
+                    drops.add(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
+                    usedItem = true;
+                } else {
+                    drops = state.getBlock().getDrops(getWorld(), cp, state, fortune);
                 }
-                int thl = 0;
-                boolean canUseItem = false;
-                if (ItemStackTools.isValid(item)) {
-                    if (!isBroken(item)) {
-                        canUseItem = true;
-                        String harvestTool = state.getBlock().getHarvestTool(state);
-                        if(harvestTool != null) {
-                            thl = Math.max(thl, item.getItem().getHarvestLevel(item, harvestTool, player, state));
+                getWorld().setBlockToAir(cp);
+                for (ItemStack drop : drops) {
+                    for (EnumFacing side : EnumFacing.VALUES) {
+                        BlockPos cip = me.offset(side);
+                        TileEntity ite = getWorld().getTileEntity(cip);
+                        if (ite instanceof IInventory) {
+                            drop = TileEntityHopper.putStackInInventoryAllSlots(null, (IInventory) ite, drop, side.getOpposite());
+                        }
+                        if (drop == null) {
+                            break;
                         }
                     }
+                    if (drop != null) {
+                        EntityItem ent = new EntityItem(getWorld(), me.getX() + 0.5, me.getY() + 1, me.getZ() + 0.5);
+                        ent.setEntityItemStack(drop);
+                        getWorld().spawnEntity(ent);
+                    }
                 }
-                int bhl = state.getBlock().getHarvestLevel(state);
-                boolean usedItem = ItemStackTools.isValid(item) && bhl > 0;
-                if (thl >= bhl && state.getBlock().getBlockHardness(state, getWorld(), cp) != -1) {
-                    List<ItemStack> drops;
-                    int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, item);
-                    if (canUseItem && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, item) > 0 && state.getBlock().canSilkHarvest(getWorld(), cp, state, player)) {
-                        drops = new ArrayList<ItemStack>();
-                        drops.add(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)));
-                        usedItem = true;
-                    } else {
-                        drops = state.getBlock().getDrops(getWorld(), cp, state, fortune);
-                    }
-                    getWorld().setBlockToAir(cp);
-                    for (ItemStack drop : drops) {
-                        for (EnumFacing side : EnumFacing.VALUES) {
-                            BlockPos cip = me.offset(side);
-                            TileEntity ite = getWorld().getTileEntity(cip);
-                            if (ite instanceof IInventory) {
-                                drop = TileEntityHopper.putStackInInventoryAllSlots(null, (IInventory) ite, drop, side.getOpposite());
-                            }
-                            if (drop == null) {
-                                break;
-                            }
-                        }
-                        if (drop != null) {
-                            EntityItem ent = new EntityItem(getWorld(), me.getX() + 0.5, me.getY() + 1, me.getZ() + 0.5);
-                            ent.setEntityItemStack(drop);
-                            getWorld().spawnEntity(ent);
-                        }
-                    }
-                    stored -= USE;
-                    if (usedItem && Math.random() < 0.9) {
-                        item.onBlockDestroyed(getWorld(), state, cp, player);
-                        /*if(item.attemptDamageItem(1, new Random())) {
-                            item = null;
-                        }*/
-                        /*item.setItemDamage(item.getItemDamage()+1);
-                        if(item.getItemDamage() >= item.getMaxDamage()) {
-                            item = null;
-                        }*/
-                    }
-                    lastMinedTick = getWorld().getTotalWorldTime();
-                    break;
+                stored -= USE;
+                if (usedItem && Math.random() < 0.9) {
+                    item.onBlockDestroyed(getWorld(), state, cp, player);
+                   /*if(item.attemptDamageItem(1, new Random())) {
+                    item = null;
+					}*/
+				   /*item.setItemDamage(item.getItemDamage()+1);
+					if(item.getItemDamage() >= item.getMaxDamage()) {
+					item = null;
+					}*/
                 }
+                lastMinedTick = getWorld().getTotalWorldTime();
+                break;
             }
         }
     }
