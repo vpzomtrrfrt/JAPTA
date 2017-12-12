@@ -60,7 +60,7 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements TileEntityJPT.
                 state = getWorld().getBlockState(cp);
             }
             if (cp.getY() < 0) {
-                continue;
+                return;
             }
             int thl = 0;
             boolean canUseItem = false;
@@ -115,7 +115,6 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements TileEntityJPT.
 					}*/
                 }
                 lastMinedTick = getWorld().getTotalWorldTime();
-                break;
             }
         }
     }
