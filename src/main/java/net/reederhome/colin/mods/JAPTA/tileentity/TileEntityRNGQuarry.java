@@ -41,7 +41,9 @@ public class TileEntityRNGQuarry extends TileEntityJPT implements TileEntityJPT.
     @Override
     public void setWorld(World p_setWorld_1_) {
         super.setWorld(p_setWorld_1_);
-        player = new FakePlayer((WorldServer) getWorld(), new GameProfile(UUID.randomUUID(), "fake_player_"));
+        if(getWorld() instanceof WorldServer) {
+            player = new FakePlayer((WorldServer) getWorld(), new GameProfile(UUID.randomUUID(), "fake_player_"));
+        }
     }
 
     @Override
