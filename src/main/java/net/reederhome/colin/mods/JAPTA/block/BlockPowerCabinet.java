@@ -30,6 +30,7 @@ public class BlockPowerCabinet extends Block implements IDiagnosable {
         super(Material.ROCK);
         setDefaultState(blockState.getBaseState().withProperty(VALUE, 0));
         setCreativeTab(JAPTA.tab);
+        setHardness(1);
         this.metaValue = metaValue;
         if (metaValue > MAX_META_VALUE) {
             MAX_META_VALUE = metaValue;
