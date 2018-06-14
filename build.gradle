@@ -25,7 +25,7 @@ dependencies {
 
 repositories {
     maven { url 'http://tehnut.info/maven' }
-    maven { url 'http://maven.epoxide.xyz' }
+    maven { url 'http://maven.mcmoddev.com' }
 }
 
 version = "1.11.15"
