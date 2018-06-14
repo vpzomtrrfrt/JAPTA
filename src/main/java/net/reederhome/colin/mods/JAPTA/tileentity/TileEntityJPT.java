@@ -104,10 +104,10 @@ public abstract class TileEntityJPT extends TileEntityJPTBase implements ICapabi
                 stored -= ((ItemJPT) stack.getItem()).receiveEnergy(stack, stored, false);
             }
             try {
-                if (stack.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null)) {
+                if (JAPTA.CAPABILITY_TESLA_CONSUMER != null && stack.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null)) {
                     stored -= stack.getCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, null).givePower(stored, false);
                 }
-                if (stack.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, null)) {
+                if (JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE != null && stack.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, null)) {
                     stored -= stack.getCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, null).receiveEnergy(stored, false);
                 }
             } catch(NoClassDefFoundError ex) {

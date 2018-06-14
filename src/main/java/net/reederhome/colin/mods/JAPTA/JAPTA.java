@@ -501,13 +501,13 @@ public class JAPTA {
     public static long receiveEnergy(TileEntity te, EnumFacing side, int max) {
         if (te instanceof TileEntityJPT.EnergyReceiver) {
             return ((TileEntityJPT.EnergyReceiver) te).receiveEnergy(side, max, false);
-        } else if (te != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, side)) {
+        } else if (te != null && JAPTA.CAPABILITY_TESLA_CONSUMER != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, side)) {
             ITeslaConsumer cap = te.getCapability(JAPTA.CAPABILITY_TESLA_CONSUMER, side);
             if(cap != null) {
                 return cap.givePower(max, false);
             }
         }
-        else if(te != null && te.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side)) {
+        else if(te != null && JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE != null && te.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side)) {
             IEnergyStorage cap = te.getCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side);
             if(cap != null) {
                 return cap.receiveEnergy(max, false);
@@ -519,13 +519,13 @@ public class JAPTA {
     public static long extractEnergy(TileEntity te, EnumFacing side, int max) {
         if (te instanceof TileEntityJPT.EnergyProvider) {
             return ((TileEntityJPT.EnergyProvider) te).extractEnergy(side, max, false);
-        } else if (te != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_PRODUCER, side)) {
+        } else if (te != null && JAPTA.CAPABILITY_TESLA_PRODUCER != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_PRODUCER, side)) {
             ITeslaProducer cap = te.getCapability(JAPTA.CAPABILITY_TESLA_PRODUCER, side);
             if(cap != null) {
                 return cap.takePower(max, false);
             }
         }
-        else if(te != null && te.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side)) {
+        else if(te != null && JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE != null && te.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side)) {
             IEnergyStorage cap = te.getCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side);
             if(cap != null) {
                 return cap.extractEnergy(max, false);

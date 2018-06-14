@@ -45,13 +45,13 @@ public class ItemRFMeter extends Item {
                 value = ((TileEntityJPT.EnergyHolder) te).getEnergyStored(side);
                 max = ((TileEntityJPT.EnergyHolder) te).getMaxEnergyStored(side);
                 powerType = "J";
-            } else if (te != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_HOLDER, side)) {
+            } else if (te != null && JAPTA.CAPABILITY_TESLA_HOLDER != null && te.hasCapability(JAPTA.CAPABILITY_TESLA_HOLDER, side)) {
                 ITeslaHolder holder = te.getCapability(JAPTA.CAPABILITY_TESLA_HOLDER, side);
                 value = (int) holder.getStoredPower();
                 max = (int) holder.getCapacity();
                 powerType = "T";
             }
-            else if(te != null && te.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side)) {
+            else if(te != null && JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE != null && te.hasCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side)) {
                 IEnergyStorage storage = te.getCapability(JAPTA.CAPABILITY_FORGE_ENERGY_STORAGE, side);
                 value = storage.getEnergyStored();
                 max = storage.getMaxEnergyStored();
