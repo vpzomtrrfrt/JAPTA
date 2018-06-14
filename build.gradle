@@ -28,7 +28,7 @@ repositories {
     maven { url 'http://maven.mcmoddev.com' }
 }
 
-version = "1.11.15"
+version = "1.11.16"
 group = "net.reederhome.colin.mods.JAPTA" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "JAPTA-1.12"
 
